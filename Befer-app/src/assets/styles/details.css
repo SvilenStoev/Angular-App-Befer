@@ -1,0 +1,42 @@
+section.details {
+    width: 60em;
+    margin: 3em auto;
+}
+
+.buttons {
+    display: block;
+    margin: 1em 2em 0 auto;
+}
+
+.btn.delete:hover {
+    background-color: red;
+}
+
+.btn.edit:hover {
+    background-color: blue;
+}
+
+.btn.like:hover {
+    background-color: green;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.margin-t20 {
+    margin-top: 20px;
+}
+
+.margin-b20 {
+    margin-bottom: 20px;
+}
+
+.textCenter>img{
+    max-height: 25em;
+    max-width: 25em;
+    border-style: groove;
+    border-color: black;
+    box-shadow: 2px 2px 1em 5px rgba(65,199,255,255);
+}
+
