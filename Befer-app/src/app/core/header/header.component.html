@@ -1,10 +1,10 @@
 <nav>
-    <a href="/"><img src="https://www.linkpicture.com/q/Logo21.png" height="50"></a>
+    <a routerLink=""><img src="https://www.linkpicture.com/q/Logo21.png" height="50"></a>
     <ul>
-        <li><a href="/">Home</a></li>
-        <li *ngIf="isLogged"><a href="#">My Posts</a></li>
-        <li *ngIf="isLogged"><a href="#" (click)="logoutHandler()">Logout</a></li>
-        <li *ngIf="!isLogged"><a href="#" (click)="loginHandler()">Login</a></li>
-        <li *ngIf="!isLogged"><a href="/register">Register</a></li>
+        <li><a routerLink="">Home</a></li>
+        <li *ngIf="isLogged"><a routerLink="/posts">My Posts</a></li>
+        <li *ngIf="isLogged"><a routerLink="/logout" (click)="logoutHandler()">Logout</a></li>
+        <li *ngIf="!isLogged"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!isLogged"><a routerLink="/register">Register</a></li>
     </ul>
 </nav>

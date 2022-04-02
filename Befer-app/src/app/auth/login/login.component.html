@@ -1,0 +1,15 @@
+<form>
+    <h2>Login</h2>
+    <div>
+        <label>Username</label>
+        <input class="error" type="text" placeholder="Username" name="username" value="">
+        <p class="errorText">Error</p>
+    </div>
+    <div>
+        <label>Password</label>
+        <input class="error" type="password" placeholder="Password" name="password" value="">
+        <p class="errorText">Error</p>
+    </div>
+    <button class="btn" type="submit" (click)="loginHandler()">Login</button>
+    <div class="registerPath">You don't have a profile? &nbsp; <a class="registerPath" href="/register"><b><u>Join Befer now!</u></b></a></div>
+</form>
