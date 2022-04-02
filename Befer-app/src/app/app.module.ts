@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { PagesModule } from './feature/pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     CommonModule,
     RouterModule,
-    AppRoutingModule,
     PagesModule,
+    AuthModule,
     CoreModule.forRoot(),
+    AppRoutingModule,
   ],
   providers: [
     UserService,
