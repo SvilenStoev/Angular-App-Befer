@@ -4,10 +4,13 @@ import { PostsHomeComponent } from './posts-home/posts-home.component';
 
 @NgModule({
   declarations: [
-    PostsHomeComponent
+    PostsHomeComponent,
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    PostsHomeComponent
   ]
 })
 export class PostsModule { }

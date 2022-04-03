@@ -12,15 +12,15 @@ import { CoreModule } from './core/core.module';
 import { PagesModule } from './feature/pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CommonModule,
     RouterModule,
     PagesModule,
@@ -29,8 +29,6 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
   ],
   providers: [
-    UserService,
-    StorageService
   ],
   bootstrap: [
     AppComponent,

@@ -1,9 +1,9 @@
-<div>
+<div *ngFor="let post of posts">
     <div class="home-image">
         <img src="" alt="Card image cap">
     </div>
     <div class="info">
-        <h4>publication.title</h4>
+        <h4>{{post.title}}</h4>
         <div class="info-buttons">
             <a class="btn details" href="/details/${publication.objectId}">See "After"</a>
             <span class="likes">3 likes</span>
