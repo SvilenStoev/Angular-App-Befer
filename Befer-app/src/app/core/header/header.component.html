@@ -2,9 +2,10 @@
     <a routerLink=""><img src="https://www.linkpicture.com/q/Logo21.png" height="50"></a>
     <ul>
         <li><a routerLink="">Home</a></li>
-        <li *ngIf="isLogged"><a routerLink="/posts">My Posts</a></li>
+        <li *ngIf="isLogged"><a routerLink="/posts">All Posts</a></li>
+        <li *ngIf="isLogged"><a routerLink="/myPosts">My Posts</a></li>
         <li *ngIf="isLogged"><a routerLink="/profile">Profile</a></li>
-        <li *ngIf="isLogged"><a routerLink="/logout" (click)="logoutHandler()">Logout</a></li>
+        <li *ngIf="isLogged"><a href="#" (click)="logoutHandler()">Logout</a></li>
         <li *ngIf="!isLogged"><a routerLink="/login">Login</a></li>
         <li *ngIf="!isLogged"><a routerLink="/register">Register</a></li>
     </ul>

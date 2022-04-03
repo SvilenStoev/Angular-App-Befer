@@ -17,8 +17,11 @@ export class PostService {
     }
 };
 
-  loadPosts(): Observable<any> {
-    return this.http.get<any>(this.url, this.options);
+  loadPosts(limit?: number): Observable<any> {
+    return this.http.get<any>(this.url + `${limit ? `?limit=${limit}` : ''}`, this.options);
   }
 
+  loadPostById(id: string): Observable<IPost> { 
+    return this.http.get<IPost>(`${this.url}/${id}?include=owner`, this.options);
+  }
 }

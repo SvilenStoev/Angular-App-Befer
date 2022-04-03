@@ -1,0 +1,37 @@
+<div *ngIf="!!post" class="container">
+    <section class="details">
+        <h1 class="margin-b20"><i>Post title:</i> {{post.title}}</h1>
+        <div class="textCenter">
+            <img src={{post.beforeImgUrl}} />
+            <img src={{post.afterImgUrl}} />
+        </div>
+        <div class="margin-t20">
+            <hr style="width:500px; margin: auto;">
+        </div>
+        <div class="textCenter margin-t20">
+            <h3>Post Description</h3>
+            <p>{{post.description}}</p>
+            <div class="buttons">
+
+                <a class="btn delete" href="#">Delete</a>
+                <a class="btn edit" [routerLink]="['/post/edit', post.objectId]">Edit</a>
+                <!-- <span class="liked">You have already liked this post!</span> -->
+                <a class="btn like" [routerLink]="['/like', post.objectId]">Like</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="details">
+        <div class="textCenter">
+            <h3>Post Author</h3>
+            <p>Username: {{post.owner.username}}</p>
+            <p>Full name: {{post.owner.fullName}}</p>
+            <p *ngIf="post.owner.email">Email: {{post.owner.email}}}</p>
+        </div>
+    </section>
+</div>
+<div *ngIf="!post">
+    <section class="details">
+        <b>Loading...</b>
+    </section>
+</div>

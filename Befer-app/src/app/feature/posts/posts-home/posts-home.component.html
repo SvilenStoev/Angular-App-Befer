@@ -1,12 +1,22 @@
-<div *ngFor="let post of posts">
-    <div class="home-image">
-        <img src="" alt="Card image cap">
-    </div>
-    <div class="info">
-        <h4>{{post.title}}</h4>
-        <div class="info-buttons">
-            <a class="btn details" href="/details/${publication.objectId}">See "After"</a>
-            <span class="likes">3 likes</span>
+<div *ngIf="!!posts; else loadingIndicator">
+    <div class="publications-container">
+        <div *ngFor="let post of posts">
+            <div class="home-image">
+                <img src={{post.beforeImgUrl}} alt="Card image cap">
+            </div>
+            <div class="info">
+                <h4>{{post.title}}</h4>
+                <div class="info-buttons">
+                    <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
+                    <span class="likes">3 likes</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<ng-template #loadingIndicator>
+    <div>
+        <b>Loading...</b>
+    </div>
+</ng-template>

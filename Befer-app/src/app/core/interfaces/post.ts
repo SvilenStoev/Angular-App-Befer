@@ -7,8 +7,13 @@ export interface IPost extends IBase {
     title: string;
     owner: {
         __type: string;
-        className: string,
+        className: string;
         objectId: string;
+        createdAt: string;
+        fullName: string;
+        updatedAt: string;
+        username: string;
+        email: string;
     },
     isPublic: boolean;
 }

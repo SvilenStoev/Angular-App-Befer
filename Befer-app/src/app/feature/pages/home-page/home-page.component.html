@@ -4,16 +4,14 @@
   </section>
   <section class="container">
     <div class="aux">
-        <h1>Posts</h1>
+        <h1>Top 5 Posts</h1>
         <div class="home-buttons"> 
-            <a class="btn create-play" href="/create">Create Post</a>
-            <a class="btn create-play" href="/sort">Sort by Date</a>
-            <a class="btn create-play" href="/sort">Sort by Likes</a>
+            <a *ngIf="isLogged" class="btn create-play" routerLink="/create">Create Post</a>
+            <a class="btn create-play" routerLink="/sort">Sort by Date</a>
+            <a class="btn create-play" routerLink="/sort">Sort by Likes</a>
         </div>
     </div>
-    <div class="publications-container">
-  
+
       <app-posts-home></app-posts-home>
-  
-    </div>
+
   </section>
