@@ -2,11 +2,15 @@
     <a routerLink=""><img src="https://www.linkpicture.com/q/Logo21.png" height="50"></a>
     <ul>
         <li><a routerLink="">Home</a></li>
-        <li *ngIf="isLogged"><a routerLink="/posts">All Posts</a></li>
-        <li *ngIf="isLogged"><a routerLink="/myPosts">My Posts</a></li>
-        <li *ngIf="isLogged"><a routerLink="/profile">Profile</a></li>
-        <li *ngIf="isLogged"><a href="#" (click)="logoutHandler()">Logout</a></li>
-        <li *ngIf="!isLogged"><a routerLink="/login">Login</a></li>
-        <li *ngIf="!isLogged"><a routerLink="/register">Register</a></li>
+        <ng-container *ngIf="isLogged">
+            <li><a routerLink="/posts/all">All Posts</a></li>
+            <li><a routerLink="/myPosts">My Posts</a></li>
+            <li><a routerLink="/profile">Profile</a></li>
+            <li><a href="#" (click)="logoutHandler()">Logout</a></li>
+        </ng-container>
+        <ng-container *ngIf="!isLogged">
+            <li><a routerLink="/login">Login</a></li>
+            <li><a routerLink="/register">Register</a></li>
+        </ng-container>
     </ul>
 </nav>

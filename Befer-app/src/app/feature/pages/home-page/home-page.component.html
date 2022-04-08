@@ -1,12 +1,13 @@
 <section class="main container">
     <h1>The Best Network for Sharing Your "Before and After" Photography</h1>
-    <h2>Share your progress, renovation or great achievement and <u>Befer</u> Your Life</h2>
+    <h2>Share your progress, renovation or great achievement and <u>Befer</u> Your Life!</h2> 
+    <h3 *ngIf="!isLogged">You are not logged in! <a routerLink="/login">Login</a> now to access all features.</h3>
   </section>
   <section class="container">
     <div class="aux">
         <h1>Top 5 Posts</h1>
         <div class="home-buttons"> 
-            <a *ngIf="isLogged" class="btn create-play" routerLink="/create">Create Post</a>
+            <a *ngIf="isLogged" class="btn create-play" routerLink="/posts/create">Create Post</a>
             <a class="btn create-play" routerLink="/sort">Sort by Date</a>
             <a class="btn create-play" routerLink="/sort">Sort by Likes</a>
         </div>
