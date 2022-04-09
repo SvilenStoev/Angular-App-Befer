@@ -1,1 +1,29 @@
-<p>posts-all works!</p>
+<h2 class="text-center mt-4"> &#x1F62D;</h2>
+<h3 class="text-center mb-5">No companies found!</h3>
+
+
+<div class="col-sm-6 col-md-4 col-lg-3">
+    <div class="card bg-light mb-4 shadow" style="max-width: 18rem;">
+        <div class="card-header">
+            <div>
+                <a>
+                    <!-- @if (company.LogoUrl != null)
+                    { -->
+                        <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="" alt="">
+                        <img class="card-img-top rounded-circle mb-2 img-thumbnail shadow" src="" alt="">
+                    
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title text-center mb-2"><b>company.Name</b></h5>
+            <p class="card-text text-center mb-3"><i>company.CategoryName</i></p>
+            <p class="card-text mb-2"><b>Industry:</b> company.IndustryName</p>
+            <p class="card-text mb-2"><b>Location:</b> company.City, company.Country</p>
+            <p class="card-text mb-2"><b>Founded:</b> company.Founded</p>
+            <a class="btn btn-outline-primary shadow">
+                Details
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,15 +1,28 @@
-<form>
+<form [formGroup]="loginFormGroup" (ngSubmit)="loginHandler()">
     <h2>Login</h2>
     <div>
-        <label>Username</label>
-        <input class="error" type="text" placeholder="Username" name="username" value="">
-        <p class="errorText">Error</p>
+        <label for="username">Username</label>
+        <input formControlName="username" [ngClass]="{ 'error': loginFormGroup.controls['username'].invalid }" type="text"
+            placeholder="Username" name="username">
+        <ng-container *ngIf="loginFormGroup.controls['username'].invalid">
+            {{ loginFormGroup.controls['username'].errors | json }}
+            <p class="errorText">Username is required!</p>
+        </ng-container>
     </div>
     <div>
-        <label>Password</label>
-        <input class="error" type="password" placeholder="Password" name="password" value="">
-        <p class="errorText">Error</p>
+        <label for="password">Password</label>
+        <input formControlName="password" [ngClass]="{ 'error': loginFormGroup.controls['email'].invalid }" type="password" placeholder="Password" name="password">
+        <ng-container *ngIf="loginFormGroup.controls['password'].touched && loginFormGroup.controls['password'].invalid">
+            <p *ngIf="loginFormGroup.controls['password'].errors" class="errorText">
+                Email is required!
+            </p>
+
+            <p *ngIf="loginFormGroup.controls['password'].errors" class="errorText">
+                Email is not valid!
+            </p>
+        </ng-container>
     </div>
-    <button class="btn" type="submit" (click)="loginHandler()">Login</button>
-    <div class="registerPath">You don't have a profile? &nbsp; <a class="registerPath" routerLink="/register"><b><u>Join Befer now!</u></b></a></div>
+    <button class="btn" type="submit">Login</button>
+    <div class="registerPath">You don't have a profile? &nbsp; <a class="registerPath" routerLink="/register"><b><u>Join
+                    Befer now!</u></b></a></div>
 </form>
