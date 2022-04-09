@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { notify } from 'src/app/shared/notify/notify';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
+    notify('You should be logged in to access this page!', 'error');
+  
     return this.router.createUrlTree(['/login']);
   }
-
 }

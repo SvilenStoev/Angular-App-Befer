@@ -11,6 +11,7 @@ import { PagesModule } from './feature/pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     PagesModule,
     AuthModule,
+    SharedModule,
     CoreModule.forRoot(),
     AppRoutingModule,
   ],
