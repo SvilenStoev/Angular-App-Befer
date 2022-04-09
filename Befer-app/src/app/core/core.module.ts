@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PostService } from '../services/post.service';
+import { ApiService } from '../services/api.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ export class CoreModule {
       providers: [
         UserService,
         StorageService,
-        PostService
+        PostService,
+        ApiService
       ]
     }
   }

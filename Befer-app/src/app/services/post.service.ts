@@ -1,27 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { IPost } from '../interfaces';
 import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 @Injectable()
 export class PostService {
 
-  constructor(private http: HttpClient) { }
+  postColl: string = '/classes/Publication';
 
-  url = 'https://parseapi.back4app.com/classes/Publication';
-
-  options = {
-    headers: {
-        'X-Parse-Application-Id': '7GJqF8la5Gzzpm7o4rAo5A0FeuTytgkwM3FK9iVP',
-        'X-Parse-REST-API-Key': 'aMFFjTTsnCQrPPAZaK2FYHltL06o6bxQOC8Uk0wt'
-    }
-};
+  constructor(private api: ApiService) { }
 
   loadPosts(limit?: number): Observable<any> {
-    return this.http.get<any>(this.url + `${limit ? `?limit=${limit}` : ''}`, this.options);
+    return this.api.get(`${this.postColl}/${limit ? `?limit=${limit}` : ''}`);
   }
 
-  loadPostById(id: string): Observable<IPost> { 
-    return this.http.get<IPost>(`${this.url}/${id}?include=owner`, this.options);
+  loadPostById(id: string): Observable<any> {
+    return this.api.get(`${this.postColl}/${id}?include=owner`);
   }
 }
