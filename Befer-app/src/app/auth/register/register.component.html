@@ -9,7 +9,7 @@
             <p *ngIf="getValError('fullName', 'minlength')" class="errorText">
                 Fullname should be at least {{ nameMinLength }} symbols! {{ fullNameSymb }} {{ fullNameSymb > 1 ? 'symbols' : 'symbol' }} to go.
             </p>
-            <p *ngIf="getValError('fullName', 'maxlength') && !getValError('fullName', 'whitespace')" class="errorText">
+            <p *ngIf="getValError('fullName', 'maxlength')" class="errorText">
                 Fullname should be maximum {{ maxLength }} symbols! Please remove {{ fullNameSymb }} {{ fullNameSymb > 1 ? 'symbols' : 'symbol' }}.
             </p>
         </ng-container>
@@ -18,10 +18,9 @@
         <label>Username</label>
         <input formControlName="username" type="text" placeholder="John93" name="username">
         <ng-container *ngIf="showError('username')">
-            {{ registerFormGroup.controls['username'].errors | json }}
             <p *ngIf="getValError('username', 'required')" class="errorText">Username is required!</p>
             <p *ngIf="getValError('username', 'whitespace')" class="errorText">Username should not contains whitespace!</p>
-            <p *ngIf="getValError('username', 'minlength')" class="errorText">
+            <p *ngIf="getValError('username', 'minlength') && !getValError('username', 'whitespace')" class="errorText">
                 Username should be at least {{ nameMinLength }} symbols! {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }} to go.
             </p>
             <p *ngIf="getValError('username', 'maxlength') && !getValError('username', 'whitespace')" class="errorText">
@@ -30,21 +29,34 @@
         </ng-container>
     </div>
     <div class="on-dark">
-        <label>Email</label>
-        <input type="email" placeholder="John93@gmail.com" name="email">
-        <p class="errorText">Error</p>
+        <label for="email">Email</label>
+        <input formControlName="email" type="email" placeholder="John93@gmail.com" name="email">
+        <ng-container *ngIf="showError('email')">
+            <p *ngIf="getValError('email', 'required')" class="errorText">Email is required!</p>
+            <p *ngIf="getValError('email', 'emailVal') && !getValError('email', 'required')" class="errorText">Email is not valid!</p>
+        </ng-container>
     </div>
-    <ng-container formGroupName="passwords">
-        <div class="on-dark">
-            <label>Password</label>
+        <div formGroupName="passwords" class="on-dark">
+            <label for="password">Password</label>
             <input formControlName="password" type="password" placeholder="*********" name="password">
-            <p class="errorText">Error</p>
+            <ng-container *ngIf="showError('password', passwordsGroup)">
+                <p *ngIf="getValError('password', 'required', passwordsGroup)" class="errorText">Password is required!</p>
+                <p *ngIf="getValError('password', 'whitespace', passwordsGroup)" class="errorText">Password should not contains whitespace!</p>
+                <p *ngIf="getValError('password', 'minlength', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup)" class="errorText">
+                    Password should be at least {{ passwordMinLength }} symbols! {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }} to go.
+                </p>
+                <p *ngIf="getValError('password', 'maxlength', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup)" class="errorText">
+                    Password should be maximum {{ maxLength }} symbols! Please remove {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
+                </p>
+            </ng-container>
         </div>
-        <div  class="on-dark">
+        <div formGroupName="passwords" class="on-dark">
             <label>Repeat Password</label>
             <input formControlName="repeatPass" type="password" placeholder="*********" name="repeatPass">
-            <p class="errorText">Error</p>
+            <ng-container *ngIf="showError('repeatPass', passwordsGroup)">
+                <p *ngIf="getValError('repeatPass', 'required', passwordsGroup)" class="errorText">Password is required!</p>
+                <p *ngIf="getValError('repeatPass', 'passMissmatch', passwordsGroup)" class="errorText">It doesn't match your password!</p>
+            </ng-container>
         </div>
-    </ng-container>
     <button [disabled]="!registerFormGroup.valid" class="btn" type="submit">Register</button>
 </form>
