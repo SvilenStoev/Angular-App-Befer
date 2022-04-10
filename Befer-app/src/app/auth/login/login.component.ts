@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, ControlContainer, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { whitespaceValidator } from '../util';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -12,11 +13,14 @@ export class LoginComponent implements OnInit {
 
   usernameSymb: number;
   passwordSymb: number;
-  minlength: number = 5;
+  userNameMinLength: number = 4;
+  userNameMaxLength: number = 16;
+  passwordMinLength: number = 6;
+  passwordMaxLength: number = 20;
 
   loginFormGroup: FormGroup = this.formBuilder.group({
-    username: new FormControl('', [Validators.required, Validators.minLength(this.minlength), whitespaceValidator]),
-    password: new FormControl('', [Validators.required, Validators.minLength(this.minlength)])
+    'username': new FormControl(null, [Validators.required, Validators.minLength(this.userNameMinLength), Validators.maxLength(this.userNameMaxLength), whitespaceValidator]),
+    'password': new FormControl(null, [Validators.required, Validators.minLength(this.passwordMinLength), Validators.maxLength(this.passwordMaxLength), whitespaceValidator])
   });
 
   constructor(
@@ -26,12 +30,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginFormGroup.valueChanges.subscribe(() => {
-      console.log('valuechanged');
-      if (this.loginFormGroup.controls['username'].errors?.['minlength']) {
-        this.usernameSymb = this.loginFormGroup.controls['username'].errors?.['minlength']?.requiredLength - this.loginFormGroup.controls['username'].errors?.['minlength'].actualLength;
+      const usernameMinError = this.getValError('username', 'minlength');
+      const usernameMaxError = this.getValError('username', 'maxlength');
+      const passMinError = this.getValError('password', 'minlength');
+      const passMaxError = this.getValError('password', 'maxlength');
+
+      if (usernameMinError) {
+        this.usernameSymb = usernameMinError.requiredLength - usernameMinError.actualLength;
+      } else if (usernameMaxError)  {
+        this.usernameSymb = usernameMaxError.actualLength - usernameMaxError.requiredLength;
       }
-      if (this.loginFormGroup.controls['password'].errors?.['minlength']) {
-        this.passwordSymb = this.loginFormGroup.controls['password'].errors?.['minlength']?.requiredLength - this.loginFormGroup.controls['password'].errors?.['minlength'].actualLength;
+      
+      if (passMinError) {
+        this.passwordSymb = passMinError.requiredLength - passMinError.actualLength;
+      } else if (passMaxError) {
+        this.passwordSymb = passMaxError.actualLength - passMaxError.requiredLength;
       }
     })
   }
@@ -41,14 +54,12 @@ export class LoginComponent implements OnInit {
     // this.userService.login();
     // this.router.navigate(['/home']);
   }
-}
 
-const whitespaceValidator: ValidatorFn = (control: AbstractControl) => {
-  const value = control.value;
-
-  if (/\s/g.test(value)) {
-    return { whitespace: true };
+  showError(controlName: string): boolean {
+    return this.loginFormGroup.controls[controlName].touched && this.loginFormGroup.controls[controlName].invalid;
   }
 
-  return null;
-};
+  getValError(controlName: string, errorType: string) {
+    return this.loginFormGroup.controls[controlName].errors?.[errorType];
+  }
+}

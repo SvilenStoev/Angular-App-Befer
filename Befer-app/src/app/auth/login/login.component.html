@@ -2,27 +2,29 @@
     <h2>Login</h2>
     <div>
         <label for="username">Username</label>
-        <input formControlName="username" type="text"
-            placeholder="Username" name="username">
-        <ng-container *ngIf="loginFormGroup.controls['username'].touched && loginFormGroup.controls['username'].invalid">
-            <p *ngIf="loginFormGroup.controls['username'].errors?.['required']" class="errorText">Username is required!</p>
-            <p *ngIf="loginFormGroup.controls['username'].errors?.['whitespace']" class="errorText">
-                Username should not contains whitespace!
+        <input formControlName="username" type="text" placeholder="Username" name="username">
+        <ng-container *ngIf="showError('username')">
+            <p *ngIf="getValError('username', 'required')" class="errorText">Username is required!</p>
+            <p *ngIf="getValError('username', 'whitespace')" class="errorText">Username should not contains whitespace!</p>
+            <p *ngIf="getValError('username', 'minlength') && !getValError('username', 'whitespace')" class="errorText">
+                Username should be at least {{ userNameMinLength }} symbols! {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }} to go.
             </p>
-            <p *ngIf="loginFormGroup.controls['username'].errors?.['minlength'] && !loginFormGroup.controls['username'].errors?.['whitespace']" class="errorText">
-                Username should be at least {{ minlength }} symbols! {{ usernameSymb }} symbols to go.
+            <p *ngIf="getValError('username', 'maxlength') && !getValError('username', 'whitespace')" class="errorText">
+                Username should be maximum {{ userNameMaxLength }} symbols! Please remove {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }}.
             </p>
         </ng-container>
     </div>
     <div>
         <label for="password">Password</label>
         <input formControlName="password" type="password" placeholder="Password" name="password">
-        <ng-container *ngIf="loginFormGroup.controls['password'].touched && loginFormGroup.controls['password'].invalid">
-            <p *ngIf="loginFormGroup.controls['password'].errors?.['required']" class="errorText">
-                Password is required!
+        <ng-container *ngIf="showError('password')">
+            <p *ngIf="getValError('password', 'required')" class="errorText">Password is required!</p>
+            <p *ngIf="getValError('password', 'whitespace')" class="errorText">Password should not contains whitespace!</p>
+            <p *ngIf="getValError('password', 'minlength') && !getValError('password', 'whitespace')" class="errorText">
+                Password should be at least {{ passwordMinLength }} symbols! {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }} to go.
             </p>
-            <p *ngIf="loginFormGroup.controls['password'].errors?.['minlength']" class="errorText">
-                Password should be at least {{ minlength }} symbols! {{ passwordSymb }} symbols to go.
+            <p *ngIf="getValError('password', 'maxlength') && !getValError('password', 'whitespace')" class="errorText">
+                Password should be maximum {{ passwordMaxLength }} symbols! Please remove {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
             </p>
         </ng-container>
     </div>
