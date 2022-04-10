@@ -119,11 +119,11 @@ form button.btn {
     box-sizing: 2px 2px 2px black;
 }
 
-form button:hover {
+/* form button:hover:enabled {
     cursor: pointer;
     background-color: rgba(0, 128, 0, 0.562);
-    /* font-weight: bold; */
-}
+    font-weight: bold;
+} */
 
 /* Notifications */
 
@@ -169,9 +169,24 @@ li.notifications>div:hover {
     color: rgb(0, 0, 0);
 }
 
-input.error, textarea.error {
+/* NB: Inserted in ng-invalid! */
+/* input.error, textarea.error {
     background-color: #f1d7de; 
     border: 2px solid rgba(218, 6, 6, 0.315);
+    box-shadow: 1px 1px 1px #aaaaaa;
+} */
+
+/* NG valid / invalid border */
+input.ng-valid {
+    border-bottom: 3.5px solid #42A948;
+    /* green */
+}
+
+input.ng-invalid.ng-touched {
+    border: 2px solid rgba(218, 6, 6, 0.315);
+    border-bottom: 3.5px solid #A94442;
+    /* red */
+    background-color: #f1d7de; 
     box-shadow: 1px 1px 1px #aaaaaa;
 }
 
@@ -197,12 +212,17 @@ input.error, textarea.error {
     box-shadow: 2px 2px 5px black;
 }
 
-.btn:hover {
+.btn:hover:enabled {
     cursor: pointer;
     background-color: rgba(255,199,44,255);
     box-shadow: 2px 2px 5px rgba(65,199,255,255);
     color: white;
 }
+
+.btn:disabled {
+    background: #dddddd;
+    cursor: not-allowed;
+  }
 
 .registerPath {
     margin: auto;
@@ -213,3 +233,4 @@ input.error, textarea.error {
 .registerPath>a {
     color: rgb(32, 18, 160);
 }
+
