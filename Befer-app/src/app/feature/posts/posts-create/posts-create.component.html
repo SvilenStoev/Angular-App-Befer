@@ -1,28 +1,41 @@
-<form class="publication-form">
+<form #createPostForm="ngForm" class="publication-form" (ngSubmit)="createHandler(createPostForm)">
     <h1>Create Post</h1>
     <div>
         <label>Title</label>
-        <input type="text" placeholder="Post title" name="title">
-        <p class="errorText">Test Error</p>
+        <input #title="ngModel" ngModel type="text" placeholder="Post title" name="title" required minlength="{{titleMinLength}}" maxlength="{{titleMaxLength}}">
+        <ng-container *ngIf="title.touched && title.invalid">
+            <p *ngIf="title.errors?.['required']" class="errorText">Title is required!</p>
+            <p *ngIf="title.errors?.['minlength']" class="errorText">Title should be atleast {{titleMinLength}} symbols long!</p>
+            <p *ngIf="title.errors?.['maxlength']" class="errorText">Title should be maximum {{titleMaxLength}} symbols long!</p>
+        </ng-container >
     </div>
     <div>
-        <label>Before" image URL</label>
-        <input type="text" placeholder="Your Before Image Url" name="beforeImgUrl">
-        <p class="errorText">Test Error</p>
+        <label>"Before" image URL</label>
+        <input #beforeImgUrl="ngModel" ngModel type="text" placeholder="Your Before Image Url"  name="beforeImgUrl" required minlength="{{imgUrlMinLength}}">
+        <ng-container *ngIf="beforeImgUrl.touched && beforeImgUrl.invalid">
+            <p *ngIf="beforeImgUrl.errors?.['required']" class="errorText">"Before" image URL is required!</p>
+            <p *ngIf="beforeImgUrl.errors?.['minlength']" class="errorText">"Before" image URL should be atleast {{imgUrlMinLength}} symbols long!</p>
+        </ng-container>
     </div>
     <div>
-        <label>After" image URL</label>
-        <input type="text" placeholder="Your After Image Url" name="afterImgUrl">
-        <p class="errorText">Test Error</p>
+        <label>"After" image URL</label>
+        <input #afterImgUrl="ngModel" ngModel type="text" placeholder="Your After Image Url"  name="afterImgUrl" required minlength="{{imgUrlMinLength}}">
+        <ng-container *ngIf="afterImgUrl.touched && afterImgUrl.invalid">
+            <p *ngIf="afterImgUrl.errors?.['required']" class="errorText">"After" image URL is required!</p>
+            <p *ngIf="afterImgUrl.errors?.['minlength']" class="errorText">"After" image URL should be atleast {{imgUrlMinLength}} symbols long!</p>
+        </ng-container>
     </div>
     <div>
         <label>Description</label>
-        <input type="textarea" placeholder="Some nice description" name="description">
-        <p class="errorText">Test Error</p>
+        <textarea #description="ngModel" ngModel type="text" placeholder="Some nice description" rows="8" name="description" maxlength="{{descriptionMaxLength}}"></textarea>
+        <ng-container *ngIf="description.touched && description.invalid">
+            <p *ngIf="description.errors?.['maxlength']" class="errorText">Title should be maximum {{descriptionMaxLength}} symbols long!</p>
+        </ng-container>
     </div>
     <div class="check">
-        <input type="checkbox" id="check-box" checked="checked" name="checkbox">
-        <label>Public</label>
+        <input #isPublic="ngModel" ngModel="true" type="checkbox" name="isPublic">
+        <label for="isPublic">Public</label>
     </div>
-    <button class="btn" type="submit">Submit</button>
+    <button [disabled]="createPostForm.invalid" class="btn">Submit</button>
+    <button class="btn delete" type="button" (click)="navigateToHome()">Cancel</button>
 </form>

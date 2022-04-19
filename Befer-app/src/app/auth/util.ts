@@ -45,3 +45,19 @@ export function passMissmatchValidator(control: AbstractControl): ValidationErro
 
     return null;
 } 
+
+export function addOwner(record: any, userId: string) {
+    if (userId) {
+        record.owner = createPointer('_User', userId);
+    }
+
+    return record;
+}
+
+export function createPointer(className: string, objectId: string) {
+    return {
+        __type: 'Pointer',
+        className,
+        objectId
+    }
+}

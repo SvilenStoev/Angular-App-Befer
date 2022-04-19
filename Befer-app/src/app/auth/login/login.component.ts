@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { whitespaceValidator } from '../util';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { notifyErr } from 'src/app/shared/notify/notify';
 
 @Component({
   selector: 'app-login',
@@ -37,10 +38,10 @@ export class LoginComponent implements OnInit {
 
       if (usernameMinError) {
         this.usernameSymb = usernameMinError.requiredLength - usernameMinError.actualLength;
-      } else if (usernameMaxError)  {
+      } else if (usernameMaxError) {
         this.usernameSymb = usernameMaxError.actualLength - usernameMaxError.requiredLength;
       }
-      
+
       if (passMinError) {
         this.passwordSymb = passMinError.requiredLength - passMinError.actualLength;
       } else if (passMaxError) {
@@ -50,9 +51,24 @@ export class LoginComponent implements OnInit {
   }
 
   loginHandler(): void {
-    console.log("login");
-    this.userService.login();
-    this.router.navigate(['/home']);
+    const data = this.loginFormGroup.value;
+
+    this.userService.login$(data).subscribe({
+      next: user => {
+        console.log(user);
+        this.router.navigate(['/home']);
+      },
+      complete: () => {
+        console.log('login stream completed')
+      },
+      error: (err) => {
+        this.loginFormGroup.controls['username'].setErrors({'serverErr': true});
+        this.loginFormGroup.controls['password'].setErrors({'serverErr': true});
+        
+        const errMessage = err.error.error;
+        notifyErr(errMessage);
+      }
+    });
   }
 
   showError(controlName: string): boolean {

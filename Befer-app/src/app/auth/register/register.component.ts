@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CreateUserDto, UserService } from 'src/app/services/user.service';
-import { notifySuccess } from 'src/app/shared/notify/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
 
 @Component({
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     'email': new FormControl(null, [Validators.required, emailValidator]),
     'passwords': new FormGroup({
       'password': new FormControl(null, [Validators.required, Validators.minLength(this.passwordMinLength), Validators.maxLength(this.maxLength), whitespaceValidator]),
-      'repeatPass': new FormControl(null, [ Validators.required, passMissmatchValidator ]),
+      'repeatPass': new FormControl(null, [Validators.required, passMissmatchValidator]),
     }),
   });
 
@@ -68,21 +68,35 @@ export class RegisterComponent implements OnInit {
   registerHandler(): void {
     const { email, fullName, passwords, username } = this.registerFormGroup.value;
 
-    const body: CreateUserDto = {
+    const data: CreateUserDto = {
       username: username,
       fullName: fullName,
       email: email,
       password: passwords.password
     }
 
-    this.userService.register$(body).subscribe(data => {
-      this.router.navigate(['/home']);
-      console.log(data);
-      notifySuccess(`User ${username} is created!`);
+    this.userService.register$(data).subscribe({
+      next: user => {
+        console.log(user);
+        notifySuccess(`User ${username} is created!`);
+        this.router.navigate(['/home']);
+      },
+      complete: () => {
+        console.log('login stream completed');
+      },
+      error: (err) => {
+        const code = err.error.code;
+        const errMessage = err.error.error;
+
+        if (code == '202') {
+          this.registerFormGroup.controls['username'].setErrors({'serverErr': true});
+        } else if (code == '203') {
+          this.registerFormGroup.controls['email'].setErrors({'serverErr': true});
+        }
+
+        notifyErr(errMessage);
+      }
     });
-
-    console.log(body);
-
   }
 
   showError(controlName: string, sourceGroup: FormGroup = this.registerFormGroup): boolean {
