@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
 
   loginHandler(): void {
     console.log("login");
-    // this.userService.login();
-    // this.router.navigate(['/home']);
+    this.userService.login();
+    this.router.navigate(['/home']);
   }
 
   showError(controlName: string): boolean {

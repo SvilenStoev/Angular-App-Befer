@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CreateUserDto, UserService } from 'src/app/services/user.service';
+import { notifySuccess } from 'src/app/shared/notify/notify';
 import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
 
 @Component({
@@ -31,7 +34,7 @@ export class RegisterComponent implements OnInit {
     }),
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerFormGroup.valueChanges.subscribe(() => {
@@ -63,7 +66,23 @@ export class RegisterComponent implements OnInit {
   }
 
   registerHandler(): void {
-    console.log('register');
+    const { email, fullName, passwords, username } = this.registerFormGroup.value;
+
+    const body: CreateUserDto = {
+      username: username,
+      fullName: fullName,
+      email: email,
+      password: passwords.password
+    }
+
+    this.userService.register$(body).subscribe(data => {
+      this.router.navigate(['/home']);
+      console.log(data);
+      notifySuccess(`User ${username} is created!`);
+    });
+
+    console.log(body);
+
   }
 
   showError(controlName: string, sourceGroup: FormGroup = this.registerFormGroup): boolean {

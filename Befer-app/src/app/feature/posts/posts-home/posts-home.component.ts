@@ -17,6 +17,5 @@ export class PostsHomeComponent implements OnInit {
     this.postService.loadPosts(5).subscribe(data => {
       this.posts = data.results as IPost[];
     });
-    
   }
 }

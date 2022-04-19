@@ -1,3 +1,31 @@
-h2, h3 {
-    color: red;
+.publications-container {
+  background-color: rgba(128, 128, 128, 0.301);
+  display: flex !important;
+  flex-flow: row wrap !important;
+  position: relative !important;
+  /* flex-basis: auto; */
+}
+
+
+.publications-container>div {
+  /* flex: 0 0 5em; */
+  flex: 0 1 calc(20% - 6px)  !important; /* <-- adjusting for margin */
+  margin: 1.5em  !important;
+  background-color: gray;
+  box-shadow: 2px 2px 1.5em 5px rgba(65, 199, 255, 255);
+
+}
+
+.publications-container>div:hover {
+  box-shadow: 2px 2px 1.5em 5px rgba(255, 199, 44, 255);
+}
+
+.publications-container>div>.info {
+  position: absolute;
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  bottom: 0;
+  background-color: white;
+  box-shadow: 2px 2px 1.5em 2px black;
 }

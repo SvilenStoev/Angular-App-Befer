@@ -4,7 +4,6 @@
         <label for="fullName">First and last name</label>
         <input formControlName="fullName" type="text" placeholder="John Jonsen" name="fullName">
         <ng-container *ngIf="showError('fullName')">
-            {{ registerFormGroup.controls['fullName'].errors | json }}
             <p *ngIf="getValError('fullName', 'required')" class="errorText">Fullname is required!</p>
             <p *ngIf="getValError('fullName', 'minlength')" class="errorText">
                 Fullname should be at least {{ nameMinLength }} symbols! {{ fullNameSymb }} {{ fullNameSymb > 1 ? 'symbols' : 'symbol' }} to go.

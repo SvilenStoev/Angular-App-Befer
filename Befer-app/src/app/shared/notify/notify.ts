@@ -9,10 +9,25 @@ document.body.prepend(div);
 
 //TODO svstoev Implement notify with component
 
-export function notify(message: string, classType: string) {
+export function notifySuccess(message: string) {
     const liItem = document.createElement('li');
     liItem.classList.add('notifications');
-    liItem.classList.add(classType);
+    liItem.classList.add('success');
+    liItem.textContent = message;
+
+    const divEl = document.createElement('div');
+    divEl.textContent = '\u2716';
+    liItem.appendChild(divEl);
+
+    list.appendChild(liItem);
+
+    setTimeout(() => liItem.remove(), 4000);
+}
+
+export function notifyErr(message: string) {
+    const liItem = document.createElement('li');
+    liItem.classList.add('notifications');
+    liItem.classList.add('error');
     liItem.textContent = message;
 
     const divEl = document.createElement('div');

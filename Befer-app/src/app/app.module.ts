@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
     CommonModule,
     RouterModule,
     PagesModule,
+    FormsModule,
     AuthModule,
     SharedModule,
     CoreModule.forRoot(),
