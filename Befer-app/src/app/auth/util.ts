@@ -30,6 +30,16 @@ export function emailValidator(control: AbstractControl): ValidationErrors | nul
     return null;
 }
 
+// export function passValidator(control: AbstractControl): ValidationErrors | null {
+//     const value = control.value;
+
+//     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[#?!@$&]).{6,}$/.test(value)) {
+//         return { passVal: true };
+//     }
+
+//     return null;
+// }
+
 export function passMissmatchValidator(control: AbstractControl): ValidationErrors | null {
     const passGroup = control.parent as FormGroup;
 

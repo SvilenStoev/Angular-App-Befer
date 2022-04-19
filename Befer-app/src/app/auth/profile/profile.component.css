@@ -58,3 +58,26 @@
 .flex select {
     padding: 0.17em 0;
 }
+
+.btn.cancel:hover {
+    background-color: red;
+}
+
+.btn.edit:hover {
+    background-color: blue;
+}
+
+.btn.save:hover {
+    background-color: green;
+}
+
+input {
+    text-decoration: inherit;
+    background-color: transparent;
+    border: none;
+    display: block;
+    border-bottom: 2px solid rgb(7, 1, 31);
+    font-family: system-ui;
+    font-size: 0.9rem;
+    padding: 0.3rem 1.2rem;
+}

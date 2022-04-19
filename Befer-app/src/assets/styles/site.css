@@ -67,7 +67,7 @@ footer {
     padding: 0.5em 1em;
 }
 
-form {
+form:not(.profileForm) {
     max-width: 40em;
     min-width: 15em;
     background-color: rgba(255, 255, 255, 0.904);
@@ -240,4 +240,3 @@ a.btn:hover {
 .registerPath>a {
     color: rgb(32, 18, 160);
 }
-

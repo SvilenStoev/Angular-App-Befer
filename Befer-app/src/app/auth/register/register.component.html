@@ -47,6 +47,9 @@
                 <p *ngIf="getValError('password', 'maxlength', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup)" class="errorText">
                     Password should be maximum {{ maxLength }} symbols! Please remove {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
                 </p>
+                <!-- <p *ngIf="getValError('password', 'passVal', passwordsGroup) && !getValError('password', 'required', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup) && !getValError('password', 'minlength', passwordsGroup)" class="errorText">
+                    Password should contains  .... {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
+                </p> -->
             </ng-container>
         </div>
         <div formGroupName="passwords" class="on-dark">

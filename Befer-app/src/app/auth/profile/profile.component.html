@@ -1,16 +1,46 @@
 <div class="profile"><img src="/assets/images/profile.png" alt="default user">
-    <h3>User Info:</h3>
-    <div class="flex">
-        <p>Username: </p>
-        <p>Johny</p>
-    </div>
-    <div class="flex">
-        <p>Email: </p>
-        <p>john.doe@gmail.com</p>
-    </div>
-    <div class="flex">
-        <p>Phone: </p>
-        <p>+359 885 888 888</p>
-    </div>
-    <button class="btn">Edit</button>
+    <ng-container *ngIf="!isEditMode">
+        <h3>User Info:</h3>
+        <div class="flex">
+            <p>Username: </p>
+            <p>Johny</p>
+        </div>
+        <div class="flex">
+            <p>Full name: </p>
+            <p>Johny Jnonev</p>
+        </div>
+        <div class="flex">
+            <p>Email: </p>
+            <p>john.doe@gmail.com</p>
+        </div>
+        <div class="flex">
+            <p>Profile picture: </p>
+            <p>Something</p>
+        </div>
+        <button (click)="isEditMode = true" class="btn edit">Edit</button>
+    </ng-container>
+
+    <ng-container *ngIf="isEditMode">
+        <form class="profileForm">
+            <h3>Edit User:</h3>
+                <div>
+                    <p>Username: </p>
+                    <input type="text" name="username">
+                </div>
+                <div>
+                    <p>Full name: </p>
+                    <p>Johny Jnonev</p>
+                </div>
+                <div class="flex">
+                    <p>Email: </p>
+                    <p>john.doe@gmail.com</p>
+                </div>
+                <div class="flex">
+                    <p>Profile picture: </p>
+                    <p>Something</p>
+                </div>
+                <button type="button" (click)="isEditMode = false" class="btn cancel">Cancel</button>
+                <button [disabled]="editProfileForm.invalid" class="btn save">Save</button>
+            </form>
+    </ng-container>
 </div>
