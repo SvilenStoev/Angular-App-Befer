@@ -28,7 +28,8 @@
 }
 
 .flex {
-    display: flex;
+    display: -webkit-box;
+    margin: 0.3em;
 }
 
 .flex p:first-child {
@@ -46,9 +47,9 @@
 
 .flex>input,
 .flex>div {
-    width: 55%;
-    text-align: left;
-    margin: .5em;
+    width: 40% !important;
+    text-align: left !important;
+    margin: .1em !important;
 }
 
 .flex>div>input {
@@ -78,6 +79,24 @@ input {
     display: block;
     border-bottom: 2px solid rgb(7, 1, 31);
     font-family: system-ui;
-    font-size: 0.9rem;
-    padding: 0.3rem 1.2rem;
+    font-size: 0.8rem;
 }
+
+input.ng-valid {
+    border-bottom: 3.5px solid #42A948;
+}
+
+.btn {
+    margin: 12px;
+    font-size: 1.2rem;
+    border-radius: 0.3em;
+    padding: 0.1em 0.3em;
+    font-weight: bold;
+    color: black;
+    box-shadow: 2px 2px 5px black;
+}
+
+.btn:disabled {
+    background: #dddddd;
+    cursor: not-allowed;
+  }

@@ -1,46 +1,64 @@
 <div class="profile"><img src="/assets/images/profile.png" alt="default user">
+  <ng-container *ngIf="!!currUser">
     <ng-container *ngIf="!isEditMode">
         <h3>User Info:</h3>
         <div class="flex">
             <p>Username: </p>
-            <p>Johny</p>
+            <p>{{currUser.username}}</p>
         </div>
         <div class="flex">
             <p>Full name: </p>
-            <p>Johny Jnonev</p>
+            <p>{{currUser.fullName}}</p>
         </div>
         <div class="flex">
             <p>Email: </p>
-            <p>john.doe@gmail.com</p>
+            <p>{{currUser.email}}</p>
         </div>
         <div class="flex">
             <p>Profile picture: </p>
             <p>Something</p>
         </div>
-        <button (click)="isEditMode = true" class="btn edit">Edit</button>
+        <button (click)="editHandler()" class="btn edit">Edit</button>
     </ng-container>
 
     <ng-container *ngIf="isEditMode">
-        <form class="profileForm">
+        <form #editProfileForm="ngForm" (ngSubmit)="saveHandler()" class="profileForm">
             <h3>Edit User:</h3>
-                <div>
+                <div class="flex">
                     <p>Username: </p>
-                    <input type="text" name="username">
-                </div>
-                <div>
-                    <p>Full name: </p>
-                    <p>Johny Jnonev</p>
+                    <input #username="ngModel" ngModel required minlength="{{nameMinLength}}" maxlength="{{userNameMaxLength}}" type="text" name="username">
+                    <ng-container *ngIf="username.touched && username.invalid">
+                        <p *ngIf="username.errors?.['required']" class="errorText">Username is required!</p>
+                        <p *ngIf="username.errors?.['minlength'] && !username.errors?.['required']" class="errorText">
+                            Username should be at least {{ nameMinLength }} symbols!
+                        </p>
+                    </ng-container>
                 </div>
                 <div class="flex">
+                    <p>Full name: </p>
+                    <input #fullName="ngModel" ngModel required minlength="{{nameMinLength}}" maxlength="{{maxLength}}" type="text" name="fullName">
+                    <ng-container *ngIf="fullName.touched && fullName.invalid">
+                        <p *ngIf="fullName.errors?.['required']" class="errorText">Fullname is required!</p>
+                        <p *ngIf="fullName.errors?.['minlength'] && !fullName.errors?.['required']" class="errorText">
+                            Fullname should be at least {{ nameMinLength }} symbols!
+                        </p>
+                    </ng-container>
+                </div >
+                <div class="flex">
                     <p>Email: </p>
-                    <p>john.doe@gmail.com</p>
+                    <input #email="ngModel" ngModel required emailValidator type="email" name="email">
+                    <ng-container *ngIf="email.touched && email.invalid">
+                        <p *ngIf="email.errors?.['required']" class="errorText">Email is required!</p>
+                        <p *ngIf="email.errors?.['emailVal'] && !email.errors?.['required']" class="errorText">Email is not valid!</p>
+                    </ng-container>
                 </div>
                 <div class="flex">
                     <p>Profile picture: </p>
-                    <p>Something</p>
+                    <input ngModel type="text" name="profileUrl">
                 </div>
                 <button type="button" (click)="isEditMode = false" class="btn cancel">Cancel</button>
                 <button [disabled]="editProfileForm.invalid" class="btn save">Save</button>
             </form>
     </ng-container>
+  </ng-container>
 </div>

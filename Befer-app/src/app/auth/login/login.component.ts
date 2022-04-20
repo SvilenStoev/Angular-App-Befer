@@ -54,8 +54,7 @@ export class LoginComponent implements OnInit {
     const data = this.loginFormGroup.value;
 
     this.userService.login$(data).subscribe({
-      next: user => {
-        console.log(user);
+      next: () => {
         this.router.navigate(['/home']);
       },
       complete: () => {

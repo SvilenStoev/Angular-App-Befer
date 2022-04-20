@@ -38,4 +38,12 @@ export class UserService {
     return this.api.post<IUser>('/users', userData);
   }
 
+  getProfile(): IUser {
+    //return this.api.get(`/users/${this.currUser.objectId}`);
+
+    return this.currUser;
+  }
+
+
+
 }
