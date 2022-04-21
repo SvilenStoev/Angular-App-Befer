@@ -1,4 +1,4 @@
-<div *ngIf="!!posts; else loadingIndicator">
+<div *ngIf="!!posts">
     <div class="publications-container">
         <div *ngFor="let post of posts">
             <div class="home-image">
@@ -15,8 +15,4 @@
     </div>
 </div>
 
-<ng-template #loadingIndicator>
-    <div>
-        <b>Loading...</b>
-    </div>
-</ng-template>
+<app-spinner [showLoader]="showLoader"></app-spinner>

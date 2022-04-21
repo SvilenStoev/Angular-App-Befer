@@ -9,13 +9,21 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class PostsAllComponent implements OnInit {
 
+  showLoader: boolean = false;
   posts: IPost[];
 
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.postService.loadPosts().subscribe(data => {
-      this.posts = data.results as IPost[];
+    this.showLoader = true;
+
+    this.postService.loadPosts().subscribe({
+      next: (data) => {
+        this.posts = data.results as IPost[];
+      },
+      complete: () => {
+        this.showLoader = false;
+      }
     });
   }
 }

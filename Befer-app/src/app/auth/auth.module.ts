@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailValidatorDirective } from './email-validator.directive';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EmailValidatorDirective } from './email-validator.directive';
     CommonModule,
     AuthRoutingModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
   ]
 })

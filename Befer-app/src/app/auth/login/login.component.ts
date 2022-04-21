@@ -12,6 +12,7 @@ import { notifyErr } from 'src/app/shared/notify/notify';
 })
 export class LoginComponent implements OnInit {
 
+  showLoader: boolean = false;
   usernameSymb: number;
   passwordSymb: number;
   userNameMinLength: number = 4;
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginHandler(): void {
+    this.showLoader = true;
     const data = this.loginFormGroup.value;
 
     this.userService.login$(data).subscribe({
@@ -58,12 +60,12 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       },
       complete: () => {
-        console.log('login stream completed')
+        this.showLoader = false;
       },
       error: (err) => {
-        this.loginFormGroup.controls['username'].setErrors({'serverErr': true});
-        this.loginFormGroup.controls['password'].setErrors({'serverErr': true});
-        
+        this.loginFormGroup.controls['username'].setErrors({ 'serverErr': true });
+        this.loginFormGroup.controls['password'].setErrors({ 'serverErr': true });
+
         const errMessage = err.error.error;
         notifyErr(errMessage);
       }

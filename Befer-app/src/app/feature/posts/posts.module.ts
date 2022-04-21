@@ -6,6 +6,7 @@ import { PostsRoutingModule } from './posts-routing.module';
 import { PostsAllComponent } from './posts-all/posts-all.component';
 import { PostsCreateComponent } from './posts-create/posts-create.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     PostsRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   exports: [
     PostsHomeComponent
