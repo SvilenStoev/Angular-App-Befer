@@ -32,7 +32,11 @@ export class PostService {
   constructor(private api: ApiService, private userService: UserService) { }
 
   loadPosts(limit?: number): Observable<any> {
-    return this.api.get(`${this.postColl}/${limit ? `?limit=${limit}` : ''}`);
+    const publicOptions = JSON.stringify({
+      isPublic: true
+    });
+
+    return this.api.get(`${this.postColl}/?where=${publicOptions}${limit ? `&limit=${limit}` : ''}`);
   }
 
   loadPostById(id: string): Observable<any> {
