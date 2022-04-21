@@ -26,4 +26,8 @@ export class PostsAllComponent implements OnInit {
       }
     });
   }
+
+  sortHandler() {
+    
+  }
 }

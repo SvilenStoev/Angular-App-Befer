@@ -12,6 +12,7 @@ export class PostsHomeComponent implements OnInit {
 
   posts: IPost[];
   limitPosts: number = 5;
+  sortType: string = 'Date';
   showLoader: boolean = false;
 
   constructor(private postService: PostService, private userService: UserService) { }
@@ -21,35 +22,39 @@ export class PostsHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showLoader = true;
-
-    this.postService.loadPosts(this.limitPosts).subscribe({
-      next: (data) => {
-        console.log(this.limitPosts);
-        this.posts = data.results as IPost[];
-      },
-      complete: () => {
-        this.showLoader = false;
-      }
-    });
+    this.loadPosts(this.limitPosts);
   }
 
-  limitPostsHandler(limit: number) {
+  loadPosts(limit: number = this.limitPosts, sort: string = this.sortType) {
+    this.showLoader = true;
     this.limitPosts = limit;
-    this.showLoader = true;
 
     this.postService.loadPosts(this.limitPosts).subscribe({
       next: (data) => {
-        console.log(this.limitPosts);
-        this.posts = data.results as IPost[];
+        if (sort == 'Likes') {
+          this.posts = this.sortByLikes(data.results);
+        } else {
+          this.posts = this.sortByDate(data.results);
+        }
       },
       complete: () => {
         this.showLoader = false;
       }
     });
   }
-  
-  sortHandler() {
 
+  sortByDate(postsArr: IPost[]): IPost[] {
+    postsArr = postsArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+    console.log(postsArr);
+    return postsArr;
   }
+
+  sortByLikes(postsArr: IPost[]): IPost[] {
+    //TODO
+    postsArr = postsArr.sort((a, b) =>  (a.likes ? a.likes?.length : 0) - (b.likes ? a.likes?.length : 0));
+    console.log(postsArr);
+    return postsArr;
+  }
+
+
 }

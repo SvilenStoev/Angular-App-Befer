@@ -2,10 +2,10 @@
     <h1>Top {{limitPosts}} Posts</h1>
     <div class="home-buttons">
         <a *ngIf="isLogged" class="btn btn-home" routerLink="/posts/create">Create Post</a>
-        <a class="btn btn-home" (click)="limitPostsHandler(5)">Top 5 posts</a>
-        <a class="btn btn-home" (click)="limitPostsHandler(10)">Top 10 posts</a>
-        <a class="btn btn-home" (click)="sortHandler()">Sort by Date</a>
-        <a class="btn btn-home" (click)="sortHandler()">Sort by Likes</a>
+        <a class="btn btn-home" (click)="loadPosts(5)">Top 5 posts</a>
+        <a class="btn btn-home" (click)="loadPosts(10)">Top 10 posts</a>
+        <a class="btn btn-home" (click)="loadPosts(limitPosts, 'Date')">Sort by Date</a>
+        <a class="btn btn-home" (click)="loadPosts(limitPosts, 'Likes')">Sort by Likes</a>
     </div>
 </div>
 <div *ngIf="!!posts">
@@ -16,9 +16,10 @@
             </div>
             <div class="info">
                 <h4>{{post.title}}</h4>
+                <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
                 <div class="info-buttons">
-                    <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
-                    <span class="likes">3 likes</span>
+                    <span>{{post.createdAt | date: 'mediumDate' }}</span>
+                    <span class="likes">{{post.likes?.length}} likes</span>
                 </div>
             </div>
         </div>

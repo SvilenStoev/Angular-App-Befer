@@ -31,12 +31,12 @@ export class PostService {
 
   constructor(private api: ApiService, private userService: UserService) { }
 
-  loadPosts(limit?: number): Observable<any> {
-    const publicOptions = JSON.stringify({
+  loadPosts(limit?: number, sort: string = 'createdAt'): Observable<any> {
+    const onlyPublic = JSON.stringify({
       isPublic: true
     });
 
-    return this.api.get(`${this.postColl}/?where=${publicOptions}${limit ? `&limit=${limit}` : ''}`);
+    return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=${sort}${limit ? `&limit=${limit}` : ''}`);
   }
 
   loadPostById(id: string): Observable<any> {

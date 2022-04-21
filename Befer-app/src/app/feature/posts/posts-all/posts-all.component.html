@@ -1,21 +1,26 @@
-<section class="container">
-
-    <div *ngIf="!!posts">
-        <div class="publications-container">
-            <div *ngFor="let post of posts">
-                <div class="home-image">
-                    <img src={{post.beforeImgUrl}} alt="Card image cap">
-                </div>
-                <div class="info">
-                    <h4>{{post.title}}</h4>
-                    <div class="info-buttons">
-                        <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
-                        <span class="likes">3 likes</span>
-                    </div>
+<div class="aux">
+    <h1>All Posts</h1>
+    <div class="home-buttons">
+        <a class="btn btn-home" (click)="sortHandler()">Sort by Date</a>
+        <a class="btn btn-home" (click)="sortHandler()">Sort by Likes</a>
+    </div>
+</div>
+<div *ngIf="!!posts">
+    <div class="publications-container">
+        <div *ngFor="let post of posts">
+            <div class="home-image">
+                <img src={{post.beforeImgUrl}} alt="Card image cap">
+            </div>
+            <div class="info">
+                <h4>{{post.title}}</h4>
+                <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
+                <div class="info-buttons">
+                    <span>{{post.createdAt | date: 'mediumDate' }}</span>
+                    <span class="likes">3 likes</span>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <app-spinner [showLoader]="showLoader"></app-spinner>
-</section>
+<app-spinner [showLoader]="showLoader"></app-spinner>

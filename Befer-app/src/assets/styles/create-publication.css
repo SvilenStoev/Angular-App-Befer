@@ -60,11 +60,12 @@ a.btn-home {
 .info-buttons {
     display: flex;
     justify-content: space-between;
+    margin-top: 12px;
 }
 
 .likes {
     display: block;
-    margin: 0 1em;
+    margin: 0 0.4em;
 }
 
 img.image {
