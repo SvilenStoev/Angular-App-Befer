@@ -30,8 +30,5 @@
         </div>
     </section>
 </div>
-<div *ngIf="!post">
-    <section class="details">
-        <b>Loading...</b>
-    </section>
-</div>
+
+<app-spinner [showLoader]="showLoader"></app-spinner>

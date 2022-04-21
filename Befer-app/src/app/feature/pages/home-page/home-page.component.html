@@ -4,15 +4,5 @@
     <h3 *ngIf="!isLogged">You are not logged in! <a routerLink="/login">Login</a> now to access all features.</h3>
   </section>
   <section class="container">
-    <div class="aux">
-        <h1>Top 5 Posts</h1>
-        <div class="home-buttons"> 
-            <a *ngIf="isLogged" class="btn create-play" routerLink="/posts/create">Create Post</a>
-            <a class="btn create-play" routerLink="/sort">Sort by Date</a>
-            <a class="btn create-play" routerLink="/sort">Sort by Likes</a>
-        </div>
-    </div>
-
       <app-posts-home></app-posts-home>
-
   </section>

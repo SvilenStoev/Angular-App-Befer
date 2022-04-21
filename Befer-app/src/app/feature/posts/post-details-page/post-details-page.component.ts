@@ -11,15 +11,22 @@ import { PostService } from '../../../services/post.service';
 export class PostDetailsPageComponent implements OnInit {
 
   post: IPost;
+  showLoader: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private postService: PostService) { }
-  
+
   ngOnInit(): void {
     const postId = this.activatedRoute.snapshot.params['id'];
+    this.showLoader = true;
 
-    this.postService.loadPostById(postId).subscribe(data => {
-      this.post = data as IPost;
-      console.log(this.post);
+    this.postService.loadPostById(postId).subscribe({
+      next: (data) => {
+        this.post = data as IPost;
+        console.log(this.post);
+      },
+      complete: () => {
+        this.showLoader = false;
+      }
     });
   }
 
