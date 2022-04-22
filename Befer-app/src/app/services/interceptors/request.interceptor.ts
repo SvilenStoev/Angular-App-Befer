@@ -22,13 +22,14 @@ export class RequestInterceptor implements HttpInterceptor {
       }
     });
 
-    if (this.userService.getToken) {
+    const token = this.userService.getToken;
+
+    if (token) {
       req = req.clone({
         setHeaders: {
-          'X-Parse-Session-Token': this.userService.getToken
+          'X-Parse-Session-Token': token
         }
       });
-
     }
 
     return next.handle(req);

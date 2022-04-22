@@ -84,16 +84,13 @@ export class RegisterComponent implements OnInit {
         console.log('login stream completed');
       },
       error: (err) => {
-        const code = err.error.code;
-        const errMessage = err.error.error;
+        const code = err.code;
 
         if (code == '202') {
           this.registerFormGroup.controls['username'].setErrors({'serverErr': true});
         } else if (code == '203') {
           this.registerFormGroup.controls['email'].setErrors({'serverErr': true});
         }
-
-        notifyErr(errMessage);
       }
     });
   }

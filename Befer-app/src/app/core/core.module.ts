@@ -11,6 +11,7 @@ import { ApiService } from '../services/api.service';
 import { SharedModule } from '../shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
+import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,11 @@ export class CoreModule {
           provide: HTTP_INTERCEPTORS,
           multi: true,
           useClass: RequestInterceptor,
+        },
+        {
+          provide: HTTP_INTERCEPTORS,
+          multi: true,
+          useClass: ErrorInterceptor,
         },
       ]
     }

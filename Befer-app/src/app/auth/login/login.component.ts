@@ -62,12 +62,11 @@ export class LoginComponent implements OnInit {
       complete: () => {
         this.showLoader = false;
       },
-      error: (err) => {
+      error: () => {
         this.loginFormGroup.controls['username'].setErrors({ 'serverErr': true });
         this.loginFormGroup.controls['password'].setErrors({ 'serverErr': true });
 
-        const errMessage = err.error.error;
-        notifyErr(errMessage);
+        this.showLoader = false;
       }
     });
   }
