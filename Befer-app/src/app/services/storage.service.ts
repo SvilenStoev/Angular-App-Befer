@@ -28,7 +28,7 @@ export class StorageService {
   }
 
   getUserData(): UserDataDto {
-    return this.getItem('userData');
+    return this.getItem('userData') || null;
   }
 
   clearUserData() {

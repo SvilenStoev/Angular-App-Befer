@@ -19,9 +19,17 @@ export class RequestInterceptor implements HttpInterceptor {
       setHeaders: {
         'X-Parse-Application-Id': environment.application['X-Parse-Application-Id'],
         'X-Parse-REST-API-Key': environment.application['X-Parse-REST-API-Key'],
-        'X-Parse-Session-Token': this.userService.getToken
       }
     });
+
+    if (this.userService.getToken) {
+      req = req.clone({
+        setHeaders: {
+          'X-Parse-Session-Token': this.userService.getToken
+        }
+      });
+
+    }
 
     return next.handle(req);
   };

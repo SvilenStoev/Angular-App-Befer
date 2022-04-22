@@ -21,7 +21,7 @@ export class UserService {
   }
 
   get getToken(): string {
-    return this.storage.getUserData().token;
+    return this.storage.getUserData()?.token;
   }
 
   constructor(private storage: StorageService, private api: ApiService) {
