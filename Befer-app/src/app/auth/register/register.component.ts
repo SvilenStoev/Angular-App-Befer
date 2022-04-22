@@ -76,8 +76,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.userService.register$(data).subscribe({
-      next: user => {
-        console.log(user);
+      next: () => {
         notifySuccess(`User ${username} is created!`);
         this.router.navigate(['/home']);
       },

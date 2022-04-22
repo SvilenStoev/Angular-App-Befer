@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserDataDto } from './user.service';
 
 @Injectable()
 export class StorageService {
@@ -9,7 +10,7 @@ export class StorageService {
     this.localStorage.setItem(key, str);
     return item;
   }
-  
+
   getItem<T>(key: string): T {
     let item;
     const tmp = this.localStorage.getItem(key);
@@ -21,4 +22,17 @@ export class StorageService {
     }
     return item;
   }
+
+  setUserData(userData: UserDataDto) {
+    this.setItem('userData', userData);
+  }
+
+  getUserData(): UserDataDto {
+    return this.getItem('userData');
+  }
+
+  clearUserData() {
+    localStorage.removeItem('userData');
+  }
+
 }

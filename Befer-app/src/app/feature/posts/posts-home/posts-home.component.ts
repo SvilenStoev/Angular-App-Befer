@@ -50,11 +50,9 @@ export class PostsHomeComponent implements OnInit {
   }
 
   sortByLikes(postsArr: IPost[]): IPost[] {
-    //TODO
+    //TODO doesn't work as expected
     postsArr = postsArr.sort((a, b) =>  (a.likes ? a.likes?.length : 0) - (b.likes ? a.likes?.length : 0));
     console.log(postsArr);
     return postsArr;
   }
-
-
 }

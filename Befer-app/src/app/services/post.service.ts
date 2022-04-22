@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { addOwner } from '../auth/util';
 import { IPost } from '../interfaces';
 import { ApiService } from './api.service';
@@ -9,7 +9,7 @@ export interface CreatePostDto {
   afterImgUrl: string,
   beforeImgUrl: string,
   description: string,
-  title: string, 
+  title: string,
   isPublic: boolean,
   owner: CreateOwnerDto
 }
@@ -44,10 +44,14 @@ export class PostService {
   }
 
   createPost$(postData: CreatePostDto): Observable<IPost> {
-    const userId = this.userService.currUser.objectId;
+    const userId = this.userService.userId;
 
     addOwner(postData, userId);
 
-    return this.api.post<IPost>(this.postColl, postData);
+    return this.api
+      .post<IPost>(this.postColl, postData)
+      .pipe(
+        map(response => response.body));
   }
 }
+

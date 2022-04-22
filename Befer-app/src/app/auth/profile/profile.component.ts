@@ -17,13 +17,19 @@ export class ProfileComponent implements OnInit {
   passwordMinLength: number = 6;
   maxLength: number = 20;
 
-
   @ViewChild('editProfileForm') editProfileForm: NgForm;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.currUser = this.userService.getProfile();
+    this.userService.getProfile$().subscribe({
+      next: (user) => {
+        this.currUser = user;
+      },
+      complete: () => {
+        
+      }
+    });
 
     setTimeout(() => {
       console.log(this.currUser);

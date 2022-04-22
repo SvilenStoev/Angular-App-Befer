@@ -28,11 +28,10 @@ export class PostsCreateComponent implements OnInit {
       data.isPublic = true;
     }
 
-    const result = this.postService.createPost$(data).subscribe({
+    this.postService.createPost$(data).subscribe({
       next: (post) => {
-        console.log(post);
         notifySuccess('The post is created!');
-        this.router.navigate([`/details/${post}`]);
+        this.router.navigate([`posts/details/${post.objectId}`]);
       },
       error: (err) => {
         const errMessage = err.error.error;

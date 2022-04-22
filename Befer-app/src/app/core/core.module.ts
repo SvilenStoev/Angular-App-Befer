@@ -8,6 +8,9 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PostService } from '../services/post.service';
 import { ApiService } from '../services/api.service';
+import { SharedModule } from '../shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestInterceptor } from '../services/interceptors/request.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import { ApiService } from '../services/api.service';
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports: [
     HeaderComponent,
@@ -33,7 +37,12 @@ export class CoreModule {
         UserService,
         StorageService,
         PostService,
-        ApiService
+        ApiService,
+        {
+          provide: HTTP_INTERCEPTORS,
+          multi: true,
+          useClass: RequestInterceptor,
+        },
       ]
     }
   }
