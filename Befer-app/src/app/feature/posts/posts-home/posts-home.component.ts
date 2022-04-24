@@ -25,16 +25,16 @@ export class PostsHomeComponent implements OnInit {
     this.loadPosts(this.limitPosts);
   }
 
-  loadPosts(limit: number = this.limitPosts, sort: string = this.sortType) {
+  loadPosts(limit: number) {
     this.showLoader = true;
     this.limitPosts = limit;
 
     this.postService.loadPosts(this.limitPosts).subscribe({
       next: (data) => {
-        if (sort == 'Likes') {
-          this.posts = this.sortByLikes(data.results);
+        if (this.sortType == 'Likes') {
+          this.sortByLikes(data.results);
         } else {
-          this.posts = this.sortByDate(data.results);
+          this.sortByDate(data.results);
         }
       },
       complete: () => {
@@ -43,16 +43,13 @@ export class PostsHomeComponent implements OnInit {
     });
   }
 
-  sortByDate(postsArr: IPost[]): IPost[] {
-    postsArr = postsArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-    console.log(postsArr);
-    return postsArr;
+  sortByDate(postsArr: IPost[]): void {
+    this.sortType = 'Date';
+    this.posts = postsArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
   }
 
-  sortByLikes(postsArr: IPost[]): IPost[] {
-    //TODO doesn't work as expected
-    postsArr = postsArr.sort((a, b) =>  (a.likes ? a.likes?.length : 0) - (b.likes ? a.likes?.length : 0));
-    console.log(postsArr);
-    return postsArr;
+  sortByLikes(postsArr: IPost[]): void {
+    this.sortType = 'Likes';
+    this.posts = postsArr.sort((a, b) => b.likes.length - a.likes.length);
   }
 }

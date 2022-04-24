@@ -226,6 +226,7 @@ a.btn:hover {
     color: white;
 }
 
+
 .btn:disabled {
     background: #dddddd;
     cursor: not-allowed;

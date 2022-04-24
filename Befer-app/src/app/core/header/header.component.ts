@@ -40,8 +40,7 @@ export class HeaderComponent {
         this.isLoggingOut = false;
         this.showLoader = false;
 
-        const errMessage = err.error.error;
-        notifyErr(errMessage);
+        notifyErr(err.message);
       }
     });
   }
