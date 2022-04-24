@@ -1,26 +1,32 @@
-<div class="aux">
-    <h1>All Posts</h1>
-    <div class="home-buttons">
-        <a class="btn btn-home" (click)="sortHandler()">Sort by Date</a>
-        <a class="btn btn-home" (click)="sortHandler()">Sort by Likes</a>
+<section class="container">
+    <div class="aux">
+        <h1>All Posts | Sorted by {{sortType}}</h1>
+        <div class="home-buttons">
+            <ng-container *ngIf="sortType == 'Likes'">
+                <a class="btn btn-home" (click)="sortByDate(posts)">Sort by Date</a>
+            </ng-container>
+            <ng-container *ngIf="sortType == 'Date'">
+                <a class="btn btn-home" (click)="sortByLikes(posts)">Sort by Likes</a>
+            </ng-container>
+        </div>
     </div>
-</div>
-<div *ngIf="!!posts">
-    <div class="publications-container">
-        <div *ngFor="let post of posts">
-            <div class="home-image">
-                <img src={{post.beforeImgUrl}} alt="Card image cap">
-            </div>
-            <div class="info">
-                <h4>{{post.title}}</h4>
-                <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
-                <div class="info-buttons">
-                    <span>{{post.createdAt | date: 'mediumDate' }}</span>
-                    <span class="likes">3 likes</span>
+    <div *ngIf="!!posts">
+        <div class="publications-container">
+            <div *ngFor="let post of posts">
+                <div class="home-image">
+                    <img src={{post.beforeImgUrl}} alt="Card image cap">
+                </div>
+                <div class="info">
+                    <h4>{{post.title}}</h4>
+                    <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
+                    <div class="info-buttons">
+                        <span>{{post.createdAt | date: 'mediumDate' }}</span>
+                        <span class="likes">{{post.likes.length}} likes</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <app-spinner [showLoader]="showLoader"></app-spinner>

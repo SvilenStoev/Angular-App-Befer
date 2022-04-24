@@ -12,6 +12,7 @@ import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../
 })
 export class RegisterComponent implements OnInit {
 
+  showLoader: boolean = false;
   usernameSymb: number;
   fullNameSymb: number;
   passwordSymb: number;
@@ -75,13 +76,15 @@ export class RegisterComponent implements OnInit {
       password: passwords.password
     }
 
+    this.showLoader = true;
+
     this.userService.register$(data).subscribe({
       next: () => {
-        notifySuccess(`User ${username} is created!`);
         this.router.navigate(['/home']);
+        notifySuccess(`User ${username} is created successfully.`);
       },
       complete: () => {
-        console.log('login stream completed');
+        this.showLoader = false;
       },
       error: (err) => {
         const code = err.code;

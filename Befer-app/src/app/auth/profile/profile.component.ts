@@ -30,10 +30,6 @@ export class ProfileComponent implements OnInit {
         
       }
     });
-
-    setTimeout(() => {
-      console.log(this.currUser);
-    })
   }
 
   editHandler(): void {

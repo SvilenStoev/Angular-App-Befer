@@ -8,18 +8,29 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./posts-all.component.css']
 })
 export class PostsAllComponent implements OnInit {
-
-  showLoader: boolean = false;
+  
   posts: IPost[];
+  limitPosts: number = 8;
+  sortType: string = 'Date';
+  showLoader: boolean = false;
 
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.showLoader = true;
+    this.loadPosts(this.limitPosts);
+  }
 
-    this.postService.loadPosts().subscribe({
+  loadPosts(limit: number) {
+    this.showLoader = true;
+    this.limitPosts = limit;
+
+    this.postService.loadPosts(this.limitPosts).subscribe({
       next: (data) => {
-        this.posts = data.results as IPost[];
+        if (this.sortType == 'Likes') {
+          this.sortByLikes(data.results);
+        } else {
+          this.sortByDate(data.results);
+        }
       },
       complete: () => {
         this.showLoader = false;
@@ -27,7 +38,13 @@ export class PostsAllComponent implements OnInit {
     });
   }
 
-  sortHandler() {
-    
+  sortByDate(postsArr: IPost[]): void {
+    this.sortType = 'Date';
+    this.posts = postsArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  }
+
+  sortByLikes(postsArr: IPost[]): void {
+    this.sortType = 'Likes';
+    this.posts = postsArr.sort((a, b) => b.likes.length - a.likes.length);
   }
 }

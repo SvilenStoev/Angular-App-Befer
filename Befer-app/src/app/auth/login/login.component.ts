@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { whitespaceValidator } from '../util';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { notifyErr } from 'src/app/shared/notify/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({
   selector: 'app-login',
@@ -58,6 +58,7 @@ export class LoginComponent implements OnInit {
     this.userService.login$(data).subscribe({
       next: () => {
         this.router.navigate(['/home']);
+        notifySuccess('Logged in successfully.');
       },
       complete: () => {
         this.showLoader = false;

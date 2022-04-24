@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
-import { notifyErr } from 'src/app/shared/notify/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -35,6 +35,7 @@ export class HeaderComponent {
 
         this.storage.clearUserData();
         this.router.navigate(['/home']);
+        notifySuccess('You have successfully logged out.');
       },
       error: (err) => {
         this.isLoggingOut = false;

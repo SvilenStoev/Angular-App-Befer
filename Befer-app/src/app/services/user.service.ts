@@ -10,8 +10,6 @@ export interface UserDataDto { username: string, id: string, token: string }
 @Injectable()
 export class UserService {
 
-  currUser: IUser;
-
   get isLogged() {
     return !!this.storage.getUserData();
   }
@@ -41,7 +39,6 @@ export class UserService {
           };
 
           this.storage.setUserData(userData);
-          this.currUser = user;
         })
       );
   }
@@ -63,7 +60,6 @@ export class UserService {
           };
 
           this.storage.setUserData(userData);
-          this.currUser = user;
         })
       );
   }
