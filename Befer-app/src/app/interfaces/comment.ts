@@ -8,7 +8,7 @@ export interface IComment extends IBase {
         objectId: string
     },
     publication: {
-        __type: string
+        __type: "Pointer"
         className: "Publication",
         objectId: string;
     },

@@ -1,0 +1,15 @@
+<div class="container" *ngIf="comments">
+    <section class="details">
+        <div *ngFor="let comment of comments">
+                <h3>{{comment.publication.className}}</h3>
+                <p>{{comment.content}}</p>
+                <p><span>{{comment.createdAt | createdBefore}}</span></p>
+                <p><span>{{now | date: 'medium'}}</span></p>
+                <p><span>{{comment.createdAt | date: 'medium'}}</span></p>
+        </div>
+        <div *ngIf="comments.length === 0">No comment for this post!</div>
+    </section>
+</div>
+<div *ngIf="!comments">
+    Loading...
+</div>

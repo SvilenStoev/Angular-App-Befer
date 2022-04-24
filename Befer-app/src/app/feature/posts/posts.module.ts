@@ -7,6 +7,7 @@ import { PostsAllComponent } from './posts-all/posts-all.component';
 import { PostsCreateComponent } from './posts-create/posts-create.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     PostDetailsPageComponent,
     PostsAllComponent,
     PostsCreateComponent,
+    CommentsComponent,
   ],
   imports: [
     CommonModule,
