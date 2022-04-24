@@ -25,7 +25,6 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     PagesModule,
     FormsModule,
-    AuthModule,
     SharedModule,
     CoreModule.forRoot(),
     AppRoutingModule,

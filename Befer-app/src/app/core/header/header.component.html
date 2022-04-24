@@ -6,13 +6,13 @@
             <li><a routerLink="/posts/all">All Posts</a></li>
             <li><a routerLink="/myPosts">My Posts</a></li>
             <li><a routerLink="/posts/create">Create Post</a></li>
-            <li><a routerLink="/profile">Profile</a></li>
+            <li><a routerLink="/user/profile">Profile</a></li>
             <li><a href="javascript:void(0)" (click)="logoutHandler()">Logout</a></li>
         </ng-container>
         <ng-container *ngIf="!isLogged">
             <li><a routerLink="/posts/all">All Posts</a></li>
-            <li><a routerLink="/login">Login</a></li>
-            <li><a routerLink="/register">Register</a></li>
+            <li><a routerLink="/user/login">Login</a></li>
+            <li><a routerLink="/user/register">Register</a></li>
         </ng-container>
     </ul>
 </nav>
