@@ -35,7 +35,6 @@ export class ProfileComponent implements OnInit {
   editHandler(): void {
     this.isEditMode = true;
 
-    
     setTimeout(() => {
       this.editProfileForm.form.patchValue({
         email: this.currUser.email,

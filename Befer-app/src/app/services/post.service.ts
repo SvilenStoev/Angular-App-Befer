@@ -23,7 +23,6 @@ export interface CreateOwnerDto {
   email: string
 }
 
-
 @Injectable()
 export class PostService {
 
@@ -36,7 +35,7 @@ export class PostService {
       isPublic: true
     });
 
-    return this.api.get(`${this.postColl}/?where=${onlyPublic}${limit ? `&limit=${limit}` : ''}`);
+    return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=-createdAt${limit ? `&limit=${limit}` : ''}`);
   }
 
   loadMyPosts(limit: number, userId: string): Observable<any> {
@@ -60,6 +59,17 @@ export class PostService {
       .post<IPost>(this.postColl, postData)
       .pipe(
         map(response => response.body));
+  }
+
+  editPost$(postData: CreatePostDto, id: string): Observable<IPost> {
+    return this.api
+      .put<IPost>(`${this.postColl}/${id}`, postData)
+      .pipe(
+        map(response => response.body));
+  }
+
+  deletePost(id: string): Observable<any> {
+    return this.api.delete(`${this.postColl}/${id}`);
   }
 
   updateLikesByPostId$(newLikesData: string[], postId: string): Observable<any> {

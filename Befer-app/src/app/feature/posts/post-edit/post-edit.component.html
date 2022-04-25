@@ -1,0 +1,43 @@
+<form #editPostForm="ngForm" class="publication-form" (ngSubmit)="editHandler(editPostForm)">
+    <h1>Edit Post</h1>
+    <div>
+        <label>Title</label>
+        <input #title="ngModel" ngModel type="text" placeholder="Post title" name="title" required minlength="{{titleMinLength}}" maxlength="{{titleMaxLength}}">
+        <ng-container *ngIf="title.touched && title.invalid">
+            <p *ngIf="title.errors?.['required']" class="errorText">Title is required!</p>
+            <p *ngIf="title.errors?.['minlength']" class="errorText">Title should be atleast {{titleMinLength}} symbols long!</p>
+            <p *ngIf="title.errors?.['maxlength']" class="errorText">Title should be maximum {{titleMaxLength}} symbols long!</p>
+        </ng-container >
+    </div>
+    <div>
+        <label>"Before" image URL</label>
+        <input #beforeImgUrl="ngModel" ngModel type="text" placeholder="Your Before Image Url"  name="beforeImgUrl" required minlength="{{imgUrlMinLength}}">
+        <ng-container *ngIf="beforeImgUrl.touched && beforeImgUrl.invalid">
+            <p *ngIf="beforeImgUrl.errors?.['required']" class="errorText">"Before" image URL is required!</p>
+            <p *ngIf="beforeImgUrl.errors?.['minlength']" class="errorText">"Before" image URL should be atleast {{imgUrlMinLength}} symbols long!</p>
+        </ng-container>
+    </div>
+    <div>
+        <label>"After" image URL</label>
+        <input #afterImgUrl="ngModel" ngModel type="text" placeholder="Your After Image Url"  name="afterImgUrl" required minlength="{{imgUrlMinLength}}">
+        <ng-container *ngIf="afterImgUrl.touched && afterImgUrl.invalid">
+            <p *ngIf="afterImgUrl.errors?.['required']" class="errorText">"After" image URL is required!</p>
+            <p *ngIf="afterImgUrl.errors?.['minlength']" class="errorText">"After" image URL should be atleast {{imgUrlMinLength}} symbols long!</p>
+        </ng-container>
+    </div>
+    <div>
+        <label>Description</label>
+        <textarea #description="ngModel" ngModel type="text" placeholder="Some nice description" rows="8" name="description" maxlength="{{descriptionMaxLength}}"></textarea>
+        <ng-container *ngIf="description.touched && description.invalid">
+            <p *ngIf="description.errors?.['maxlength']" class="errorText">Title should be maximum {{descriptionMaxLength}} symbols long!</p>
+        </ng-container>
+    </div>
+    <div class="check">
+        <input #isPublic="ngModel" ngModel type="checkbox" name="isPublic">
+        <label for="isPublic">Public</label>
+    </div>
+    <button [disabled]="editPostForm.invalid" class="btn">Submit</button>
+    <button class="btn delete" type="button" (click)="navigateBack()">Cancel</button>
+</form>
+
+<app-spinner [showLoader]="showLoader"></app-spinner>

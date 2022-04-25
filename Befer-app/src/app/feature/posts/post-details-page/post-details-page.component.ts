@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPost } from 'src/app/interfaces';
+import { TransferService } from 'src/app/services/transfer.service';
 import { UserService } from 'src/app/services/user.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 import { PostService } from '../../../services/post.service';
@@ -17,12 +18,14 @@ export class PostDetailsPageComponent implements OnInit {
   isOwner: boolean = false;
   isLiked: boolean = false;
   userId: string = this.userService.userId;
+  postId: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private postService: PostService,
     private userService: UserService,
-    private router: Router) { }
+    private router: Router,
+    private transferData: TransferService) { }
 
   ngOnInit(): void {
     const postId = this.activatedRoute.snapshot.params['id'];
@@ -33,11 +36,13 @@ export class PostDetailsPageComponent implements OnInit {
         this.post = data as IPost;
         this.isOwner = this.post.owner.objectId == this.userId;
         this.isLiked = this.post.likes.includes(this.userId);
-        console.log(this.post);
-        console.log(this.isLiked);
-        console.log(this.isOwner);
+        this.postId = this.post.objectId;
+        this.transferData.setData(this.post);
       },
       complete: () => {
+        this.showLoader = false;
+      },
+      error: () => {
         this.showLoader = false;
       }
     });
@@ -54,11 +59,18 @@ export class PostDetailsPageComponent implements OnInit {
     if (choise) {
       this.showLoader = true;
 
-      this.showLoader = false;
-
-      notifySuccess('The post was deleted successfully!');
-
-      this.router.navigate(['/home']);
+      this.postService.deletePost(this.postId).subscribe({
+        next: () => {
+          notifySuccess('The post was deleted successfully!');
+          this.router.navigate(['/posts/mine']);
+        },
+        complete: () => {
+          this.showLoader = false;
+        },
+        error: () => {
+          this.showLoader = false;
+        }
+      });
     }
   }
 
@@ -69,7 +81,7 @@ export class PostDetailsPageComponent implements OnInit {
     this.post.likes.push(this.userId);
     const newLikesArr = this.post.likes;
 
-    this.postService.updateLikesByPostId$(newLikesArr, this.post.objectId).subscribe({
+    this.postService.updateLikesByPostId$(newLikesArr, this.postId).subscribe({
       next: () => {
         this.isLiked = true;
       },
@@ -94,11 +106,11 @@ export class PostDetailsPageComponent implements OnInit {
     } else {
       return notifyErr('Something went wrong!');
     }
-    
+
     const newLikesArr = this.post.likes;
     this.showLoader = true;
 
-    this.postService.updateLikesByPostId$(newLikesArr, this.post.objectId).subscribe({
+    this.postService.updateLikesByPostId$(newLikesArr, this.postId).subscribe({
       next: () => {
         this.isLiked = false;
       },

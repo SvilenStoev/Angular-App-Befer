@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
 import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
+import { TransferService } from '../services/transfer.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ export class CoreModule {
         StorageService,
         PostService,
         ApiService,
+        TransferService,
         {
           provide: HTTP_INTERCEPTORS,
           multi: true,

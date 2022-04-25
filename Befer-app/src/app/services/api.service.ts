@@ -21,4 +21,8 @@ export class ApiService {
   put<T>(url: string, body: any = {}): Observable<any> {
     return this.http.put<T>(this.hostname + url, body, { observe: 'response' });
   }
+
+  delete(url: string): Observable<any> {
+    return this.http.delete(this.hostname + url);
+  }
 }

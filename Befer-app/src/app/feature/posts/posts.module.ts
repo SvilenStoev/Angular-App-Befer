@@ -8,6 +8,7 @@ import { PostsCreateComponent } from './posts-create/posts-create.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommentsComponent } from './comments/comments.component';
+import { PostEditComponent } from './post-edit/post-edit.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CommentsComponent } from './comments/comments.component';
     PostsAllComponent,
     PostsCreateComponent,
     CommentsComponent,
+    PostEditComponent,
   ],
   imports: [
     CommonModule,
