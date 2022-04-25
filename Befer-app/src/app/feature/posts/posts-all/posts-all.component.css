@@ -29,3 +29,9 @@
   background-color: white;
   box-shadow: 2px 2px 1.5em 2px black;
 }
+
+h3 {
+  text-align: center;
+  margin-top: 3em;
+  margin-bottom: 2em;
+}

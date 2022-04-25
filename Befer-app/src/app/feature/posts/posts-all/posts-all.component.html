@@ -11,7 +11,7 @@
         </div>
     </div>
     <div *ngIf="!!posts">
-        <div class="publications-container">
+        <div *ngIf="posts.length != 0" class="publications-container">
             <div *ngFor="let post of posts">
                 <div class="home-image">
                     <img src={{post.beforeImgUrl}} alt="Card image cap">
@@ -28,13 +28,17 @@
                         <span>{{post.createdAt | date: 'mediumDate' }}</span>
                         <ng-container *ngIf="isMyPosts">
                             <b>
-                                <span [ngClass]="{'status-private': !post.isPublic, 'status-public': post.isPublic}">| {{post.isPublic ? 'Public' : 'Private'}} |</span>
+                                <span [ngClass]="{'status-private': !post.isPublic, 'status-public': post.isPublic}">|
+                                    {{post.isPublic ? 'Public' : 'Private'}} |</span>
                             </b>
                         </ng-container>
                         <span class="likes">{{post.likes.length}} likes</span>
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="posts.length == 0">
+            <h3>You don't have any posts yet! Why not <a [routerLink]="['/posts/create']">create</a> one?</h3>
         </div>
     </div>
 </section>

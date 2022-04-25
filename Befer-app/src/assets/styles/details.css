@@ -20,6 +20,10 @@ section.details {
     background-color: green;
 }
 
+.btn.dislike:hover {
+    background-color: red;
+}
+
 .textCenter {
     text-align: center;
 }
@@ -32,11 +36,27 @@ section.details {
     margin-bottom: 20px;
 }
 
-.textCenter>img{
+.textCenter>img:not(.befer-logo) {
     max-height: 25em;
     max-width: 25em;
+    min-height: 15em;
+    min-width: 15em;
     border-style: groove;
     border-color: black;
-    box-shadow: 2px 2px 1em 5px rgba(65,199,255,255);
+    box-shadow: 2px 2px 1em 5px rgba(65, 199, 255, 255);
 }
 
+.befer-logo {
+    max-height: 4em;
+    max-width: 4em;
+    min-height: 4em;
+    min-width: 4em;
+}
+
+.textCenter>i {
+    font-size: 3em;
+}
+
+.liked {
+    margin-left: 1em;
+}

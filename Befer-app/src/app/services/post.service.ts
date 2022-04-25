@@ -61,5 +61,18 @@ export class PostService {
       .pipe(
         map(response => response.body));
   }
+
+  updateLikesByPostId$(newLikesData: string[], postId: string): Observable<any> {
+    const body = {
+      "likes": newLikesData
+    }
+
+    console.log(body);
+
+    return this.api
+      .put<any>(`${this.postColl}/${postId}`, body)
+      .pipe(
+        map(response => response.body));
+  }
 }
 

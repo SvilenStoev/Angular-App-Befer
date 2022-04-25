@@ -3,20 +3,27 @@
         <h1 class="margin-b20"><i>Post title:</i> {{post.title}}</h1>
         <div class="textCenter">
             <img src={{post.beforeImgUrl}} />
+            <img class="befer-logo" src="../../../../assets/images/Befer_spinner.png" />
             <img src={{post.afterImgUrl}} />
         </div>
         <div class="margin-t20">
             <hr style="width:500px; margin: auto;">
         </div>
         <div class="textCenter margin-t20">
-            <h3>Post Description</h3>
-            <p>{{post.description}}</p>
+            <ng-container *ngIf="post.description">
+                <h3>Post Description</h3>
+                <p>{{post.description}}</p>
+            </ng-container>
             <div class="buttons">
-
-                <a class="btn delete" href="#">Delete</a>
-                <a class="btn edit" [routerLink]="['/post/edit', post.objectId]">Edit</a>
-                <!-- <span class="liked">You have already liked this post!</span> -->
-                <a class="btn like" [routerLink]="['/like', post.objectId]">Like</a>
+                <ng-container *ngIf="isOwner">
+                    <a class="btn delete" href="#">Delete</a>
+                    <a class="btn edit" [routerLink]="['/post/edit', post.objectId]">Edit</a>
+                </ng-container>
+                <a href="javascript:void(0)" (click)="likeHandler()" *ngIf="!isLiked && !isOwner" class="btn like">Like</a>
+                <ng-container *ngIf="isLiked && !isOwner">
+                    <a href="javascript:void(0)" (click)="dislikeHandler()" class="btn dislike">Dislike</a>
+                    <span class="liked">You liked this post!</span>
+                </ng-container>
             </div>
         </div>
     </section>

@@ -15,7 +15,7 @@ export class UserService {
   }
 
   get userId(): string {
-    return this.storage.getUserData().id;
+    return this.storage.getUserData()?.id;
   }
 
   get getToken(): string {

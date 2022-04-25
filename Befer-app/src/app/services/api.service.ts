@@ -14,7 +14,11 @@ export class ApiService {
     return this.http.get(this.hostname + url);
   }
 
-  post<T>(url: string, data: any = {}): Observable<any> {
-    return this.http.post<T>(this.hostname + url, data, { observe: 'response' });
+  post<T>(url: string, body: any = {}): Observable<any> {
+    return this.http.post<T>(this.hostname + url, body, { observe: 'response' });
+  }
+
+  put<T>(url: string, body: any = {}): Observable<any> {
+    return this.http.put<T>(this.hostname + url, body, { observe: 'response' });
   }
 }
