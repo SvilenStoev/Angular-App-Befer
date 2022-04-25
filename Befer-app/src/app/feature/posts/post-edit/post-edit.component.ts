@@ -4,7 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IPost } from 'src/app/interfaces';
 import { PostService } from 'src/app/services/post.service';
 import { TransferService } from 'src/app/services/transfer.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { notifySuccess } from 'src/app/shared/notify/notify';
+import { postConsts } from 'src/app/shared/constants';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-post-edit',
@@ -12,10 +15,9 @@ import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
   styleUrls: ['./post-edit.component.css']
 })
 export class PostEditComponent implements OnInit {
-  titleMinLength: number = 4;
-  titleMaxLength: number = 50;
-  imgUrlMinLength: number = 10;
-  descriptionMaxLength: number = 450;
+  titleMinLength: number = postConsts.titleMinLength;
+  titleMaxLength: number = postConsts.titleMaxLength;
+  descriptionMaxLength: number = postConsts.descriptionMaxLength;
 
   showLoader: boolean = false;
   postId: string;
@@ -27,9 +29,12 @@ export class PostEditComponent implements OnInit {
     private router: Router,
     private postService: PostService,
     private activatedRoute: ActivatedRoute,
-    private transferService: TransferService) { }
+    private transferService: TransferService,
+    private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`${environment.appName} | Edit Post`);
+
     this.postId = this.activatedRoute.snapshot.params['id'];
 
     setTimeout(() => {

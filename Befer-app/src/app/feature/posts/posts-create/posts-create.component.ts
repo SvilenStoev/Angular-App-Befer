@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostService } from 'src/app/services/post.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { notifySuccess } from 'src/app/shared/notify/notify';
+import { postConsts } from 'src/app/shared/constants';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-posts-create',
@@ -10,18 +13,22 @@ import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
   styleUrls: ['./posts-create.component.css']
 })
 export class PostsCreateComponent implements OnInit {
+  titleMinLength: number = postConsts.titleMinLength;
+  titleMaxLength: number = postConsts.titleMaxLength;
+  descriptionMaxLength: number = postConsts.descriptionMaxLength;
+  showLoader: boolean = false;
 
-  titleMinLength: number = 4;
-  titleMaxLength: number = 50;
-  imgUrlMinLength: number = 10;
-  descriptionMaxLength: number = 450;
-
-  constructor(private router: Router, private postService: PostService) { }
+  constructor(
+    private router: Router, 
+    private postService: PostService,
+    private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`${environment.appName} | Posts Create`);
   }
 
   createHandler(createPostForm: NgForm): void {
+    this.showLoader = true;
     const data = createPostForm.value;
 
     if (data.isPublic == 'true') {
@@ -33,9 +40,11 @@ export class PostsCreateComponent implements OnInit {
         notifySuccess('The post is created!');
         this.router.navigate([`posts/details/${post.objectId}`]);
       },
-      error: (err) => {
-        const errMessage = err.error.error;
-        notifyErr(errMessage);
+      complete: () => {
+        this.showLoader = false;
+      },
+      error: () => {
+        this.showLoader = false;
       }
     });
   }

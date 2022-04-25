@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -12,9 +14,9 @@ export class HomePageComponent implements OnInit {
     return this.userService.isLogged;
   }
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private titleService: Title) { }
 
   ngOnInit(): void {
-    
+    this.titleService.setTitle(`${environment.appName} | Home`);
   }
 }

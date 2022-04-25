@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { whitespaceValidator } from '../util';
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { whitespaceValidator } from '../util';
+import { userConsts } from 'src/app/shared/constants';
 import { UserService } from '../../services/user.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { environment } from 'src/environments/environment';
+import { notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +16,13 @@ import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 })
 export class LoginComponent implements OnInit {
 
-  showLoader: boolean = false;
   usernameSymb: number;
   passwordSymb: number;
-  userNameMinLength: number = 4;
-  userNameMaxLength: number = 16;
-  passwordMinLength: number = 6;
-  passwordMaxLength: number = 20;
+  showLoader: boolean = false;
+  userNameMinLength: number = userConsts.userNameMinLength;
+  userNameMaxLength: number = userConsts.userNameMaxLength;
+  passwordMinLength: number = userConsts.passwordMinLength;
+  passwordMaxLength: number = userConsts.passwordMaxLength;
 
   loginFormGroup: FormGroup = this.formBuilder.group({
     'username': new FormControl(null, [Validators.required, Validators.minLength(this.userNameMinLength), Validators.maxLength(this.userNameMaxLength), whitespaceValidator]),
@@ -28,9 +32,12 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`${environment.appName} | Login`);
+
     this.loginFormGroup.valueChanges.subscribe(() => {
       const usernameMinError = this.getValError('username', 'minlength');
       const usernameMaxError = this.getValError('username', 'maxlength');

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { IPost } from 'src/app/interfaces';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-posts-all',
@@ -17,9 +19,15 @@ export class PostsAllComponent implements OnInit {
   showLoader: boolean = false;
   isMyPosts: boolean = false;
 
-  constructor(private postService: PostService, private router: Router, private userService: UserService) { }
+  constructor(
+    private postService: PostService, 
+    private router: Router, 
+    private userService: UserService,
+    private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`${environment.appName} | All Posts`);
+
     this.loadPosts(this.limitPosts);
   }
 

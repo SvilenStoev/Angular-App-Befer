@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CreateUserDto, UserService } from 'src/app/services/user.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { notifySuccess } from 'src/app/shared/notify/notify';
 import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
+import { userConsts } from 'src/app/shared/constants';
+import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -16,10 +19,10 @@ export class RegisterComponent implements OnInit {
   usernameSymb: number;
   fullNameSymb: number;
   passwordSymb: number;
-  nameMinLength: number = 4;
-  userNameMaxLength: number = 16;
-  passwordMinLength: number = 6;
-  maxLength: number = 20;
+  nameMinLength: number = userConsts.fullNameMinLength;
+  maxLength: number = userConsts.fullNameMaxLength;
+  passwordMinLength: number = userConsts.passwordMinLength;
+  userNameMaxLength: number = userConsts.userNameMaxLength;
 
   get passwordsGroup(): FormGroup {
     return this.registerFormGroup.controls['passwords'] as FormGroup;
@@ -35,9 +38,15 @@ export class RegisterComponent implements OnInit {
     }),
   });
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private userService: UserService, 
+    private router: Router,
+    private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`${environment.appName} | Register`);
+
     this.registerFormGroup.valueChanges.subscribe(() => {
       const fullNameMinError = this.getValError('fullName', 'minlength');
       const fullNameMaxError = this.getValError('fullName', 'maxlength');

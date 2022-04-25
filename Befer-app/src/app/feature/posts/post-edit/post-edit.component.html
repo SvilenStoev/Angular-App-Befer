@@ -11,18 +11,18 @@
     </div>
     <div>
         <label>"Before" image URL</label>
-        <input #beforeImgUrl="ngModel" ngModel type="text" placeholder="Your Before Image Url"  name="beforeImgUrl" required minlength="{{imgUrlMinLength}}">
+        <input #beforeImgUrl="ngModel" ngModel type="text" placeholder="Your Before Image Url" name="beforeImgUrl" appUrlValidator required>
         <ng-container *ngIf="beforeImgUrl.touched && beforeImgUrl.invalid">
             <p *ngIf="beforeImgUrl.errors?.['required']" class="errorText">"Before" image URL is required!</p>
-            <p *ngIf="beforeImgUrl.errors?.['minlength']" class="errorText">"Before" image URL should be atleast {{imgUrlMinLength}} symbols long!</p>
+            <p *ngIf="beforeImgUrl.errors?.['urlVal'] && !beforeImgUrl.errors?.['required']" class="errorText">"Before" image URL should be valid URL!</p>
         </ng-container>
     </div>
     <div>
         <label>"After" image URL</label>
-        <input #afterImgUrl="ngModel" ngModel type="text" placeholder="Your After Image Url"  name="afterImgUrl" required minlength="{{imgUrlMinLength}}">
+        <input #afterImgUrl="ngModel" ngModel type="text" placeholder="Your After Image Url" name="afterImgUrl" appUrlValidator required>
         <ng-container *ngIf="afterImgUrl.touched && afterImgUrl.invalid">
             <p *ngIf="afterImgUrl.errors?.['required']" class="errorText">"After" image URL is required!</p>
-            <p *ngIf="afterImgUrl.errors?.['minlength']" class="errorText">"After" image URL should be atleast {{imgUrlMinLength}} symbols long!</p>
+            <p *ngIf="afterImgUrl.errors?.['urlVal'] && !afterImgUrl.errors?.['required']" class="errorText">"After" image URL should be valid URL!</p>
         </ng-container>
     </div>
     <div>

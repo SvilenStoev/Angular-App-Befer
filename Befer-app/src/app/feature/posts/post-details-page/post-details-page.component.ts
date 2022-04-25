@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPost } from 'src/app/interfaces';
 import { TransferService } from 'src/app/services/transfer.service';
 import { UserService } from 'src/app/services/user.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { environment } from 'src/environments/environment';
 import { PostService } from '../../../services/post.service';
 
 @Component({
@@ -25,9 +27,12 @@ export class PostDetailsPageComponent implements OnInit {
     private postService: PostService,
     private userService: UserService,
     private router: Router,
-    private transferData: TransferService) { }
+    private transferData: TransferService,
+    private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`${environment.appName} | Post Details`);
+
     const postId = this.activatedRoute.snapshot.params['id'];
     this.showLoader = true;
 
