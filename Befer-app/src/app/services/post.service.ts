@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { addOwner } from '../auth/util';
+import { addOwner, createPointer } from '../auth/util';
 import { IPost } from '../interfaces';
 import { ApiService } from './api.service';
 import { UserService } from './user.service';
@@ -31,12 +31,20 @@ export class PostService {
 
   constructor(private api: ApiService, private userService: UserService) { }
 
-  loadPosts(limit?: number, sort: string = 'createdAt'): Observable<any> {
+  loadPosts(limit?: number): Observable<any> {
     const onlyPublic = JSON.stringify({
       isPublic: true
     });
 
-    return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=${sort}${limit ? `&limit=${limit}` : ''}`);
+    return this.api.get(`${this.postColl}/?where=${onlyPublic}${limit ? `&limit=${limit}` : ''}`);
+  }
+
+  loadMyPosts(limit: number, userId: string): Observable<any> {
+    const pointerQuery = JSON.stringify({
+      "owner": createPointer('_User', userId)
+    });
+
+    return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}`);
   }
 
   loadPostById(id: string): Observable<any> {

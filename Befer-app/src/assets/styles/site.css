@@ -241,3 +241,11 @@ a.btn:hover {
 .registerPath>a {
     color: rgb(32, 18, 160);
 }
+
+.status-private {
+    color: red;
+}
+
+.status-public {
+    color: green;
+}

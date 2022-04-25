@@ -1,6 +1,6 @@
 <section class="container">
     <div class="aux">
-        <h1>All Posts | Sorted by {{sortType}}</h1>
+        <h1>{{isMyPosts ? 'My' : 'All'}} Posts | Sorted by {{sortType}}</h1>
         <div class="home-buttons">
             <ng-container *ngIf="sortType == 'Likes'">
                 <a class="btn btn-home" (click)="sortByDate(posts)">Sort by Date</a>
@@ -18,9 +18,19 @@
                 </div>
                 <div class="info">
                     <h4>{{post.title}}</h4>
-                    <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
+                    <ng-container *ngIf="isMyPosts">
+                        <a class="btn details" [routerLink]="['/posts/details', post.objectId]">Details</a>
+                    </ng-container>
+                    <ng-container *ngIf="!isMyPosts">
+                        <a class="btn details" [routerLink]="['/posts/details', post.objectId]">See "After"</a>
+                    </ng-container>
                     <div class="info-buttons">
                         <span>{{post.createdAt | date: 'mediumDate' }}</span>
+                        <ng-container *ngIf="isMyPosts">
+                            <b>
+                                <span [ngClass]="{'status-private': !post.isPublic, 'status-public': post.isPublic}">| {{post.isPublic ? 'Public' : 'Private'}} |</span>
+                            </b>
+                        </ng-container>
                         <span class="likes">{{post.likes.length}} likes</span>
                     </div>
                 </div>

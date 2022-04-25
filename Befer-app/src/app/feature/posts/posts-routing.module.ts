@@ -10,6 +10,11 @@ const routes: Routes = [
         component: PostsAllComponent
     },
     {
+        path: 'posts/mine',
+        canActivate: [AuthGuard],
+        component: PostsAllComponent
+    },
+    {
         path: 'posts/create',
         canActivate: [AuthGuard],
         component: PostsCreateComponent

@@ -4,7 +4,7 @@
         <li><a routerLink="">Home</a></li>
         <ng-container *ngIf="isLogged">
             <li><a routerLink="/posts/all">All Posts</a></li>
-            <li><a routerLink="/myPosts">My Posts</a></li>
+            <li><a routerLink="/posts/mine">My Posts</a></li>
             <li><a routerLink="/posts/create">Create Post</a></li>
             <li><a routerLink="/user/profile">Profile</a></li>
             <li><a href="javascript:void(0)" (click)="logoutHandler()">Logout</a></li>
