@@ -5,7 +5,10 @@ export interface IComment extends IBase {
     author: {
         __type: "Pointer";
         className: "_User",
-        objectId: string
+        objectId: string,
+        fullName: string,
+        username: string,
+        email: string
     },
     publication: {
         __type: "Pointer"

@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
 import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
 import { TransferService } from '../services/transfer.service';
+import { CommentService } from '../services/comment.service';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ export class CoreModule {
         PostService,
         ApiService,
         TransferService,
+        CommentService,
         {
           provide: HTTP_INTERCEPTORS,
           multi: true,
