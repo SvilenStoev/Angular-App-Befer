@@ -51,7 +51,7 @@ Only users, which are not author of a single post can like it. After that they a
 - Web Api services + AJAX real-time Requests
 
 ## Initial StartUp
-Run ng serve for a dev server. Navigate to http://localhost:4200/.
+Run "ng serve" for a dev server. Navigate to http://localhost:4200/.
 
 ## 🧑 Author
 
