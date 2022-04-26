@@ -3,14 +3,14 @@
 
 ## Hosted on:
 
-**Heroku -** https://befer.herokuapp.com/
+**Firebase -** https://befer-app.web.app/
 
 ## :eyeglasses: Project Introduction
 
 **Befer Website** is created as defense project for **Angular** course at [SoftUni](https://softuni.bg/ "SoftUni") (March 2022).
 
-Befer website is a network for people who would like to share their "before and after" photography to other, or just store them without expose in public. Place for look at other people photography and have fun.
-Befer is a platform, where users can introduce their best pictures and great transformations or comment and like other people photos.
+Befer website is a network for people who would like to share their "before and after" photography to other, or just store them without expose in public. Place for browsing other people's photography and have fun.
+Befer is a platform, where users can introduce their best pictures and great transformations or comment and like other people's photos.
 
 ## :pencil2: Overview
 
@@ -41,14 +41,14 @@ Only users, which are not author of a single post can like it. After that they a
 
 ## :hammer: Built With
 - [Angular](https://github.com/angular)
-- Angular validations with reactive forms and ngForm
-- Angular features for components, router, httpRequest, etc.
-- [Font Awesome](https://fontawesome.com/)
+- Angular - validations with reactive forms and ngForm
+- Angular - modules, components, directives, pipes, router, httpRequest and other features
 - JavaScript
 - [TypeScript](https://www.typescriptlang.org/)
 - [Back4app](https://www.back4app.com/) as a backend
 - Custom HTML & CSS
 - Web Api services + AJAX real-time Requests
+- [Font Awesome](https://fontawesome.com/)
 
 ## Initial StartUp
 
