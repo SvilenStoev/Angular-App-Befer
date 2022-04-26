@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { IUser } from '../interfaces';
 import { StorageService } from '../services/storage.service';
 import { ApiService } from './api.service';
 
 export interface CreateUserDto { username: string, fullName: string, email: string, password: string }
 export interface UserDataDto { username: string, id: string, token: string }
+export interface UserEditDto { username: string, fullName: string, email: string, profilePicture: any }
 
 @Injectable()
 export class UserService {
+
+  userColl: string = '/users';
 
   get isLogged() {
     return !!this.storage.getUserData();
@@ -49,7 +52,7 @@ export class UserService {
 
   register$(data: CreateUserDto): Observable<IUser> {
     return this.api
-      .post<IUser>('/users', data)
+      .post<IUser>(this.userColl, data)
       .pipe(
         map(response => response.body),
         tap(user => {
@@ -65,7 +68,30 @@ export class UserService {
   }
 
   getProfile$(): Observable<any> {
-    return this.api.get(`/users/${this.userId}`);
+    return this.api.get(`${this.userColl}/${this.userId}`);
   }
 
+  editProfile$(userData: UserEditDto): Observable<any> {
+    // const formData = new FormData();
+    // formData.set('username', userData.username);
+    // formData.set('fullName', userData.fullName);
+    // formData.set('email', userData.email);
+
+    // if (userData.profilePicture) {
+    //   formData.append('profilePicture', userData.profilePicture);
+    // }
+
+    // console.log(formData.get('profilePicture'));
+    // const body = {
+    //   "profilePicture":
+    //   {
+    //     "__type": "File",
+    //     "name": formData.get('profilePicture')
+    //   }
+    // }
+
+    // var parseFile = new Parse.File(name, file);
+
+    return this.api.put<IUser>(`${this.userColl}/${this.userId}`, userData);
+  }
 }

@@ -1,7 +1,7 @@
-<div class="profile"><img src="/assets/images/profile.png" alt="default user">
+<div class="profile"><img src="{{profilePicture}}" alt="default user">
   <ng-container *ngIf="!!currUser">
     <ng-container *ngIf="!isEditMode">
-        <h3>User Info:</h3>
+        <h3>User Info</h3>
         <div class="flex">
             <p>Username: </p>
             <p>{{currUser.username}}</p>
@@ -14,16 +14,16 @@
             <p>Email: </p>
             <p>{{currUser.email}}</p>
         </div>
-        <div class="flex">
+        <!-- <div class="flex">
             <p>Profile picture: </p>
             <p>Something</p>
-        </div>
+        </div> -->
         <button (click)="editHandler()" class="btn edit">Edit</button>
     </ng-container>
 
     <ng-container *ngIf="isEditMode">
-        <form #editProfileForm="ngForm" (ngSubmit)="saveHandler()" class="profileForm">
-            <h3>Edit User:</h3>
+        <form #saveProfileForm="ngForm" (ngSubmit)="saveHandler(saveProfileForm)" class="profileForm">
+            <h3>Edit User</h3>
                 <div class="flex">
                     <p>Username: </p>
                     <input #username="ngModel" ngModel required minlength="{{nameMinLength}}" maxlength="{{userNameMaxLength}}" type="text" name="username">
@@ -42,7 +42,7 @@
                         <p *ngIf="fullName.errors?.['minlength'] && !fullName.errors?.['required']" class="errorText">
                             Fullname should be at least {{ nameMinLength }} symbols!
                         </p>
-                    </ng-container>
+                    </ng-container> 
                 </div >
                 <div class="flex">
                     <p>Email: </p>
@@ -52,13 +52,15 @@
                         <p *ngIf="email.errors?.['emailVal'] && !email.errors?.['required']" class="errorText">Email is not valid!</p>
                     </ng-container>
                 </div>
-                <div class="flex">
+                <!-- <div class="flex">
                     <p>Profile picture: </p>
-                    <input ngModel type="text" name="profileUrl">
-                </div>
+                    <input type="file" name="profilePicture" accept="image/jpg" id="profile-picture" (change)="updateProfilePicture($event)">
+                </div> -->
                 <button type="button" (click)="isEditMode = false" class="btn cancel">Cancel</button>
-                <button [disabled]="editProfileForm.invalid" class="btn save">Save</button>
+                <button [disabled]="saveProfileForm.invalid" class="btn save">Save</button>
             </form>
     </ng-container>
   </ng-container>
 </div>
+
+<app-spinner [showLoader]="showLoader"></app-spinner>

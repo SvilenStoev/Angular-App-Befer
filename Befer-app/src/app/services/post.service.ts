@@ -77,8 +77,6 @@ export class PostService {
       "likes": newLikesData
     }
 
-    console.log(body);
-
     return this.api
       .put<any>(`${this.postColl}/${postId}`, body)
       .pipe(

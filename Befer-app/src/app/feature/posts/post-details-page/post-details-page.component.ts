@@ -80,6 +80,12 @@ export class PostDetailsPageComponent implements OnInit {
   }
 
   likeHandler() {
+    if (this.isLiked || this.isOwner) {
+      notifyErr('You can not like this post!')
+      this.router.navigate(['/home']);
+      return;
+    }
+
     this.showLoader = true;
     const previousLikes = this.post.likes;
 
@@ -103,6 +109,12 @@ export class PostDetailsPageComponent implements OnInit {
   }
 
   dislikeHandler() {
+    if (!this.isLiked || this.isOwner) {
+      notifyErr('You can not dislike this post!')
+      this.router.navigate(['/home']);
+      return;
+    }
+
     const previousLikes = this.post.likes;
     const index = this.post.likes.indexOf(this.userId);
 

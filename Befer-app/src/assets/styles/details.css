@@ -20,8 +20,24 @@ section.details {
     background-color: green;
 }
 
+.btn.like:hover>i {
+    color: white;
+}
+
+i.fa-thumbs-up {
+    color: green;
+}
+
+i.fa-thumbs-down {
+    color: red;
+}
+
 .btn.dislike:hover {
     background-color: red;
+}
+
+.btn.dislike:hover>i {
+    color: white;
 }
 
 .textCenter {
@@ -47,10 +63,8 @@ section.details {
 }
 
 .befer-logo {
-    max-height: 4em;
-    max-width: 4em;
-    min-height: 4em;
-    min-width: 4em;
+    width: 8%;
+    height: 8%;
 }
 
 .textCenter>i {
