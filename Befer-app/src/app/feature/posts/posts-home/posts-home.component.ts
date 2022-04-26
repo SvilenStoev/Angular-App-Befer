@@ -29,7 +29,7 @@ export class PostsHomeComponent implements OnInit {
     this.showLoader = true;
     this.limitPosts = limit;
 
-    this.postService.loadPosts(this.limitPosts).subscribe({
+    this.postService.loadPosts$(this.limitPosts).subscribe({
       next: (data) => {
         if (this.sortType == 'Likes') {
           this.sortByLikes(data.results);

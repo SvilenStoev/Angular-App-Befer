@@ -36,7 +36,7 @@ export class PostDetailsPageComponent implements OnInit {
     const postId = this.activatedRoute.snapshot.params['id'];
     this.showLoader = true;
 
-    this.postService.loadPostById(postId).subscribe({
+    this.postService.loadPostById$(postId).subscribe({
       next: (data) => {
         this.post = data as IPost;
         this.isOwner = this.post.owner.objectId == this.userId;
@@ -64,7 +64,7 @@ export class PostDetailsPageComponent implements OnInit {
     if (choise) {
       this.showLoader = true;
 
-      this.postService.deletePost(this.postId).subscribe({
+      this.postService.deletePost$(this.postId).subscribe({
         next: () => {
           notifySuccess('The post was deleted successfully!');
           this.router.navigate(['/posts/mine']);

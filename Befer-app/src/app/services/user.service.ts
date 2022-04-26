@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { IUser } from '../interfaces';
 import { StorageService } from '../services/storage.service';
 import { ApiService } from './api.service';

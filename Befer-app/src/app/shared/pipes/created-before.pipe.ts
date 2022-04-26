@@ -7,49 +7,38 @@ export class CreatedBeforePipe implements PipeTransform {
 
   private now = new Date();
 
-  transform(value: string): string {
-    const then = new Date(value);
+  transform(createdAt: string): string {
+    const createdTime = new Date(createdAt);
 
-    const timePassed = this.now.getTime() - then.getTime();
-    const miliseconds = 1000;
-    const minute = 60 * 1000;
-    const hour = 60 * minute;
+    const elapsedTime = this.now.getTime() - createdTime.getTime();
+    const milisec = 1000;
+    const min = 60 * 1000;
+    const hour = 60 * min;
     const day = 24 * hour;
     const month = 30 * day;
     const year = 365 * day;
-    // console.log(timePassed);
 
-    // 1min = 60 * 1000
-    // 1hour = 60 * 60 * 1000
-    // 1day = 24 * 60 * 60 * 1000
-    // 1month = 30 * 24 * 60 * 60 * 1000
-    // 1year = 365 * 24 * 60 * 60 * 1000
-    // const secondsInMinute = 60;
-    // if (timePassed < 60 * miliseconds) {
-    //   return `${Math.floor(timePassed / 60)} seconds`;
-    // }
-
-    if (timePassed < minute) {
-      return `${Math.floor(timePassed / miliseconds)} seconds`;
+    if (elapsedTime < min) {
+      return `commented ${Math.floor(elapsedTime / milisec)} seconds ago`;
     }
 
-    if (timePassed < hour) {
-      return `${Math.floor(timePassed / minute)} minutes`;
+    if (elapsedTime < hour) {
+      return `commented ${Math.floor(elapsedTime / min)} minutes ago`;
     }
 
-    if (timePassed < day) {
-      return `${Math.floor(timePassed / hour)} hours`;
+    if (elapsedTime < day) {
+      return `commented ${Math.floor(elapsedTime / hour)} hours ago`;
     }
 
-    if (timePassed < month) {
-      return `${Math.floor(timePassed / day)} days`;
+    if (elapsedTime < month) {
+      return `commented ${Math.floor(elapsedTime / day)} days ago`;
     }
 
-    if (timePassed < year) {
-      return `${Math.floor(timePassed / month)} month`;
+    if (elapsedTime < year) {
+      return `commented ${Math.floor(elapsedTime / month)} month ago`;
     }
 
-    return `${Math.floor(timePassed / year)} years`;
+    return `commented ${Math.floor(elapsedTime / year)} years ago`;
   }
 
 }

@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { createPointer } from '../auth/util';
+import { map, Observable } from 'rxjs';
+import { addOwner, createPointer } from '../auth/util';
+import { IComment } from '../interfaces';
 import { ApiService } from './api.service';
 import { UserService } from './user.service';
 
 export interface CreateCommentDto {
   content: string,
   author: CreateAuthorDto,
-  post: CreatePostDto
+  publication: CreatePostDto
 }
 
 export interface CreateAuthorDto {
   __type: string,
   className: string,
   objectId: string,
-  fullName: string,
-  username: string,
-  email: string
+
 }
 
 export interface CreatePostDto {
@@ -36,45 +35,26 @@ export class CommentService {
       "publication": createPointer('Publication', postId)
     });
 
-    return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}&include=author`);
+    return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}&include=author&order=-createdAt`);
   }
 
+  createComment$(commentData: CreateCommentDto, postId: string): Observable<IComment> {
+    const userId = this.userService.userId;
 
-  
-  // loadPostById(id: string): Observable<any> {
-  //   return this.api.get(`${this.postColl}/${id}?include=owner`);
-  // }
+    if (!userId || !postId) {
+      throw new Error('Something went wrong!');
+    }
 
-  // createPost$(postData: CreatePostDto): Observable<IPost> {
-  //   const userId = this.userService.userId;
+    commentData.author = createPointer('_User', userId);
+    commentData.publication = createPointer('Publication', postId);
 
-  //   addOwner(postData, userId);
+    return this.api
+      .post<IComment>(this.postColl, commentData)
+      .pipe(
+        map(response => response.body));
+  }
 
-  //   return this.api
-  //     .post<IPost>(this.postColl, postData)
-  //     .pipe(
-  //       map(response => response.body));
-  // }
-
-  // editPost$(postData: CreatePostDto, id: string): Observable<IPost> {
-  //   return this.api
-  //     .put<IPost>(`${this.postColl}/${id}`, postData)
-  //     .pipe(
-  //       map(response => response.body));
-  // }
-
-  // deletePost(id: string): Observable<any> {
-  //   return this.api.delete(`${this.postColl}/${id}`);
-  // }
-
-  // updateLikesByPostId$(newLikesData: string[], postId: string): Observable<any> {
-  //   const body = {
-  //     "likes": newLikesData
-  //   }
-
-  //   return this.api
-  //     .put<any>(`${this.postColl}/${postId}`, body)
-  //     .pipe(
-  //       map(response => response.body));
-  // }
+  deleteComment$(id: string): Observable<any> {
+    return this.api.delete(`${this.postColl}/${id}`);
+  }
 }

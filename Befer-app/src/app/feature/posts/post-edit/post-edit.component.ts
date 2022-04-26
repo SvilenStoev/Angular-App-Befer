@@ -60,7 +60,6 @@ export class PostEditComponent implements OnInit {
     this.postService.editPost$(data, this.postId).subscribe({
       next: () => {
         notifySuccess('The post is edited!');
-        this.showLoader = false;
         this.router.navigate([`posts/details/${this.postId}`]);
       },
       complete: () => {

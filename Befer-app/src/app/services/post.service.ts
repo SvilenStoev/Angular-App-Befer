@@ -30,7 +30,7 @@ export class PostService {
 
   constructor(private api: ApiService, private userService: UserService) { }
 
-  loadPosts(limit?: number): Observable<any> {
+  loadPosts$(limit?: number): Observable<any> {
     const onlyPublic = JSON.stringify({
       isPublic: true
     });
@@ -38,7 +38,7 @@ export class PostService {
     return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=-createdAt${limit ? `&limit=${limit}` : ''}`);
   }
 
-  loadMyPosts(limit: number, userId: string): Observable<any> {
+  loadMyPosts$(limit: number, userId: string): Observable<any> {
     const pointerQuery = JSON.stringify({
       "owner": createPointer('_User', userId)
     });
@@ -46,7 +46,7 @@ export class PostService {
     return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}`);
   }
 
-  loadPostById(id: string): Observable<any> {
+  loadPostById$(id: string): Observable<any> {
     return this.api.get(`${this.postColl}/${id}?include=owner`);
   }
 
@@ -68,7 +68,7 @@ export class PostService {
         map(response => response.body));
   }
 
-  deletePost(id: string): Observable<any> {
+  deletePost$(id: string): Observable<any> {
     return this.api.delete(`${this.postColl}/${id}`);
   }
 

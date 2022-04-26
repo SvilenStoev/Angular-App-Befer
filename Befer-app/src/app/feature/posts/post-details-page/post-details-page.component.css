@@ -1,1 +1,21 @@
+/* 
+aside {
+    width: 40%;
+    display: block;
+}
 
+.mainLeft {
+    width: 40%;
+    display: block;
+} */
+
+.aside * {
+    margin: 0;
+    padding: 0;
+}
+
+.aside>div {
+    border: 1px solid #999;
+    border-radius: 0.3em;
+    padding: 0.3em 0.5em;
+}

@@ -40,7 +40,7 @@ export class PostsAllComponent implements OnInit {
     if (url == '/posts/all') {
       this.isMyPosts = false;
 
-      this.postService.loadPosts(this.limitPosts).subscribe({
+      this.postService.loadPosts$(this.limitPosts).subscribe({
         next: (data) => {
           if (this.sortType == 'Likes') {
             this.sortByLikes(data.results);
@@ -56,7 +56,7 @@ export class PostsAllComponent implements OnInit {
       this.isMyPosts = true;
       const userId = this.userService.userId;
 
-      this.postService.loadMyPosts(this.limitPosts, userId).subscribe({
+      this.postService.loadMyPosts$(this.limitPosts, userId).subscribe({
         next: (data) => {
           if (this.sortType == 'Likes') {
             this.sortByLikes(data.results);
