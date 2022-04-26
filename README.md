@@ -51,7 +51,12 @@ Only users, which are not author of a single post can like it. After that they a
 - Web Api services + AJAX real-time Requests
 
 ## Initial StartUp
-Run "ng serve" for a dev server. Navigate to http://localhost:4200/.
+
+1) Download the code from this repo. 
+
+2) Run "npm i" for installing all depencencies.
+
+3) Run "ng serve" for a dev server. Navigate to http://localhost:4200/.
 
 ## 🧑 Author
 
