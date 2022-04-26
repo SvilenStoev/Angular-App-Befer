@@ -1,19 +1,20 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { UserService } from '../services/user.service';
-import { StorageService } from '../services/storage.service';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { PostService } from '../services/post.service';
+import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+
 import { ApiService } from '../services/api.service';
 import { SharedModule } from '../shared/shared.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RequestInterceptor } from '../services/interceptors/request.interceptor';
-import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
-import { TransferService } from '../services/transfer.service';
+import { PostService } from '../services/post.service';
+import { UserService } from '../services/user.service';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { StorageService } from '../services/storage.service';
 import { CommentService } from '../services/comment.service';
+import { TransferService } from '../services/transfer.service';
+import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
+import { RequestInterceptor } from '../services/interceptors/request.interceptor';
 
 @NgModule({
   declarations: [

@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CreateUserDto, UserService } from 'src/app/services/user.service';
-import { notifySuccess } from 'src/app/shared/notify/notify';
-import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
-import { userConsts } from 'src/app/shared/constants';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { userConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
+import { notifySuccess } from 'src/app/shared/notify/notify';
+import { CreateUserDto, UserService } from 'src/app/services/user.service';
+import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
 
 @Component({
   selector: 'app-register',

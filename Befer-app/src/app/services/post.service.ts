@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { addOwner, createPointer } from '../auth/util';
+import { Injectable } from '@angular/core';
+
 import { IPost } from '../interfaces';
 import { ApiService } from './api.service';
 import { UserService } from './user.service';
+import { addOwner, createPointer } from '../auth/util';
 
 export interface CreatePostDto {
   afterImgUrl: string,
@@ -30,20 +31,24 @@ export class PostService {
 
   constructor(private api: ApiService, private userService: UserService) { }
 
-  loadPosts$(limit?: number): Observable<any> {
+  loadPosts$(limit: number, sortType: string): Observable<any> {
     const onlyPublic = JSON.stringify({
       isPublic: true
     });
 
-    return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=-createdAt${limit ? `&limit=${limit}` : ''}`);
+    sortType = this.getSortType(sortType);
+
+    return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=${sortType}${limit ? `&limit=${limit}` : ''}`);
   }
 
-  loadMyPosts$(limit: number, userId: string): Observable<any> {
+  loadMyPosts$(limit: number, userId: string, sortType: string): Observable<any> {
     const pointerQuery = JSON.stringify({
       "owner": createPointer('_User', userId)
     });
 
-    return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}`);
+    sortType = this.getSortType(sortType);
+
+    return this.api.get(`${this.postColl}/?where=${pointerQuery}&order=${sortType}${limit ? `&limit=${limit}` : ''}`);
   }
 
   loadPostById$(id: string): Observable<any> {
@@ -82,5 +87,12 @@ export class PostService {
       .pipe(
         map(response => response.body));
   }
-}
 
+  getSortType(sortType: string): string {
+    if (sortType == 'Date') {
+      return '-createdAt';
+    } else {
+      return '-likes';
+    }
+  }
+}

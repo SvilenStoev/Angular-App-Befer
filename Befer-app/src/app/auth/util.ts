@@ -1,17 +1,7 @@
-import { AbstractControl, ControlContainer, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
-
+import { AbstractControl, FormGroup, ValidationErrors } from "@angular/forms";
 
 export function whitespaceValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-
-    // if (control.errors && Object.keys(control.errors).filter(errorName => errorName !== 'whitespace').length > 0) {
-    //     console.log(control.errors);
-    //     // if (/\s/g.test(value)) {
-    //     //     return { whitespace: true };
-    //     // }
-
-    //     return null;
-    // }
 
     if (/\s/g.test(value)) {
         return { whitespace: true };
@@ -29,16 +19,6 @@ export function emailValidator(control: AbstractControl): ValidationErrors | nul
 
     return null;
 }
-
-// export function passValidator(control: AbstractControl): ValidationErrors | null {
-//     const value = control.value;
-
-//     if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[#?!@$&]).{6,}$/.test(value)) {
-//         return { passVal: true };
-//     }
-
-//     return null;
-// }
 
 export function passMissmatchValidator(control: AbstractControl): ValidationErrors | null {
     const passGroup = control.parent as FormGroup;

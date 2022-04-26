@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+
+import { postConsts } from 'src/app/shared/constants';
+import { environment } from 'src/environments/environment';
 import { PostService } from 'src/app/services/post.service';
 import { notifySuccess } from 'src/app/shared/notify/notify';
-import { postConsts } from 'src/app/shared/constants';
-import { Title } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-posts-create',

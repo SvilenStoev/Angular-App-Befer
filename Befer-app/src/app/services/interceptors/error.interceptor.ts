@@ -5,7 +5,8 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
+
 import { notifyErr } from 'src/app/shared/notify/notify';
 
 @Injectable()

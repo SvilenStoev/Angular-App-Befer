@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { IPost } from 'src/app/interfaces';
+import { Component, OnInit } from '@angular/core';
+
 import { UserService } from 'src/app/services/user.service';
 import { PostService } from '../../../services/post.service';
 
@@ -29,7 +30,7 @@ export class PostsHomeComponent implements OnInit {
     this.showLoader = true;
     this.limitPosts = limit;
 
-    this.postService.loadPosts$(this.limitPosts).subscribe({
+    this.postService.loadPosts$(this.limitPosts, this.sortType).subscribe({
       next: (data) => {
         if (this.sortType == 'Likes') {
           this.sortByLikes(data.results);
@@ -38,6 +39,9 @@ export class PostsHomeComponent implements OnInit {
         }
       },
       complete: () => {
+        this.showLoader = false;
+      },
+      error: () => {
         this.showLoader = false;
       }
     });

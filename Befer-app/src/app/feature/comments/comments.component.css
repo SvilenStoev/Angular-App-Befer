@@ -4,6 +4,17 @@
     font-size: 30px;
 }
 
+.new-comment {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.container {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+
 .new-comment textarea {
     resize: none;
     width: 100%;
@@ -57,4 +68,8 @@
     position: relative;
     left: 90%;
     margin-bottom: 5px;
+}
+
+.adjust-margin {
+    margin: 1em auto;
 }

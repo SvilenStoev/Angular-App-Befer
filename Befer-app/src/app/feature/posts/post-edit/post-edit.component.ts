@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { IPost } from 'src/app/interfaces';
-import { PostService } from 'src/app/services/post.service';
-import { TransferService } from 'src/app/services/transfer.service';
-import { notifySuccess } from 'src/app/shared/notify/notify';
-import { postConsts } from 'src/app/shared/constants';
 import { Title } from '@angular/platform-browser';
+import { postConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
+import { PostService } from 'src/app/services/post.service';
+import { notifySuccess } from 'src/app/shared/notify/notify';
+import { TransferService } from 'src/app/services/transfer.service';
 
 @Component({
   selector: 'app-post-edit',

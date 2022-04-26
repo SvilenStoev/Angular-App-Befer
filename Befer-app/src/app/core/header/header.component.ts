@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+
+import { UserService } from '../../services/user.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
-import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -40,6 +41,8 @@ export class HeaderComponent {
       error: (err) => {
         this.isLoggingOut = false;
         this.showLoader = false;
+
+        notifySuccess('Something went wrong!');
 
         notifyErr(err.message);
       }

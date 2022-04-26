@@ -7,8 +7,6 @@ div.appendChild(list);
 
 document.body.prepend(div);
 
-//TODO svstoev Implement notify with component
-
 export function notifySuccess(message: string) {
     const liItem = document.createElement('li');
     liItem.classList.add('notifications');

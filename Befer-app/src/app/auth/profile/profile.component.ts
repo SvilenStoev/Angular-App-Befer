@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 import { IUser } from 'src/app/interfaces';
-import { UserService } from 'src/app/services/user.service';
 import { userConsts } from 'src/app/shared/constants';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
+import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({
   selector: 'app-profile',

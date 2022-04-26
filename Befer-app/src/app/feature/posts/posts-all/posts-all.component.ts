@@ -1,10 +1,11 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+
 import { IPost } from 'src/app/interfaces';
-import { PostService } from 'src/app/services/post.service';
-import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-posts-all',
@@ -40,7 +41,7 @@ export class PostsAllComponent implements OnInit {
     if (url == '/posts/all') {
       this.isMyPosts = false;
 
-      this.postService.loadPosts$(this.limitPosts).subscribe({
+      this.postService.loadPosts$(this.limitPosts, this.sortType).subscribe({
         next: (data) => {
           if (this.sortType == 'Likes') {
             this.sortByLikes(data.results);
@@ -50,13 +51,16 @@ export class PostsAllComponent implements OnInit {
         },
         complete: () => {
           this.showLoader = false;
+        },
+        error: () => {
+          this.showLoader = false;
         }
       });
     } else if (url == '/posts/mine') {
       this.isMyPosts = true;
       const userId = this.userService.userId;
 
-      this.postService.loadMyPosts$(this.limitPosts, userId).subscribe({
+      this.postService.loadMyPosts$(this.limitPosts, userId, this.sortType).subscribe({
         next: (data) => {
           if (this.sortType == 'Likes') {
             this.sortByLikes(data.results);
@@ -65,6 +69,9 @@ export class PostsAllComponent implements OnInit {
           }
         },
         complete: () => {
+          this.showLoader = false;
+        },
+        error: () => {
           this.showLoader = false;
         }
       });

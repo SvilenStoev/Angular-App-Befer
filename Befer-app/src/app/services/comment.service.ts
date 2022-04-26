@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { addOwner, createPointer } from '../auth/util';
+import { Injectable } from '@angular/core';
+
 import { IComment } from '../interfaces';
 import { ApiService } from './api.service';
+import { createPointer } from '../auth/util';
 import { UserService } from './user.service';
 
 export interface CreateCommentDto {

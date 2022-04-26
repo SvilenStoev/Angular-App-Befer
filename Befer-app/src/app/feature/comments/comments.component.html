@@ -1,5 +1,5 @@
     <article class="new-comment">
-        <form #saveCommentForm="ngForm" class="publication-form" (ngSubmit)="saveHandler(saveCommentForm)">
+        <form #saveCommentForm="ngForm" class="publication-form adjust-margin" (ngSubmit)="saveHandler(saveCommentForm)">
             <h3>New comment</h3>
             <textarea #content="ngModel" ngModel type="text" name="content" placeholder="Type comment"
                 required maxlength="200"></textarea>

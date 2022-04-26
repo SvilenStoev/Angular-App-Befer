@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+
 import { IComment } from 'src/app/interfaces';
-import { CommentService } from 'src/app/services/comment.service';
 import { UserService } from 'src/app/services/user.service';
+import { CommentService } from 'src/app/services/comment.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({
@@ -29,24 +30,7 @@ export class CommentsComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit(): void {
-
     this.loadComments(this.limitComments);
-
-    // const comment: IComment = {
-    //   objectId: 'sadsa',
-    //   createdAt: '22 Apr 2022 at 08:31:49 UTC',
-    //   updatedAt: '24 Apr 2022 at 15:25:08 UTC',
-    //   content: 'Some nice comment',
-    //   author: {
-    //     __type: "Pointer",
-    //     className: "_User",
-    //     objectId: 'CB5M2z0fmw'
-    //   },
-    //   publication: {
-    //     __type: "Pointer",
-    //     className: "Publication",
-    //     objectId: "lEGpKFDIFO",
-    //   }
   }
 
   loadComments(limit: number) {

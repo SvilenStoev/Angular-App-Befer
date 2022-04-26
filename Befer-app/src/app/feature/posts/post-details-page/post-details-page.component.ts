@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { IPost } from 'src/app/interfaces';
-import { TransferService } from 'src/app/services/transfer.service';
-import { UserService } from 'src/app/services/user.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 import { PostService } from '../../../services/post.service';
+import { TransferService } from 'src/app/services/transfer.service';
+import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({
   selector: 'app-post-details-page',
