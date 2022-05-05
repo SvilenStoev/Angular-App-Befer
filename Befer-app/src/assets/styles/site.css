@@ -6,6 +6,7 @@ html {
     background: url('../images/background/Background3.jpg') rgba(7, 1, 31, 0.473);
     background-size: cover;
     background-blend-mode: overlay;
+    scroll-behavior: smooth;
 }
 
 body {

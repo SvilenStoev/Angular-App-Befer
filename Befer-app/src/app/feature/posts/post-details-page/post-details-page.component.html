@@ -15,6 +15,7 @@
                     <h3>Post Description</h3>
                     <p>{{post.description}}</p>
                 </ng-container>
+                <b><i><div style="cursor:pointer; display:inline; margin: 20px;" (click)="scrollToSec()">{{commentsMassage()}}</div></i></b>
                 <div class="buttons">
                     <ng-container *ngIf="isOwner">
                         <a href="javascript:void(0)" (click)="onDelete()" class="btn delete">Delete</a>
@@ -42,7 +43,7 @@
 
 <aside>
     <ng-container *ngIf="postId">
-        <app-comments [postId]="postId"></app-comments>
+        <app-comments (commentsCount)="commentsCount($event)" [postId]="postId"></app-comments>
     </ng-container>
 </aside>
 

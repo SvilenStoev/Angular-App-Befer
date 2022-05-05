@@ -1,8 +1,8 @@
 import { IBase } from "./base";
 
-export interface IComment extends IBase {
+export interface IComment {
     content: string;
-    author: {
+    author?: {
         __type: "Pointer";
         className: "_User",
         objectId: string,
@@ -10,9 +10,12 @@ export interface IComment extends IBase {
         username: string,
         email: string
     },
-    publication: {
+    publication?: {
         __type: "Pointer"
         className: "Publication",
         objectId: string;
     },
+    objectId?: string;
+    createdAt?: string;
+    updatedAt?: string;
 }

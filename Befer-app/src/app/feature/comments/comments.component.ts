@@ -1,6 +1,6 @@
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { IComment } from 'src/app/interfaces';
 import { UserService } from 'src/app/services/user.service';
@@ -16,11 +16,13 @@ export class CommentsComponent implements OnInit {
 
   now = new Date();
   limitComments: number = 5;
+  isAddingComment: boolean = false;
   showLoader: boolean = false;
   userId: string = this.userService.userId;
 
   @Input() postId: string;
   @ViewChild('saveCommentForm') saveCommentForm: NgForm;
+  @Output() commentsCount = new EventEmitter<any>();
 
   comments: IComment[];
 
@@ -34,26 +36,26 @@ export class CommentsComponent implements OnInit {
   }
 
   loadComments(limit: number) {
-    this.showLoader = true;
     this.limitComments = limit;
 
     this.commentService.loadPostComments$(this.limitComments, this.postId).subscribe({
       next: (res) => {
         this.comments = res.results as IComment[];
+        this.commentsCount.emit(this.comments?.length);
       },
       complete: () => {
-        this.showLoader = false;
       },
       error: () => {
-        this.showLoader = false;
       }
     });
   }
 
   saveHandler(saveCommentForm: NgForm): void {
     const data = saveCommentForm.value;
+    const currComment = { content: data.content };
 
-    this.showLoader = true;
+    this.isAddingComment = true;
+    this.comments.unshift(currComment);
 
     this.commentService.createComment$(data, this.postId).subscribe({
       next: () => {
@@ -62,10 +64,10 @@ export class CommentsComponent implements OnInit {
         this.loadComments(this.limitComments);
       },
       complete: () => {
-        this.showLoader = false;
+        this.isAddingComment = false;
       },
       error: () => {
-        this.showLoader = false;
+        this.isAddingComment = false;
       }
     });
   }
@@ -88,6 +90,8 @@ export class CommentsComponent implements OnInit {
           this.comments = this.comments.filter(function (c) {
             return c.objectId != commentId;
           });
+
+          this.commentsCount.emit(this.comments?.length);
         },
         complete: () => {
           this.showLoader = false;

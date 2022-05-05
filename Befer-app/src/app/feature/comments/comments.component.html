@@ -6,25 +6,25 @@
             <ng-container *ngIf="content.touched && content.invalid">
                 <p *ngIf="content.errors?.['required']" class="errorText">Content is required!</p>
             </ng-container>
-            <button type="submit" [disabled]="saveCommentForm.invalid" class="btn save">Save</button>
+            <button type="submit" [disabled]="saveCommentForm.invalid || isAddingComment" class="btn save">Save</button>
         </form>
     </article>
 
-    <div class="container" *ngIf="comments">
+    <div class="container" id="comments" *ngIf="comments">
         <section class="details">
             <h3>Comments</h3>
             <div class="comments">
                 <ul>
                     <li class="comment" *ngFor="let comment of comments">
                         <header>
-                            <b>{{comment.author.username}}</b>
-                            <span class="comment-date">
-                                <b>{{comment.author.fullName}}&nbsp;{{comment.createdAt | createdBefore}}</b>
+                            <b>{{comment.author?.username}}</b>
+                            <span class="comment-date"> 
+                                <b>{{comment.author?.fullName}}&nbsp;{{(comment.createdAt || '') | createdBefore}}</b>
                             </span>
                         </header>
                         <p>{{comment.content}}</p>
-                        <ng-container *ngIf="comment.author.objectId == userId">
-                            <a href="javascript:void(0)" (click)="onDelete(comment.author.objectId, comment.objectId)" class="btn delete">Delete</a>
+                        <ng-container *ngIf="comment.author?.objectId == userId">
+                            <a href="javascript:void(0)" (click)="onDelete(comment.author?.objectId || '', comment.objectId || '')" class="btn delete">Delete</a>
                         </ng-container>
                     </li>
                 </ul>

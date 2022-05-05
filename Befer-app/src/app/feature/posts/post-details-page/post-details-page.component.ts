@@ -20,8 +20,11 @@ export class PostDetailsPageComponent implements OnInit {
   showLoader: boolean = false;
   isOwner: boolean = false;
   isLiked: boolean = false;
+  isLiking: boolean = false;
+  isDisliking: boolean = false;
   userId: string = this.userService.userId;
   postId: string;
+  commCount: number = -1;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -87,22 +90,29 @@ export class PostDetailsPageComponent implements OnInit {
       return;
     }
 
-    this.showLoader = true;
+    if (this.isDisliking) {
+      return;
+    }
+
     const previousLikes = this.post.likes;
 
     this.post.likes.push(this.userId);
+    this.isLiked = true;
+    this.isLiking = true;
+
     const newLikesArr = this.post.likes;
 
     this.postService.updateLikesByPostId$(newLikesArr, this.postId).subscribe({
       next: () => {
-        this.isLiked = true;
+
       },
       complete: () => {
-        this.showLoader = false;
+        this.isLiking = false;
       },
       error: (err) => {
-        this.showLoader = false;
         this.post.likes = previousLikes;
+        this.isLiking = false;
+        this.isLiked = false;
 
         notifyErr(err.message);
       }
@@ -116,8 +126,14 @@ export class PostDetailsPageComponent implements OnInit {
       return;
     }
 
+    if (this.isLiking) {
+      return;
+    }
+
     const previousLikes = this.post.likes;
     const index = this.post.likes.indexOf(this.userId);
+    this.isLiked = false;
+    this.isDisliking = true;
 
     if (index >= 0) {
       this.post.likes.splice(index, 1);
@@ -126,21 +142,45 @@ export class PostDetailsPageComponent implements OnInit {
     }
 
     const newLikesArr = this.post.likes;
-    this.showLoader = true;
 
     this.postService.updateLikesByPostId$(newLikesArr, this.postId).subscribe({
       next: () => {
-        this.isLiked = false;
       },
       complete: () => {
-        this.showLoader = false;
+        this.isDisliking = false;
       },
       error: (err) => {
-        this.showLoader = false;
+        this.isDisliking = false;
         this.post.likes = previousLikes;
 
         notifyErr(err.message);
       }
     });
+  }
+
+  scrollToSec() {
+    document.getElementById('comments')?.scrollIntoView();
+  }
+
+  commentsCount(count: number): void {
+    this.commCount = count;
+  }
+
+  commentsMassage(): string { 
+    let msg = '';
+
+    if (this.commCount == -1) {
+      return '';
+    }
+
+    if (this.commCount == 0) {
+      msg = 'There are no comments for this post! Why not write one?';
+    } else if (this.commCount == 1) {
+      msg = `There is 1 comment for this post. See it!`;
+    } else {
+      msg = `There are ${this.commCount} comments for this post. Check them!`;
+    }
+
+    return msg; 
   }
 }

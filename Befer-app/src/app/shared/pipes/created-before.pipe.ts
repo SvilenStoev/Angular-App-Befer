@@ -8,6 +8,10 @@ export class CreatedBeforePipe implements PipeTransform {
   private now = new Date();
 
   transform(createdAt: string): string {
+    if (!createdAt) {
+      return '';
+    }
+
     const createdTime = new Date(createdAt);
 
     const elapsedTime = this.now.getTime() - createdTime.getTime();
