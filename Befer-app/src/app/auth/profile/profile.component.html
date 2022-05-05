@@ -7,7 +7,7 @@
             <p>{{currUser.username}}</p>
         </div>
         <div class="flex">
-            <p>Full name: </p>
+            <p>First and last name: </p>
             <p>{{currUser.fullName}}</p>
         </div>
         <div class="flex">
@@ -35,7 +35,7 @@
                     </ng-container>
                 </div>
                 <div class="flex">
-                    <p>Full name: </p>
+                    <p>First and last name: </p>
                     <input #fullName="ngModel" ngModel required minlength="{{nameMinLength}}" maxlength="{{maxLength}}" type="text" name="fullName">
                     <ng-container *ngIf="fullName.touched && fullName.invalid">
                         <p *ngIf="fullName.errors?.['required']" class="errorText">Fullname is required!</p>

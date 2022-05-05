@@ -98,6 +98,7 @@ export class RegisterComponent implements OnInit {
       },
       error: (err) => {
         const code = err.code;
+        this.showLoader = false;
 
         if (code == '202') {
           this.registerFormGroup.controls['username'].setErrors({'serverErr': true});
