@@ -6,13 +6,14 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { ApiService } from '../services/api.service';
 import { SharedModule } from '../shared/shared.module';
-import { PostService } from '../services/post.service';
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/auth/user.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { StorageService } from '../services/storage.service';
-import { CommentService } from '../services/comment.service';
-import { TransferService } from '../services/transfer.service';
+import { PostService } from '../services/components/post.service';
+import { StorageService } from '../services/common/storage.service';
+import { TransferService } from '../services/common/transfer.service';
+import { LanguageService } from '../services/common/language.service';
+import { CommentService } from '../services/components/comment.service';
 import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
 
@@ -44,6 +45,7 @@ export class CoreModule {
         ApiService,
         TransferService,
         CommentService,
+        LanguageService,
         {
           provide: HTTP_INTERCEPTORS,
           multi: true,

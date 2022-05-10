@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { IComment } from 'src/app/interfaces';
-import { UserService } from 'src/app/services/user.service';
-import { CommentService } from 'src/app/services/comment.service';
+import { UserService } from 'src/app/services/auth/user.service';
+import { CommentService } from 'src/app/services/components/comment.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({

@@ -1,19 +1,26 @@
 <nav>
-    <a routerLink=""><img src="https://www.linkpicture.com/q/Logo21.png" height="50"></a>
+    <a routerLink=""><img src="{{menu.logo.url}}" alt="{{menu.logo.name}}" height="50"></a>
     <ul>
-        <li><a routerLink="">Home</a></li>
+        <li><a routerLink="">{{menu.home.name}}</a></li>
+        <li><a routerLink="{{menu.allPosts.url}}">{{menu.allPosts.name}}</a></li>
         <ng-container *ngIf="isLogged">
-            <li><a routerLink="/posts/all">All Posts</a></li>
-            <li><a routerLink="/posts/mine">My Posts</a></li>
-            <li><a routerLink="/posts/create">Create Post</a></li>
-            <li><a routerLink="/user/profile">Profile</a></li>
-            <li><a href="javascript:void(0)" (click)="logoutHandler()">Logout</a></li>
+            <li><a routerLink="{{menu.myPosts.url}}">{{menu.myPosts.name}}</a></li>
+            <li><a routerLink="{{menu.createPost.url}}">{{menu.createPost.name}}</a></li>
+            <li><a routerLink="{{menu.profile.url}}">{{menu.profile.name}}</a></li>
+            <li><a href="javascript:void(0)" (click)="logoutHandler()">{{menu.logout.name}}</a></li>
         </ng-container>
         <ng-container *ngIf="!isLogged">
-            <li><a routerLink="/posts/all">All Posts</a></li>
-            <li><a routerLink="/user/login">Login</a></li>
-            <li><a routerLink="/user/register">Register</a></li>
+            <li><a routerLink="{{menu.login.url}}">{{menu.login.name}}</a></li>
+            <li><a routerLink="{{menu.register.url}}">{{menu.register.name}}</a></li>
         </ng-container>
+        <li>
+            <ng-container *ngIf="currLang == 'bg'">
+                <a href="javascript:void(0)" (click)="changeLang('en')">EN</a>
+            </ng-container>
+            <ng-container *ngIf="currLang == 'en'">
+                <a href="javascript:void(0)" (click)="changeLang('bg')">BG</a>
+            </ng-container>
+        </li>
     </ul>
 </nav>
 

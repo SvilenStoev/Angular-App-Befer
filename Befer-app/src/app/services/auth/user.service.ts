@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 
-import { IUser } from '../interfaces';
-import { ApiService } from './api.service';
-import { StorageService } from '../services/storage.service';
+import { IUser } from '../../interfaces';
+import { ApiService } from '../api.service';
+import { StorageService } from '../common/storage.service';
 
 export interface CreateUserDto { username: string, fullName: string, email: string, password: string }
 export interface UserDataDto { username: string, id: string, token: string }

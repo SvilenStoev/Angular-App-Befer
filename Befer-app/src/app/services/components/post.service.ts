@@ -1,10 +1,10 @@
 import { map, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { IPost } from '../interfaces';
-import { ApiService } from './api.service';
-import { UserService } from './user.service';
-import { addOwner, createPointer } from '../auth/util';
+import { IPost } from '../../interfaces';
+import { ApiService } from '../api.service';
+import { UserService } from '../auth/user.service';
+import { addOwner, createPointer } from '../../auth/util';
 
 export interface CreatePostDto {
   afterImgUrl: string,

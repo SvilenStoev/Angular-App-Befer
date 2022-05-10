@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { userConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
 import { notifySuccess } from 'src/app/shared/notify/notify';
-import { CreateUserDto, UserService } from 'src/app/services/user.service';
+import { CreateUserDto, UserService } from 'src/app/services/auth/user.service';
 import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
 
 @Component({

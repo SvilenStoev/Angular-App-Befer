@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserDataDto } from './user.service';
+import { UserDataDto } from '../auth/user.service';
 
 @Injectable()
 export class StorageService {

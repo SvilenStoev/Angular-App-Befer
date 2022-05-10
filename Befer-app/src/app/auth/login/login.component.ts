@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { whitespaceValidator } from '../util';
 import { userConsts } from 'src/app/shared/constants';
-import { UserService } from '../../services/user.service';
+import { UserService } from 'src/app/services/auth/user.service';
 import { environment } from 'src/environments/environment';
 import { notifySuccess } from 'src/app/shared/notify/notify';
 

@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IUser } from 'src/app/interfaces';
 import { userConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/auth/user.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({

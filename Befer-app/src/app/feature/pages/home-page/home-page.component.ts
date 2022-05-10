@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
-import { UserService } from '../../../services/user.service';
+import { UserService } from 'src/app/services/auth/user.service';
 
 @Component({
   selector: 'app-home-page',

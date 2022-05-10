@@ -1,0 +1,41 @@
+{
+    "language": "bg",
+    "header": {
+      "logo": {
+        "name": "Befer Logo",
+        "url": "../../../assets/images/Befer_logo.png"
+      },
+      "home": {
+        "name": "Начало",
+        "url": ""
+      },
+      "login": {
+        "name": "Вписване",
+        "url": "/user/login"
+      },
+      "register": {
+        "name": "Регистриране",
+        "url": "/user/register"
+      },
+      "profile": {
+        "name": "Профил",
+        "url": "/user/profile"
+      },
+      "logout": {
+        "name": "Отписване",
+        "url": "javascript:void(0)"
+      },
+      "allPosts": {
+        "name": "Всички постове",
+        "url": "/posts/all"
+      },
+      "myPosts": {
+        "name": "Моите постове",
+        "url": "/posts/mine"
+      },
+      "createPost": {
+        "name": "Създай пост",
+        "url": "/posts/create"
+      }
+    }
+  }

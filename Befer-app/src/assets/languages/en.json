@@ -1,0 +1,41 @@
+{
+    "language": "en",
+    "header": {
+      "logo": {
+        "name": "Befer Logo",
+        "url": "../../../assets/images/Befer_logo.png"
+      },
+      "home": {
+        "name": "Home",
+        "url": ""
+      },
+      "login": {
+        "name": "Login",
+        "url": "/user/login"
+      },
+      "register": {
+        "name": "Register",
+        "url": "/user/register"
+      },
+      "profile": {
+        "name": "Profile",
+        "url": "/user/profile"
+      },
+      "logout": {
+        "name": "Logout",
+        "url": "javascript:void(0)"
+      },
+      "allPosts": {
+        "name": "All Posts",
+        "url": "/posts/all"
+      },
+      "myPosts": {
+        "name": "My Posts",
+        "url": "/posts/mine"
+      },
+      "createPost": {
+        "name": "Create Post",
+        "url": "/posts/create"
+      }
+    }
+  }

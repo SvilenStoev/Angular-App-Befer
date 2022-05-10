@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { postConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
-import { PostService } from 'src/app/services/post.service';
+import { PostService } from 'src/app/services/components/post.service';
 import { notifySuccess } from 'src/app/shared/notify/notify';
 
 @Component({

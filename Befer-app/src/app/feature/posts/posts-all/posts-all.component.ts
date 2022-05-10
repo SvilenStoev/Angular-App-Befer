@@ -4,8 +4,8 @@ import { Title } from '@angular/platform-browser';
 
 import { IPost } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/services/user.service';
-import { PostService } from 'src/app/services/post.service';
+import { UserService } from 'src/app/services/auth/user.service';
+import { PostService } from 'src/app/services/components/post.service';
 
 @Component({
   selector: 'app-posts-all',
