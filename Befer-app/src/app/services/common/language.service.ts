@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import { ILanguage } from 'src/app/interfaces/language';
 import { environment } from 'src/environments/environment';
@@ -10,6 +10,7 @@ import * as bgJson from "../../../assets/languages/bg.json";
 })
 export class LanguageService {
 
+  langEvent$: EventEmitter<any> = new EventEmitter();
   currLang: string = this.getStorageLang() || environment.lang.default;
 
   constructor() {
@@ -17,7 +18,10 @@ export class LanguageService {
   }
 
   get(): ILanguage {
-    return this.currLang == environment.lang.en ? enJson : bgJson;
+    const language = this.currLang == environment.lang.en ? enJson : bgJson;
+    this.langEvent$.emit(language);
+
+    return language;
   }
 
   setStorageLang(language: string): void {

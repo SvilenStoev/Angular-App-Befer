@@ -162,7 +162,7 @@ export class PostDetailsPageComponent implements OnInit {
     document.getElementById('comments')?.scrollIntoView();
   }
 
-  commentsCount(count: number): void {
+  setCommentsCount(count: number): void {
     this.commCount = count;
   }
 

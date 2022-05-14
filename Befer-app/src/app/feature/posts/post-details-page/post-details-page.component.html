@@ -15,6 +15,7 @@
                     <h3>Post Description</h3>
                     <p>{{post.description}}</p>
                 </ng-container>
+                <hr style="width:500px; margin: auto;">
                 <b><i><div style="cursor:pointer; display:inline; margin: 20px;" (click)="scrollToSec()">{{commentsMassage()}}</div></i></b>
                 <div class="buttons">
                     <ng-container *ngIf="isOwner">
@@ -43,7 +44,7 @@
 
 <aside>
     <ng-container *ngIf="postId">
-        <app-comments (commentsCount)="commentsCount($event)" [postId]="postId"></app-comments>
+        <app-comments (commentsCount)="setCommentsCount($event)" [postId]="postId"></app-comments>
     </ng-container>
 </aside>
 

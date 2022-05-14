@@ -14,8 +14,8 @@ import { LanguageService } from 'src/app/services/common/language.service';
 export class HeaderComponent {
 
   private isLoggingOut: boolean = false;
-  currLang: string = this.language.currLang;
-  menu: any = this.language.get().header;
+  currLang: string = this.langService.currLang;
+  menu: any = this.langService.get().header;
   showLoader: boolean = false;
 
   get isLogged(): boolean {
@@ -23,10 +23,10 @@ export class HeaderComponent {
   }
 
   constructor(
-    public userService: UserService,
+    private userService: UserService,
     private router: Router,
     private storage: StorageService,
-    private language: LanguageService) { }
+    private langService: LanguageService) { }
 
   logoutHandler(): void {
     if (this.isLoggingOut) {
@@ -58,7 +58,7 @@ export class HeaderComponent {
 
   changeLang(language: string): void {
     this.currLang = language;
-    this.language.setStorageLang(language);
-    this.menu = this.language.get().header;
+    this.langService.setStorageLang(language);
+    this.menu = this.langService.get().header;
   }
 }

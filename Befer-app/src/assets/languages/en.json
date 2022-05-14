@@ -1,41 +1,122 @@
 {
-    "language": "en",
-    "header": {
-      "logo": {
-        "name": "Befer Logo",
-        "url": "../../../assets/images/Befer_logo.png"
-      },
-      "home": {
-        "name": "Home",
-        "url": ""
-      },
-      "login": {
-        "name": "Login",
-        "url": "/user/login"
-      },
-      "register": {
-        "name": "Register",
-        "url": "/user/register"
-      },
-      "profile": {
-        "name": "Profile",
-        "url": "/user/profile"
-      },
-      "logout": {
-        "name": "Logout",
-        "url": "javascript:void(0)"
-      },
-      "allPosts": {
-        "name": "All Posts",
-        "url": "/posts/all"
-      },
-      "myPosts": {
-        "name": "My Posts",
-        "url": "/posts/mine"
-      },
-      "createPost": {
-        "name": "Create Post",
-        "url": "/posts/create"
-      }
+  "language": "en",
+  "header": {
+    "logo": {
+      "name": "Befer Logo",
+      "url": "../../../assets/images/Befer_logo.png"
+    },
+    "home": {
+      "name": "Home",
+      "url": ""
+    },
+    "login": {
+      "name": "Login",
+      "url": "/user/login"
+    },
+    "register": {
+      "name": "Register",
+      "url": "/user/register"
+    },
+    "profile": {
+      "name": "Profile",
+      "url": "/user/profile"
+    },
+    "logout": {
+      "name": "Logout",
+      "url": "javascript:void(0)"
+    },
+    "allPosts": {
+      "name": "All Posts",
+      "url": "/posts/all"
+    },
+    "myPosts": {
+      "name": "My Posts",
+      "url": "/posts/mine"
+    },
+    "createPost": {
+      "name": "Create Post",
+      "url": "/posts/create"
     }
+  },
+  "footer": {
+    "content": "All Rights Reserved | Designed and built by ",
+    "ownerName": "Svilen Stoev"
+  },
+  "home": {
+    "title": "Home Page",
+    "subTitleH1": "The Best Network for Sharing Your \"Before and After\" Photography",
+    "subTitleH2": "Share your progress, renovation or great achievement and <u>Befer</u> Your Life!",
+    "notLogged": "You are not logged in!",
+    "loginNow": "now to access all features."
+  },
+  "postsHome": {
+    "top": "Top",
+    "sortedBy": " Posts | Sorted by ",
+    "top5": "Top 5 posts",
+    "top10": "Top 10 posts",
+    "sortBy": "Sort by ",
+    "date": "Date",
+    "likes": "Likes",
+    "seeAfter": "See \"After\""
+  },
+  "profile": {
+    "title": "Profile",
+    "userInfo": "User Info",
+    "editUser": "Edit User",
+    "fullName": "First and last name: ",
+    "email": "Email: ",
+    "username": "Username: ",
+    "required": " *"
+  },
+  "login": {
+    "title": "Sign in",
+    "username": "Username",
+    "password": "Password",
+    "signIn": "Sign in",
+    "notRegistered": "You don't have an account? Sign up."
+  },
+  "register": {
+    "title": "Sign up",
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "repeatPassword": "Repeat password",
+    "required": " *",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "age": "Age",
+    "signUp": "Sign up",
+    "alreadyRegistered": "You already have an account? Sign in."
+  },
+  "validations": {
+    "requiredEmail": "The email is required!",
+    "invalidEmail": "The email is invalid!",
+    "requiredUsername": "The username is required!",
+    "requiredPassword": "The password is required!",
+    "passwordLength": "The password should be at least 6 characters!",
+    "companyNameRequired": "The company name is required!",
+    "requiredField": "The field is required.",
+    "forbiddenField": "The field is forbidden."
+  },
+  "dropdown": {
+    "language": {
+      "icon": "language",
+      "title": "Language",
+      "options": [
+        {
+          "name": "Bulgarian",
+          "url": "bg"
+        },
+        {
+          "name": "English",
+          "url": "en"
+        }
+      ]
+    }
+  },
+  "shared": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel"
   }
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  menu: any = this.langService.get().footer;
+  currYear: number = Date.now();
+
+  constructor(private langService: LanguageService) { }
 
   ngOnInit(): void {
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.footer;
+    });
   }
-
 }
