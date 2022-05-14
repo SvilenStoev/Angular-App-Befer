@@ -9,12 +9,12 @@
 
 **Befer Website** is created as defense project for **Angular** course at [SoftUni](https://softuni.bg/ "SoftUni") (March 2022).
 
-Befer website is a network for people who would like to share their "before and after" photography to other, or just store them without expose in public. Place for browsing other people's photography and have fun.
+Befer website is a network for people who would like to share their "before and after" photography to others, or just store the photos without expose in public. Place for browsing other people's photography and have fun.
 Befer is a platform, where users can introduce their best pictures and great transformations or comment and like other people's photos.
 
 ## :pencil2: Overview
 
-**Befer** is a place, where users can share their own "before and after" photography, or their opinion of other's pictures. They can achive this through creating posts and adding comments. All users can browse through all public posts.
+**Befer** is a place, where users can share their own "before and after" photography, or their opinion of others posts. They can achive this through creating posts, adding comments or liking them. All users can browse through all public posts.
 
 ## :pencil: Project Description
 
@@ -38,6 +38,10 @@ Author of a particular post can see delete and edit buttons in details page of h
 Comments can be posted only by authorized users to all public posts. Every single comment is connected to a single post.
 Only author of the comment have the option to delete it.
 Only users, which are not author of a single post can like it. After that they are able to dislike the post.
+
+### :bulgaria: :us: Internationalization
+
+Befer supports translation in English and Bulgarian.
 
 ## :hammer: Built With
 - [Angular](https://github.com/angular)
