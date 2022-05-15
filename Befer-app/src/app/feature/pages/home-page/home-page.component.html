@@ -1,7 +1,7 @@
 <section class="main container">
-    <h1>The Best Network for Sharing Your "Before and After" Photography</h1>
-    <h2>Share your progress, renovation or great achievement and <u>Befer</u> Your Life!</h2> 
-    <h3 *ngIf="!isLogged">You are not logged in! <a routerLink="/user/login">Login</a> now to access all features.</h3>
+    <h1>{{menu.subTitleH1}}</h1>
+    <h2>{{menu.subTitleH2}} <u>Befer</u> Your Life!</h2> 
+    <h3 *ngIf="!isLogged">{{menu.notLogged}} <a routerLink="/user/login">{{menu.login}}</a> {{menu.loginNow}}</h3>
   </section>
   <section class="container">
       <app-posts-home></app-posts-home>

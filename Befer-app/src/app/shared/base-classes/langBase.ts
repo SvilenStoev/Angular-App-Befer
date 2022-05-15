@@ -1,17 +1,17 @@
-import { ILanguage } from "src/app/interfaces/language";
-import { LanguageService } from "src/app/services/common/language.service";
+// import { ILanguage } from "src/app/interfaces/language";
+// import { LanguageService } from "src/app/services/common/language.service";
 
-export class LangBase {
+// export class LangBase {
 
-    fullMenu: ILanguage = this.langService.get();
+//     fullMenu: ILanguage = this.langService.get();
 
-    constructor(protected langService: LanguageService) {
-       this.langChangeListener();
-    }
+//     constructor(protected langService: LanguageService) {
+//        this.langChangeListener();
+//     }
 
-    protected langChangeListener() {
-        this.langService.langEvent$.subscribe(langJson => {
-            this.fullMenu = langJson;
-        });
-    }
-}
+//     protected langChangeListener() {
+//         this.langService.langEvent$.subscribe(langJson => {
+//             this.fullMenu = langJson;
+//         });
+//     }
+// }

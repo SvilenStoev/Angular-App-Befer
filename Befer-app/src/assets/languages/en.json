@@ -43,20 +43,24 @@
     "ownerName": "Svilen Stoev"
   },
   "home": {
-    "title": "Home Page",
+    "title": "Home",
     "subTitleH1": "The Best Network for Sharing Your \"Before and After\" Photography",
-    "subTitleH2": "Share your progress, renovation or great achievement and <u>Befer</u> Your Life!",
+    "subTitleH2": "Share your progress, renovation or great achievement and",
     "notLogged": "You are not logged in!",
+    "login": "Login",
     "loginNow": "now to access all features."
   },
   "postsHome": {
-    "top": "Top",
-    "sortedBy": " Posts | Sorted by ",
+    "postsSortedBy": "Top {0} Posts | Sorted by {1}",
+    "createPost": "Create Post",
     "top5": "Top 5 posts",
     "top10": "Top 10 posts",
-    "sortBy": "Sort by ",
+    "sortByDate": "Sort by Date",
+    "sortByLikes": "Sort by Likes",
     "date": "Date",
     "likes": "Likes",
+    "likesCount": "likes",
+    "like": "like",
     "seeAfter": "See \"After\""
   },
   "profile": {

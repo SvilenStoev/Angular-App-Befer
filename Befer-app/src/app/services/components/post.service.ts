@@ -5,6 +5,7 @@ import { IPost } from '../../interfaces';
 import { ApiService } from '../api.service';
 import { UserService } from '../auth/user.service';
 import { addOwner, createPointer } from '../../auth/util';
+import { LanguageService } from '../common/language.service';
 
 export interface CreatePostDto {
   afterImgUrl: string,
@@ -28,8 +29,12 @@ export interface CreateOwnerDto {
 export class PostService {
 
   postColl: string = '/classes/Publication';
+  menuPostsHome: any = this.langService.get().postsHome;
 
-  constructor(private api: ApiService, private userService: UserService) { }
+  constructor(
+    private api: ApiService, 
+    private userService: UserService,
+    private langService: LanguageService) { }
 
   loadPosts$(limit: number, sortType: string): Observable<any> {
     const onlyPublic = JSON.stringify({
@@ -89,7 +94,7 @@ export class PostService {
   }
 
   getSortType(sortType: string): string {
-    if (sortType == 'Date') {
+    if (sortType == this.menuPostsHome.date) {
       return '-createdAt';
     } else {
       return '-likes';
