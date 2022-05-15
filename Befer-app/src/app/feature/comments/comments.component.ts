@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { IComment } from 'src/app/interfaces';
 import { UserService } from 'src/app/services/auth/user.service';
 import { CommentService } from 'src/app/services/components/comment.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 
 @Component({
   selector: 'app-comments',

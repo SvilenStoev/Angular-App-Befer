@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 
-import { notifyErr } from 'src/app/shared/notify/notify';
+import { notifyErr } from 'src/app/shared/other/notify';
 import { UserService } from 'src/app/services/auth/user.service';
 
 @Injectable({

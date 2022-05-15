@@ -1,13 +1,13 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { userConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
-import { notifySuccess } from 'src/app/shared/notify/notify';
+import { notifySuccess } from 'src/app/shared/other/notify';
 import { CreateUserDto, UserService } from 'src/app/services/auth/user.service';
 import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-register',
@@ -43,10 +43,10 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder, 
     private userService: UserService, 
     private router: Router,
-    private titleService: Title) { }
+    private titleService: TabTitleService) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Register`);
+    this.titleService.setTitle(`Register`);
 
     this.registerFormGroup.valueChanges.subscribe(() => {
       const fullNameMinError = this.getValError('fullName', 'minlength');

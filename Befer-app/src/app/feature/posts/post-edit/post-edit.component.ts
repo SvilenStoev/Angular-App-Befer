@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { postConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
 import { PostService } from 'src/app/services/components/post.service';
-import { notifySuccess } from 'src/app/shared/notify/notify';
+import { notifySuccess } from 'src/app/shared/other/notify';
 import { TransferService } from 'src/app/services/common/transfer.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 import { environment } from 'src/environments/environment';
 
@@ -10,9 +10,9 @@ import { environment } from 'src/environments/environment';
 })
 export class NotFoundPageComponent implements OnInit {
 
-  constructor(private titleService: Title) { }
+  constructor(private titleService: TabTitleService) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Not Found`);
+    this.titleService.setTitle(`Not Found`);
   }
 }

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 
 import { UserService } from 'src/app/services/auth/user.service';
 import { StorageService } from 'src/app/services/common/storage.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({

@@ -70,7 +70,11 @@
     "fullName": "First and last name: ",
     "email": "Email: ",
     "username": "Username: ",
-    "required": " *"
+    "required": " *",
+    "messages": {
+      "notAuthorized": "You are not authorized to edit this user!",
+      "updatedProfile": "The profile is updated!"
+    }
   },
   "login": {
     "title": "Sign in",
@@ -93,14 +97,18 @@
     "alreadyRegistered": "You already have an account? Sign in."
   },
   "validations": {
-    "requiredEmail": "The email is required!",
-    "invalidEmail": "The email is invalid!",
-    "requiredUsername": "The username is required!",
-    "requiredPassword": "The password is required!",
-    "passwordLength": "The password should be at least 6 characters!",
-    "companyNameRequired": "The company name is required!",
-    "requiredField": "The field is required.",
-    "forbiddenField": "The field is forbidden."
+    "required": {
+      "username": "Username is required!",
+      "email": "Email is required!",
+      "fullName": "Name is required!",
+      "password": "Password is required!"
+    },
+    "minlength": {
+      "username": "Username should be at least {0} symbols!",
+      "fullName": "Name should be at least {0} symbols!",
+      "password": "Password should be at least 6 characters!"
+    },
+    "invalidEmail": "Email is invalid!"
   },
   "dropdown": {
     "language": {

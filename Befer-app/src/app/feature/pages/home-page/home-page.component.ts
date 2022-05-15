@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
 import { LanguageService } from 'src/app/services/common/language.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-home-page',
@@ -20,14 +20,19 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private titleService: Title,
+    private titleService: TabTitleService,
     private langService: LanguageService) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | ${this.menu.title}`);
+    this.setTitle();
 
     this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.home;
+      this.setTitle();
     });
+  }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.title);
   }
 }

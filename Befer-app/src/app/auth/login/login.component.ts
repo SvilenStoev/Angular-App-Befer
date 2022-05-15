@@ -1,13 +1,12 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { whitespaceValidator } from '../util';
 import { userConsts } from 'src/app/shared/constants';
+import { notifySuccess } from 'src/app/shared/other/notify';
 import { UserService } from 'src/app/services/auth/user.service';
-import { environment } from 'src/environments/environment';
-import { notifySuccess } from 'src/app/shared/notify/notify';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-login',
@@ -33,10 +32,10 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private titleService: Title) { }
+    private titleService: TabTitleService) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Login`);
+    this.titleService.setTitle(`Login`);
 
     this.loginFormGroup.valueChanges.subscribe(() => {
       const usernameMinError = this.getValError('username', 'minlength');

@@ -1,13 +1,13 @@
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { IUser } from 'src/app/interfaces';
 import { userConsts } from 'src/app/shared/constants';
-import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/notify/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
+import { LanguageService } from 'src/app/services/common/language.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,16 +24,31 @@ export class ProfileComponent implements OnInit {
   maxLength: number = userConsts.fullNameMaxLength;
   passwordMinLength: number = userConsts.passwordMinLength;
   userNameMaxLength: number = userConsts.userNameMaxLength;
+  menu: any = this.langService.get().profile;
+  menuBtns: any = this.langService.get().shared;
+  validations: any = this.langService.get().validations; 
 
   @ViewChild('saveProfileForm') saveProfileForm: NgForm;
 
   constructor(
     private userService: UserService,
-    private titleService: Title,
-    private router: Router) { }
+    private titleService: TabTitleService,
+    private router: Router,
+    private langService: LanguageService) { }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.title);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Profile`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.profile;
+      this.menuBtns = langJson.shared;
+      this.validations = langJson.validations;
+      this.setTitle();
+    });
 
     this.showLoader = true;
 
@@ -56,7 +71,7 @@ export class ProfileComponent implements OnInit {
 
   editHandler(): void {
     if (!this.currUser) {
-      notifyErr('You are not authorized to edit this user!')
+      notifyErr(this.menu.messages.notAuthorized);
       this.router.navigate(['/home']);
     }
 
@@ -73,7 +88,7 @@ export class ProfileComponent implements OnInit {
 
   saveHandler(saveProfileForm: NgForm) {
     if (!this.currUser) {
-      notifyErr('You are not authorized to edit this user!')
+      notifyErr(this.menu.messages.notAuthorized)
       this.router.navigate(['/home']);
     }
 
@@ -91,7 +106,7 @@ export class ProfileComponent implements OnInit {
 
     this.userService.editProfile$(data).subscribe({
       next: () => {
-        notifySuccess('The profile is updated!');
+        notifySuccess(this.menu.messages.updatedProfile);
         this.currUser = data;
         this.isEditMode = false;
       },
