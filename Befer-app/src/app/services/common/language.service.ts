@@ -18,10 +18,7 @@ export class LanguageService {
   }
 
   get(): ILanguage {
-    const language = this.currLang == environment.lang.en ? enJson : bgJson;
-    this.langEvent$.emit(language);
-
-    return language;
+    return this.currLang == environment.lang.en ? enJson : bgJson;
   }
 
   setStorageLang(language: string): void {

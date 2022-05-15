@@ -59,6 +59,10 @@ export class HeaderComponent {
   changeLang(language: string): void {
     this.currLang = language;
     this.langService.setStorageLang(language);
-    this.menu = this.langService.get().header;
+
+    const newLang = this.langService.get();
+
+    this.menu = newLang.header;
+    this.langService.langEvent$.emit(newLang);
   }
 }
