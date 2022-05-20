@@ -148,9 +148,9 @@
   "validations": {
     "required": "{0} is required!",
     "requiredContent": "Content is required!",
-    "minlengthLong": "{0} should be at least {1} symbols! {2} {3} to go. //validations.minlength | replaceArgs: shared.username: userNameMinLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "minlengthLong": "{0} should be at least {1} symbols! {2} {3} to go.",
     "minlengthShort": "{0} should be atleast {1} symbols long!",
-    "maxlength": "{0} should be maximum {1} symbols! Please remove {2} {3}. //validations.maxlength | replaceArgs: shared.username: userNameMaxLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "maxlength": "{0} should be maximum {1} symbols! Please remove {2} {3}.",
     "whitespace": "{0} should not contains whitespace!",
     "invalid": "{0} is invalid!",
     "invalidUrl": "{0} should be valid URL!",
@@ -173,6 +173,8 @@
       "firstLastName": "First and last name",
       "password": "Password",
       "rePass": "Repeat Password"
-    }
+    },
+    "symbols": "symbols",
+    "symbol": "symbol"
   }
 }

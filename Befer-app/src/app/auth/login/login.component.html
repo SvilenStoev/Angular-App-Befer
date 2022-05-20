@@ -1,35 +1,35 @@
 <form [formGroup]="loginFormGroup" (ngSubmit)="loginHandler()">
-    <h2>Login</h2>
+    <h2>{{menu.title}}</h2>
     <div>
-        <label for="username">Username</label>
+        <label for="username">{{shared.labels.username}}</label>
         <input formControlName="username" type="text" placeholder="Username" name="username">
         <ng-container *ngIf="showError('username')">
-            <p *ngIf="getValError('username', 'required')" class="errorText">Username is required!</p>
-            <p *ngIf="getValError('username', 'whitespace')" class="errorText">Username should not contains whitespace!</p>
+            <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
+            <p *ngIf="getValError('username', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.username}}</p>
             <p *ngIf="getValError('username', 'minlength') && !getValError('username', 'whitespace')" class="errorText">
-                Username should be at least {{ userNameMinLength }} symbols! {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }} to go.
+                {{validations.minlengthLong | replaceArgs: shared.labels.username: userNameMinLength: usernameSymb: getSymbText(usernameSymb)}}
             </p>
             <p *ngIf="getValError('username', 'maxlength') && !getValError('username', 'whitespace')" class="errorText">
-                Username should be maximum {{ userNameMaxLength }} symbols! Please remove {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }}.
+                {{validations.maxlength | replaceArgs: shared.labels.username: userNameMaxLength: usernameSymb: getSymbText(usernameSymb)}}
             </p>
         </ng-container>
     </div>
     <div>
-        <label for="password">Password</label>
+        <label for="password">{{shared.labels.password}}</label>
         <input formControlName="password" type="password" placeholder="Password" name="password">
         <ng-container *ngIf="showError('password')">
-            <p *ngIf="getValError('password', 'required')" class="errorText">Password is required!</p>
-            <p *ngIf="getValError('password', 'whitespace')" class="errorText">Password should not contains whitespace!</p>
+            <p *ngIf="getValError('password', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
+            <p *ngIf="getValError('password', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.password}}</p>
             <p *ngIf="getValError('password', 'minlength') && !getValError('password', 'whitespace')" class="errorText">
-                Password should be at least {{ passwordMinLength }} symbols! {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }} to go.
+                {{validations.minlengthLong | replaceArgs: shared.labels.password: passwordMinLength: passwordSymb: getSymbText(passwordSymb)}}
             </p>
             <p *ngIf="getValError('password', 'maxlength') && !getValError('password', 'whitespace')" class="errorText">
-                Password should be maximum {{ passwordMaxLength }} symbols! Please remove {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
+                {{validations.maxlength | replaceArgs: shared.labels.password: passwordMaxLength: passwordSymb: getSymbText(passwordSymb)}}
             </p>
         </ng-container>
     </div>
-    <button class="btn" type="submit" [disabled]="!loginFormGroup.valid">Login</button>
-    <div class="registerPath">You don't have a profile? &nbsp; <a class="registerPath" routerLink="/user/register"><b><u>Join Befer now!</u></b></a></div>
+    <button class="btn" type="submit" [disabled]="!loginFormGroup.valid">{{menu.title}}</button>
+    <div class="registerPath">{{menu.notRegistered}} &nbsp; <a class="registerPath" routerLink="/user/register"><b><u>{{menu.joinBefer}}</u></b></a></div>
 </form>
 
 <app-spinner [showLoader]="showLoader"></app-spinner>

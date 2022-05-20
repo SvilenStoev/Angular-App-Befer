@@ -7,6 +7,7 @@ import { userConsts } from 'src/app/shared/constants';
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { UserService } from 'src/app/services/auth/user.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +16,20 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
 })
 export class LoginComponent implements OnInit {
 
-  usernameSymb: number;
-  passwordSymb: number;
-  showLoader: boolean = false;
+  //validations variables
   userNameMinLength: number = userConsts.userNameMinLength;
   userNameMaxLength: number = userConsts.userNameMaxLength;
   passwordMinLength: number = userConsts.passwordMinLength;
   passwordMaxLength: number = userConsts.passwordMaxLength;
+  usernameSymb: number;
+  passwordSymb: number;
+
+  showLoader: boolean = false;
+
+  //menu languages
+  menu: any = this.langService.get().login;
+  shared: any = this.langService.get().shared;
+  validations: any = this.langService.get().validations;
 
   loginFormGroup: FormGroup = this.formBuilder.group({
     'username': new FormControl(null, [Validators.required, Validators.minLength(this.userNameMinLength), Validators.maxLength(this.userNameMaxLength), whitespaceValidator]),
@@ -32,10 +40,22 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private titleService: TabTitleService) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService) { }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.title);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`Login`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.login;
+      this.shared = langJson.shared;
+      this.validations = langJson.validations;
+      this.setTitle();
+    });
 
     this.loginFormGroup.valueChanges.subscribe(() => {
       const usernameMinError = this.getValError('username', 'minlength');
@@ -64,7 +84,7 @@ export class LoginComponent implements OnInit {
     this.userService.login$(data).subscribe({
       next: () => {
         this.router.navigate(['/home']);
-        notifySuccess('Logged in successfully.');
+        notifySuccess(this.menu.messages.loggedInSuccess);
       },
       complete: () => {
         this.showLoader = false;
@@ -84,5 +104,9 @@ export class LoginComponent implements OnInit {
 
   getValError(controlName: string, errorType: string) {
     return this.loginFormGroup.controls[controlName].errors?.[errorType];
+  }
+
+  getSymbText(currSymbs: number): string {
+    return currSymbs > 1 ? this.shared.symbols : this.shared.symbol;
   }
 }

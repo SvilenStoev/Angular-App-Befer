@@ -148,11 +148,11 @@
   "validations": {
     "required": "{0} е задължително поле!",
     "requiredContent": "Съдържанието е задължително!",
-    "minlengthLong": "Полето {0} трябва да бъде поне {1} символа! Остават още {2} {3}. //validations.minlength | replaceArgs: shared.username: userNameMinLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "minlengthLong": "Полето \"{0}\" трябва да бъде поне {1} символа! Добави още {2} {3}.",
     "minlengthShort": "Полето \"{0}\" трябва да бъде дълго поне {1} символа!",
-    "maxlength": "Полето {0} трябва да бъде най-много {1} символа! Моля премахни {2} {3}. //validations.maxlength | replaceArgs: shared.username: userNameMaxLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "maxlength": "Полето \"{0}\" трябва да бъде най-много {1} символа! Моля премахни {2} {3}.",
     "whitespace": "{0} не трябва да съдържа интервал!",
-    "invalid": "Полето {0} е невалидно!",
+    "invalid": "Полето \"{0}\" е невалидно!",
     "invalidUrl": "{0} трябва да бъде валиден URL!",
     "passMissmatch": "Паролите не съвпадат!"
   },
@@ -173,6 +173,8 @@
       "firstLastName": "Име и фамилия",
       "password": "Парола",
       "rePass": "Повтори паролата"
-    }
+    },
+    "symbols": "символа",
+    "symbol": "символ"
   }
 }

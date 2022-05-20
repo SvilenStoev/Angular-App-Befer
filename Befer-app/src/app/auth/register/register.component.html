@@ -1,51 +1,51 @@
 <form [formGroup]="registerFormGroup" (ngSubmit)="registerHandler()">
-    <h2>Register</h2>
+    <h2>{{menu.title}}</h2>
     <div class="on-dark">
-        <label for="fullName">First and last name</label>
+        <label for="fullName">{{shared.labels.firstLastName}}</label>
         <input formControlName="fullName" type="text" placeholder="John Jonsen" name="fullName">
         <ng-container *ngIf="showError('fullName')">
-            <p *ngIf="getValError('fullName', 'required')" class="errorText">Fullname is required!</p>
+            <p *ngIf="getValError('fullName', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.firstLastName}}</p>
             <p *ngIf="getValError('fullName', 'minlength')" class="errorText">
-                Fullname should be at least {{ nameMinLength }} symbols! {{ fullNameSymb }} {{ fullNameSymb > 1 ? 'symbols' : 'symbol' }} to go.
+                {{validations.minlengthLong | replaceArgs: shared.labels.firstLastName: nameMinLength: fullNameSymb: getSymbText(fullNameSymb)}}
             </p>
             <p *ngIf="getValError('fullName', 'maxlength')" class="errorText">
-                Fullname should be maximum {{ maxLength }} symbols! Please remove {{ fullNameSymb }} {{ fullNameSymb > 1 ? 'symbols' : 'symbol' }}.
+                {{validations.maxlength | replaceArgs: shared.labels.firstLastName: maxLength: fullNameSymb: getSymbText(fullNameSymb)}}
             </p>
         </ng-container>
     </div>
     <div class="on-dark">
-        <label>Username</label>
+        <label>{{shared.labels.username}}</label>
         <input formControlName="username" type="text" placeholder="John93" name="username">
         <ng-container *ngIf="showError('username')">
-            <p *ngIf="getValError('username', 'required')" class="errorText">Username is required!</p>
-            <p *ngIf="getValError('username', 'whitespace')" class="errorText">Username should not contains whitespace!</p>
+            <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
+            <p *ngIf="getValError('username', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.username}}</p>
             <p *ngIf="getValError('username', 'minlength') && !getValError('username', 'whitespace')" class="errorText">
-                Username should be at least {{ nameMinLength }} symbols! {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }} to go.
+                {{validations.minlengthLong | replaceArgs: shared.labels.username: nameMinLength: usernameSymb: getSymbText(usernameSymb)}}
             </p>
             <p *ngIf="getValError('username', 'maxlength') && !getValError('username', 'whitespace')" class="errorText">
-                Username should be maximum {{ userNameMaxLength }} symbols! Please remove {{ usernameSymb }} {{ usernameSymb > 1 ? 'symbols' : 'symbol' }}.
+                {{validations.maxlength | replaceArgs: shared.labels.username: userNameMaxLength: usernameSymb: getSymbText(usernameSymb)}}
             </p>
         </ng-container>
     </div>
     <div class="on-dark">
-        <label for="email">Email</label>
+        <label for="email">{{shared.labels.email}}</label>
         <input formControlName="email" type="email" placeholder="John93@gmail.com" name="email">
         <ng-container *ngIf="showError('email')">
-            <p *ngIf="getValError('email', 'required')" class="errorText">Email is required!</p>
-            <p *ngIf="getValError('email', 'emailVal') && !getValError('email', 'required')" class="errorText">Email is not valid!</p>
+            <p *ngIf="getValError('email', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.email}}</p>
+            <p *ngIf="getValError('email', 'emailVal') && !getValError('email', 'required')" class="errorText">{{validations.invalid | replaceArgs: shared.labels.email}}</p>
         </ng-container>
     </div>
         <div formGroupName="passwords" class="on-dark">
-            <label for="password">Password</label>
+            <label for="password">{{shared.labels.password}}</label>
             <input formControlName="password" type="password" placeholder="*********" name="password">
             <ng-container *ngIf="showError('password', passwordsGroup)">
-                <p *ngIf="getValError('password', 'required', passwordsGroup)" class="errorText">Password is required!</p>
-                <p *ngIf="getValError('password', 'whitespace', passwordsGroup)" class="errorText">Password should not contains whitespace!</p>
+                <p *ngIf="getValError('password', 'required', passwordsGroup)" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
+                <p *ngIf="getValError('password', 'whitespace', passwordsGroup)" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.password}}</p>
                 <p *ngIf="getValError('password', 'minlength', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup)" class="errorText">
-                    Password should be at least {{ passwordMinLength }} symbols! {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }} to go.
+                    {{validations.minlengthLong | replaceArgs: shared.labels.password: passwordMinLength: passwordSymb: getSymbText(passwordSymb)}}
                 </p>
                 <p *ngIf="getValError('password', 'maxlength', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup)" class="errorText">
-                    Password should be maximum {{ maxLength }} symbols! Please remove {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
+                   {{validations.maxlength | replaceArgs: shared.labels.password: maxLength: passwordSymb: getSymbText(passwordSymb)}}
                 </p>
                 <!-- <p *ngIf="getValError('password', 'passVal', passwordsGroup) && !getValError('password', 'required', passwordsGroup) && !getValError('password', 'whitespace', passwordsGroup) && !getValError('password', 'minlength', passwordsGroup)" class="errorText">
                     Password should contains  .... {{ passwordSymb }} {{ passwordSymb > 1 ? 'symbols' : 'symbol' }}.
@@ -53,14 +53,14 @@
             </ng-container>
         </div>
         <div formGroupName="passwords" class="on-dark">
-            <label>Repeat Password</label>
+            <label>{{shared.labels.rePass}}</label>
             <input formControlName="repeatPass" type="password" placeholder="*********" name="repeatPass">
             <ng-container *ngIf="showError('repeatPass', passwordsGroup)">
-                <p *ngIf="getValError('repeatPass', 'required', passwordsGroup)" class="errorText">Password is required!</p>
-                <p *ngIf="getValError('repeatPass', 'passMissmatch', passwordsGroup)" class="errorText">It doesn't match your password!</p>
+                <p *ngIf="getValError('repeatPass', 'required', passwordsGroup)" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
+                <p *ngIf="getValError('repeatPass', 'passMissmatch', passwordsGroup)" class="errorText">{{validations.passMissmatch}}</p>
             </ng-container>
         </div>
-    <button [disabled]="!registerFormGroup.valid" class="btn" type="submit">Register</button>
+    <button [disabled]="!registerFormGroup.valid" class="btn" type="submit">{{menu.title}}</button>
 </form>
 
 <app-spinner [showLoader]="showLoader"></app-spinner>

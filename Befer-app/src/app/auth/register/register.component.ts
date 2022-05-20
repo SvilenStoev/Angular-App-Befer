@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { userConsts } from 'src/app/shared/constants';
-import { environment } from 'src/environments/environment';
 import { notifySuccess } from 'src/app/shared/other/notify';
+import { LanguageService } from 'src/app/services/common/language.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 import { CreateUserDto, UserService } from 'src/app/services/auth/user.service';
 import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../util';
-import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
 })
 export class RegisterComponent implements OnInit {
 
-  showLoader: boolean = false;
+  //validations variables
   usernameSymb: number;
   fullNameSymb: number;
   passwordSymb: number;
@@ -24,6 +24,13 @@ export class RegisterComponent implements OnInit {
   maxLength: number = userConsts.fullNameMaxLength;
   passwordMinLength: number = userConsts.passwordMinLength;
   userNameMaxLength: number = userConsts.userNameMaxLength;
+
+  showLoader: boolean = false;
+
+  //menu languages
+  menu: any = this.langService.get().register;
+  shared: any = this.langService.get().shared;
+  validations: any = this.langService.get().validations;
 
   get passwordsGroup(): FormGroup {
     return this.registerFormGroup.controls['passwords'] as FormGroup;
@@ -40,13 +47,25 @@ export class RegisterComponent implements OnInit {
   });
 
   constructor(
-    private formBuilder: FormBuilder, 
-    private userService: UserService, 
+    private formBuilder: FormBuilder,
+    private userService: UserService,
     private router: Router,
-    private titleService: TabTitleService) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService) { }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.title);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`Register`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.register;
+      this.shared = langJson.shared;
+      this.validations = langJson.validations;
+      this.setTitle();
+    });
 
     this.registerFormGroup.valueChanges.subscribe(() => {
       const fullNameMinError = this.getValError('fullName', 'minlength');
@@ -101,9 +120,9 @@ export class RegisterComponent implements OnInit {
         this.showLoader = false;
 
         if (code == '202') {
-          this.registerFormGroup.controls['username'].setErrors({'serverErr': true});
+          this.registerFormGroup.controls['username'].setErrors({ 'serverErr': true });
         } else if (code == '203') {
-          this.registerFormGroup.controls['email'].setErrors({'serverErr': true});
+          this.registerFormGroup.controls['email'].setErrors({ 'serverErr': true });
         }
       }
     });
@@ -115,5 +134,9 @@ export class RegisterComponent implements OnInit {
 
   getValError(controlName: string, errorType: string, sourceGroup: FormGroup = this.registerFormGroup) {
     return sourceGroup.controls[controlName]?.errors?.[errorType];
+  }
+
+  getSymbText(currSymbs: number): string {
+    return currSymbs > 1 ? this.shared.symbols : this.shared.symbol;
   }
 }
