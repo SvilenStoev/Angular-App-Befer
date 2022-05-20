@@ -6,6 +6,7 @@ import { IComment } from 'src/app/interfaces';
 import { UserService } from 'src/app/services/auth/user.service';
 import { CommentService } from 'src/app/services/components/comment.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
   selector: 'app-comments',
@@ -26,12 +27,24 @@ export class CommentsComponent implements OnInit {
 
   comments: IComment[];
 
+  //menu languages
+  menu: any = this.langService.get().comments;
+  shared: any = this.langService.get().shared;
+  validations: any = this.langService.get().validations;
+
   constructor(
     private commentService: CommentService,
     private router: Router,
-    private userService: UserService) { }
+    private userService: UserService,
+    private langService: LanguageService) { }
 
   ngOnInit(): void {
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.comments;
+      this.shared = langJson.shared;
+      this.validations = langJson.validations;
+    });
+
     this.loadComments(this.limitComments);
   }
 
@@ -59,7 +72,7 @@ export class CommentsComponent implements OnInit {
 
     this.commentService.createComment$(data, this.postId).subscribe({
       next: () => {
-        notifySuccess('The comment is added!');
+        notifySuccess(this.menu.messages.commentAdded);
         saveCommentForm.resetForm();
         this.loadComments(this.limitComments);
       },
@@ -74,18 +87,18 @@ export class CommentsComponent implements OnInit {
 
   onDelete(authorId: string, commentId: string) {
     if (this.userId != authorId) {
-      notifyErr('You are not authorized to delete this comment!')
+      notifyErr(this.menu.messages.notAuthorized)
       this.router.navigate(['/home']);
     }
 
-    const choise = confirm('Are you sure you want to delete this comment?');
+    const choise = confirm(this.menu.messages.confirmDeletion);
 
     if (choise) {
       this.showLoader = true;
 
       this.commentService.deleteComment$(commentId).subscribe({
         next: () => {
-          notifySuccess('The comment was deleted successfully!');
+          notifySuccess(this.menu.messages.deletedSuccess);
 
           this.comments = this.comments.filter(function (c) {
             return c.objectId != commentId;

@@ -10,9 +10,11 @@ import { UserService } from '../services/auth/user.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PostService } from '../services/components/post.service';
+import { ReplaceArgsPipe } from '../shared/pipes/replace-args.pipe';
 import { StorageService } from '../services/common/storage.service';
 import { TransferService } from '../services/common/transfer.service';
 import { LanguageService } from '../services/common/language.service';
+import { TabTitleService } from '../services/common/tab-title.service';
 import { CommentService } from '../services/components/comment.service';
 import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
@@ -46,6 +48,8 @@ export class CoreModule {
         TransferService,
         CommentService,
         LanguageService,
+        TabTitleService,
+        ReplaceArgsPipe,
         {
           provide: HTTP_INTERCEPTORS,
           multi: true,

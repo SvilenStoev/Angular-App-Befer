@@ -1,18 +1,18 @@
     <article class="new-comment">
         <form #saveCommentForm="ngForm" class="publication-form adjust-margin" (ngSubmit)="saveHandler(saveCommentForm)">
-            <h3>New comment</h3>
-            <textarea #content="ngModel" ngModel type="text" name="content" placeholder="Type comment"
+            <h3>{{menu.newComment}}</h3>
+            <textarea #content="ngModel" ngModel type="text" name="content" placeholder="{{menu.commentPlaceholder}}"
                 required maxlength="200"></textarea>
             <ng-container *ngIf="content.touched && content.invalid">
-                <p *ngIf="content.errors?.['required']" class="errorText">Content is required!</p>
+                <p *ngIf="content.errors?.['required']" class="errorText">{{validations.requiredContent}}</p>
             </ng-container>
-            <button type="submit" [disabled]="saveCommentForm.invalid || isAddingComment" class="btn save">Save</button>
+            <button type="submit" [disabled]="saveCommentForm.invalid || isAddingComment" class="btn save">{{shared.btns.save}}</button>
         </form>
     </article>
 
     <div class="container" id="comments" *ngIf="comments">
         <section class="details">
-            <h3>Comments</h3>
+            <h3>{{menu.comments}}</h3>
             <div class="comments">
                 <ul>
                     <li class="comment" *ngFor="let comment of comments">
@@ -24,11 +24,11 @@
                         </header>
                         <p>{{comment.content}}</p>
                         <ng-container *ngIf="comment.author?.objectId == userId">
-                            <a href="javascript:void(0)" (click)="onDelete(comment.author?.objectId || '', comment.objectId || '')" class="btn delete">Delete</a>
+                            <a href="javascript:void(0)" (click)="onDelete(comment.author?.objectId || '', comment.objectId || '')" class="btn delete">{{shared.btns.delete}}</a>
                         </ng-container>
                     </li>
                 </ul>
-                <div *ngIf="comments.length === 0">No comment for this post!</div>
+                <div *ngIf="comments.length === 0">{{menu.noComments}}</div>
             </div>
         </section>
     </div>

@@ -36,6 +36,10 @@
     "createPost": {
       "name": "Create Post",
       "url": "/posts/create"
+    },
+    "messages": {
+      "loggedOutSuccess": "You have successfully logged out.",
+      "somethingWrong": "Something went wrong!"
     }
   },
   "footer": {
@@ -63,72 +67,112 @@
     "like": "like",
     "seeAfter": "See \"After\""
   },
+  "postModify": {
+    "editTitle": "Edit Post",
+    "createTitle": "Create Post",
+    "title": "Title",
+    "beforeIUrl": "\"Before\" image URL",
+    "afterIUrl": "\"After\" image URL",
+    "description": "Description",
+    "public": "Public",
+    "titlePlaceholder": "Your post's title",
+    "beforeUrlPlaceholder": "Provide your Before Image Url",
+    "afterUrlPlaceholder": "Provide your After Image Url",
+    "descriptionPlaceholder": "Describe your post in the best way",
+    "messages": {
+      "postCreated": "The post is created!",
+      "postEdited": "The post is edited!"
+    }
+  },
+  "postsDetails": {
+    "title": "Post Details",
+    "postTitle": "Post title",
+    "postDescription": "Post Description",
+    "postAuthor": "Post Author",
+    "postLiked": "You liked this post!",
+    "noComments": "There are no comments for this post! Why not write one?",
+    "oneComment": "There is 1 comment for this post. See it!",
+    "manyComments": "There are {0} comments for this post. Check them!",
+    "messages": {
+      "postDeleted": "The post was deleted successfully!",
+      "notAuthorized": "You are not authorized to delete this post!",
+      "confirmDeletion": "Are you sure you want to delete this post?",
+      "canNotLike": "You can not like this post!",
+      "canNotDislike" : "You can not dislike this post!"
+    }
+  },
   "profile": {
     "title": "Profile",
     "userInfo": "User Info",
     "editUser": "Edit User",
-    "fullName": "First and last name: ",
-    "email": "Email: ",
-    "username": "Username: ",
-    "required": " *",
     "messages": {
       "notAuthorized": "You are not authorized to edit this user!",
       "updatedProfile": "The profile is updated!"
     }
   },
   "login": {
-    "title": "Sign in",
-    "username": "Username",
-    "password": "Password",
-    "signIn": "Sign in",
-    "notRegistered": "You don't have an account? Sign up."
-  },
-  "register": {
-    "title": "Sign up",
-    "email": "Email",
-    "username": "Username",
-    "password": "Password",
-    "repeatPassword": "Repeat password",
-    "required": " *",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "age": "Age",
-    "signUp": "Sign up",
-    "alreadyRegistered": "You already have an account? Sign in."
-  },
-  "validations": {
-    "required": {
-      "username": "Username is required!",
-      "email": "Email is required!",
-      "fullName": "Name is required!",
-      "password": "Password is required!"
-    },
-    "minlength": {
-      "username": "Username should be at least {0} symbols!",
-      "fullName": "Name should be at least {0} symbols!",
-      "password": "Password should be at least 6 characters!"
-    },
-    "invalidEmail": "Email is invalid!"
-  },
-  "dropdown": {
-    "language": {
-      "icon": "language",
-      "title": "Language",
-      "options": [
-        {
-          "name": "Bulgarian",
-          "url": "bg"
-        },
-        {
-          "name": "English",
-          "url": "en"
-        }
-      ]
+    "title": "Login",
+    "notRegistered": "You don't have a profile?",
+    "joinBefer": "Join Befer now!",
+    "messages": {
+      "loggedInSuccess": "Logged in successfully!"
     }
   },
+  "register": {
+    "title": "Register",
+    "alreadyRegistered": "You already have an account? Sign in.",
+    "messages": {
+      "userCreated": "User {0} is created successfully!"
+    }
+  },
+  "comments": {
+    "comments": "Comments",
+    "content": "Content",
+    "newComment": "New comment",
+    "commentPlaceholder": "Type a comment",
+    "noComments":"No comments for this post!",
+    "messages": {
+      "commentAdded": "The comment is added!",
+      "notAuthorized": "You are not authorized to delete this comment!",
+      "confirmDeletion": "Are you sure you want to delete this comment?",
+      "deletedSuccess": "The comment was deleted successfully!"
+    }
+  },
+  "notFoundPage": {
+    "title": "Not Found",
+    "sorry": "Sorry!",
+    "notFoundText1": "Either you aren't cool enough to visit this page or it doesn't exist",
+    "notFoundText2": "...like your social life.",
+    "goBack": "GO BACK HOME"
+  },
+  "validations": {
+    "required": "{0} is required!",
+    "requiredContent": "Content is required!",
+    "minlengthLong": "{0} should be at least {1} symbols! {2} {3} to go. //validations.minlength | replaceArgs: shared.username: userNameMinLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "minlengthShort": "{0} should be atleast {1} symbols long!",
+    "maxlength": "{0} should be maximum {1} symbols! Please remove {2} {3}. //validations.maxlength | replaceArgs: shared.username: userNameMaxLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "whitespace": "{0} should not contains whitespace!",
+    "invalid": "{0} is invalid!",
+    "invalidUrl": "{0} should be valid URL!",
+    "passMissmatch" : "The passwords doesn't match!"
+  },
   "shared": {
-    "edit": "Edit",
-    "save": "Save",
-    "cancel": "Cancel"
+    "btns": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "submit": "Submit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "like": "Like",
+      "dislike": "Dislike"
+    },
+    "labels": {
+      "username": "Username",
+      "email": "Email",
+      "name": "Name",
+      "firstLastName": "First and last name",
+      "password": "Password",
+      "rePass": "Repeat Password"
+    }
   }
 }

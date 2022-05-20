@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { IPost } from 'src/app/interfaces';
-import { Title } from '@angular/platform-browser';
 import { postConsts } from 'src/app/shared/constants';
-import { environment } from 'src/environments/environment';
-import { PostService } from 'src/app/services/components/post.service';
 import { notifySuccess } from 'src/app/shared/other/notify';
+import { PostService } from 'src/app/services/components/post.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 import { TransferService } from 'src/app/services/common/transfer.service';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
   selector: 'app-post-edit',
@@ -16,6 +16,7 @@ import { TransferService } from 'src/app/services/common/transfer.service';
   styleUrls: ['./post-edit.component.css']
 })
 export class PostEditComponent implements OnInit {
+  //validations variables
   titleMinLength: number = postConsts.titleMinLength;
   titleMaxLength: number = postConsts.titleMaxLength;
   descriptionMaxLength: number = postConsts.descriptionMaxLength;
@@ -24,6 +25,11 @@ export class PostEditComponent implements OnInit {
   postId: string;
   post: IPost = this.transferService.getData();
 
+  //menu languages
+  menu: any = this.langService.get().postModify;
+  validations: any = this.langService.get().validations;
+  shared: any = this.langService.get().shared;
+
   @ViewChild('editPostForm') editPostForm: NgForm;
 
   constructor(
@@ -31,10 +37,22 @@ export class PostEditComponent implements OnInit {
     private postService: PostService,
     private activatedRoute: ActivatedRoute,
     private transferService: TransferService,
-    private titleService: Title) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService) { }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.editTitle);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Edit Post`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.postModify;
+      this.validations = langJson.validations;
+      this.shared = langJson.shared;
+      this.setTitle();
+    });
 
     this.postId = this.activatedRoute.snapshot.params['id'];
 
@@ -60,7 +78,7 @@ export class PostEditComponent implements OnInit {
 
     this.postService.editPost$(data, this.postId).subscribe({
       next: () => {
-        notifySuccess('The post is edited!');
+        notifySuccess(this.menu.messages.postEdited);
         this.router.navigate([`posts/details/${this.postId}`]);
       },
       complete: () => {

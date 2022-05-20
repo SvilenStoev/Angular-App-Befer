@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { IPost } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
+import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { PostService } from 'src/app//services/components/post.service';
 import { TransferService } from 'src/app/services/common/transfer.service';
-import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
   selector: 'app-post-details-page',
@@ -26,16 +27,31 @@ export class PostDetailsPageComponent implements OnInit {
   postId: string;
   commCount: number = -1;
 
+  //menu languages
+  menu: any = this.langService.get().postsDetails;
+  shared: any = this.langService.get().shared;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private postService: PostService,
     private userService: UserService,
     private router: Router,
     private transferData: TransferService,
-    private titleService: Title) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService) { }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.title);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Post Details`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.postsDetails;
+      this.shared = langJson.shared;
+      this.setTitle();
+    });
 
     const postId = this.activatedRoute.snapshot.params['id'];
     this.showLoader = true;
@@ -59,18 +75,18 @@ export class PostDetailsPageComponent implements OnInit {
 
   onDelete() {
     if (!this.isOwner) {
-      notifyErr('You are not authorized to delete this post!')
+      notifyErr(this.menu.messages.notAuthorized)
       this.router.navigate(['/home']);
     }
 
-    const choise = confirm('Are you sure you want to delete this post?');
+    const choise = confirm(this.menu.messages.confirmDeletion);
 
     if (choise) {
       this.showLoader = true;
 
       this.postService.deletePost$(this.postId).subscribe({
         next: () => {
-          notifySuccess('The post was deleted successfully!');
+          notifySuccess(this.menu.messages.postDeleted);
           this.router.navigate(['/posts/mine']);
         },
         complete: () => {
@@ -85,7 +101,7 @@ export class PostDetailsPageComponent implements OnInit {
 
   likeHandler() {
     if (this.isLiked || this.isOwner) {
-      notifyErr('You can not like this post!')
+      notifyErr(this.menu.messages.canNotLike)
       this.router.navigate(['/home']);
       return;
     }
@@ -121,7 +137,7 @@ export class PostDetailsPageComponent implements OnInit {
 
   dislikeHandler() {
     if (!this.isLiked || this.isOwner) {
-      notifyErr('You can not dislike this post!')
+      notifyErr(this.menu.messages.canNotDislike)
       this.router.navigate(['/home']);
       return;
     }
@@ -164,23 +180,5 @@ export class PostDetailsPageComponent implements OnInit {
 
   setCommentsCount(count: number): void {
     this.commCount = count;
-  }
-
-  commentsMassage(): string { 
-    let msg = '';
-
-    if (this.commCount == -1) {
-      return '';
-    }
-
-    if (this.commCount == 0) {
-      msg = 'There are no comments for this post! Why not write one?';
-    } else if (this.commCount == 1) {
-      msg = `There is 1 comment for this post. See it!`;
-    } else {
-      msg = `There are ${this.commCount} comments for this post. Check them!`;
-    }
-
-    return msg; 
   }
 }

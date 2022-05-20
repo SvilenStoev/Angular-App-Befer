@@ -43,13 +43,13 @@ export class HeaderComponent {
 
         this.storage.clearUserData();
         this.router.navigate(['/home']);
-        notifySuccess('You have successfully logged out.');
+        notifySuccess(this.menu.messages.loggedOutSuccess);
       },
       error: (err) => {
         this.isLoggingOut = false;
         this.showLoader = false;
 
-        notifySuccess('Something went wrong!');
+        notifySuccess(this.menu.messages.somethingWrong);
 
         notifyErr(err.message);
       }

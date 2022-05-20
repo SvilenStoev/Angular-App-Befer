@@ -1,8 +1,9 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'replaceArgs'
 })
+@Injectable()
 export class ReplaceArgsPipe implements PipeTransform {
   transform(text: string, ...args: any): string {
     if (!text) {

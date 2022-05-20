@@ -15,15 +15,18 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  //validations variables
+  nameMinLength: number = userConsts.fullNameMinLength;
+  maxLength: number = userConsts.fullNameMaxLength;
+  passwordMinLength: number = userConsts.passwordMinLength;
+  userNameMaxLength: number = userConsts.userNameMaxLength;
 
   currUser: IUser;
   profilePicture: any = '/assets/images/profileDefault.png';
   showLoader: boolean = false;
   isEditMode: boolean = false;
-  nameMinLength: number = userConsts.fullNameMinLength;
-  maxLength: number = userConsts.fullNameMaxLength;
-  passwordMinLength: number = userConsts.passwordMinLength;
-  userNameMaxLength: number = userConsts.userNameMaxLength;
+
+  //menu languages
   menu: any = this.langService.get().profile;
   menuBtns: any = this.langService.get().shared;
   validations: any = this.langService.get().validations; 

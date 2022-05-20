@@ -36,6 +36,10 @@
     "createPost": {
       "name": "Създай пост",
       "url": "/posts/create"
+    },
+    "messages": {
+      "loggedOutSuccess": "Успешно отписване от сайта.",
+      "somethingWrong": "Нещо се обърка!"
     }
   },
   "footer": {
@@ -63,36 +67,112 @@
     "like": "харесване",
     "seeAfter": "Виж \"След\""
   },
+  "postModify": {
+    "editTitle": "Редактиране на пост",
+    "createTitle": "Създай Пост",
+    "title": "Заглавие",
+    "beforeIUrl": "URL на снимката тип \"Преди\"",
+    "afterIUrl": "URL на снимката тип \"След\"",
+    "description": "Описание",
+    "public": "Публично",
+    "titlePlaceholder": "Кратко заглавие на твоя пост",
+    "beforeUrlPlaceholder": "Въведи URL на снимката тип \"Преди\"",
+    "afterUrlPlaceholder": "Въведи URL на снимката тип \"След\"",
+    "descriptionPlaceholder": "Представи своя пост по най-добрия начин тук",
+    "messages": {
+      "postCreated": "Постът е създаден!",
+      "postEdited": "Постът е редактиран!"
+    }
+  },
+  "postsDetails": {
+    "title": "Детайли на поста",
+    "postTitle": "Заглавие",
+    "postDescription": "Описание",
+    "postAuthor": "Автор на поста",
+    "postLiked": "Харесано!",
+    "noComments": "Все още няма коментари за този пост! Защо не напишеш първия?",
+    "oneComment": "Има един коментар към този пост. Прочети го!",
+    "manyComments": "Има {0} коментара към този пост. Прочети ги!",
+    "messages": {
+      "postDeleted": "Постът беше изтрит успешно!",
+      "notAuthorized": "Нямаш достъп за изтриване на този пост!",
+      "confirmDeletion": "Сигурен ли си, че искаш да изтриеш този пост завинаги?",
+      "canNotLike": "Не можеш да харесаш този пост!",
+      "canNotDislike": "Не можеш да отхаресаш този пост!"
+    }
+  },
   "profile": {
     "title": "Профил",
     "userInfo": "Потребителски данни",
     "editUser": "Редактиране на профила",
-    "fullName": "Име и фамилия: ",
-    "email": "Имейл: ",
-    "username": "Потребителско име: ",
-    "required": " *",
     "messages": {
       "notAuthorized": "Нямаш достъп за редактиране на този потребител!",
       "updatedProfile": "Профилът е актуализиран!"
     }
   },
+  "login": {
+    "title": "Вписване",
+    "notRegistered": "Нямаш профил?",
+    "joinBefer": "Присъедини се към Befer сега!",
+    "messages": {
+      "loggedInSuccess": "Успешно вписване!"
+    }
+  },
+  "register": {
+    "title": "Регистриране",
+    "alreadyRegistered": "Вече имаш профил? Впиши се!",
+    "messages": {
+      "userCreated": "Потребител {0} е създаден успешно!"
+    }
+  },
+  "comments": {
+    "comments": "Коментари",
+    "content": "Съдържание",
+    "newComment": "Нов коментар",
+    "commentPlaceholder": "Напиши коментар",
+    "noComments": "Няма коментари за този пост!",
+    "messages": {
+      "commentAdded": "Коментарът е добавен!",
+      "notAuthorized": "Не можеш да изтриеш този коментар!",
+      "confirmDeletion": "Сигурен ли си, че искаш да изтриеш този коментар завинаги?",
+      "deletedSuccess": "Коментарът беше изтрит успешно!"
+    }
+  },
+  "notFoundPage": {
+    "title": "Not Found",
+    "sorry": "Съжаляваме!",
+    "notFoundText1": "Или не си толкова готин да достъпиш тази страница, или просто тя не съществува",
+    "notFoundText2": "...както и социалния ти живот.",
+    "goBack": "Към началото"
+  },
   "validations": {
-    "required": {
-      "username": "Потребителското име е задължително!",
-      "email": "Имейлът е задължителен!",
-      "fullName": "Името е задължително!",
-      "password": "Паролата е задължителна!"
-    },
-    "minlength": {
-      "username": "Потрибителското име трябва да бъде поне {0} символа!",
-      "fullName": "Името трябва да бъде поне {0} символа!",
-      "password": "Паролата трябва да бъде поне {0} символа!"
-    },
-    "invalidEmail": "Имейлът е невалиден!"
+    "required": "{0} е задължително поле!",
+    "requiredContent": "Съдържанието е задължително!",
+    "minlengthLong": "Полето {0} трябва да бъде поне {1} символа! Остават още {2} {3}. //validations.minlength | replaceArgs: shared.username: userNameMinLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "minlengthShort": "Полето \"{0}\" трябва да бъде дълго поне {1} символа!",
+    "maxlength": "Полето {0} трябва да бъде най-много {1} символа! Моля премахни {2} {3}. //validations.maxlength | replaceArgs: shared.username: userNameMaxLength: usernameSymb: getSymbText(usernameSymb) //getSymbText(currSymbs: number): string {return currSymbs > 1 ? 'symbols' : 'symbol'}",
+    "whitespace": "{0} не трябва да съдържа интервал!",
+    "invalid": "Полето {0} е невалидно!",
+    "invalidUrl": "{0} трябва да бъде валиден URL!",
+    "passMissmatch": "Паролите не съвпадат!"
   },
   "shared": {
-    "edit": "Редактирай",
-    "save": "Запази",
-    "cancel": "Откажи"
+    "btns": {
+      "edit": "Редактирай",
+      "delete": "Изтрий",
+      "submit": "Запази",
+      "save": "Запази",
+      "cancel": "Откажи",
+      "like": "Харесай",
+      "dislike": "Не харесвам"
+    },
+    "labels": {
+      "username": "Потребителско име",
+      "email": "Имейл",
+      "name": "Име",
+      "firstLastName": "Име и фамилия",
+      "password": "Парола",
+      "rePass": "Повтори паролата"
+    }
   }
 }

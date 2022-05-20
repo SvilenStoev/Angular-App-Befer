@@ -4,10 +4,13 @@ export interface ILanguage {
     footer?: {},
     home?: {},
     postsHome?: {},
+    postModify?: {},
+    postsDetails?: {},
     profile?: {},
     login?: {},
     register?: {},
+    comments?: {},
+    notFoundPage?: {},
     validations?: {},
-    dropdown?: {},
     shared?: {}
 }

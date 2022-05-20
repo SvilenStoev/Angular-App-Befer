@@ -1,12 +1,13 @@
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 
 import { postConsts } from 'src/app/shared/constants';
 import { environment } from 'src/environments/environment';
-import { PostService } from 'src/app/services/components/post.service';
 import { notifySuccess } from 'src/app/shared/other/notify';
+import { PostService } from 'src/app/services/components/post.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
+import { LanguageService } from 'src/app/services/common/language.service';
 
 @Component({
   selector: 'app-posts-create',
@@ -14,18 +15,37 @@ import { notifySuccess } from 'src/app/shared/other/notify';
   styleUrls: ['./posts-create.component.css']
 })
 export class PostsCreateComponent implements OnInit {
+  //validations variables
   titleMinLength: number = postConsts.titleMinLength;
   titleMaxLength: number = postConsts.titleMaxLength;
   descriptionMaxLength: number = postConsts.descriptionMaxLength;
+
   showLoader: boolean = false;
 
+  //menu languages
+  menu: any = this.langService.get().postModify;
+  validations: any = this.langService.get().validations;
+  shared: any = this.langService.get().shared;
+
   constructor(
-    private router: Router, 
+    private router: Router,
     private postService: PostService,
-    private titleService: Title) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService) { }
+
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.createTitle);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | Posts Create`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.postModify;
+      this.validations = langJson.validations;
+      this.shared = langJson.shared;
+      this.setTitle();
+    });
   }
 
   createHandler(createPostForm: NgForm): void {
@@ -38,7 +58,7 @@ export class PostsCreateComponent implements OnInit {
 
     this.postService.createPost$(data).subscribe({
       next: (post) => {
-        notifySuccess('The post is created!');
+        notifySuccess(this.menu.messages.postCreated);
         this.router.navigate([`posts/details/${post.objectId}`]);
       },
       complete: () => {

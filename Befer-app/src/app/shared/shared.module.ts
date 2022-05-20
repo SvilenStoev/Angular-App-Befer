@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { CreatedBeforePipe } from './pipes/created-before.pipe';
 import { ReplaceArgsPipe } from './pipes/replace-args.pipe';
+import { GenerateCommentsMsgPipe } from './pipes/generate-comments-msg.pipe';
 
 
 
@@ -10,14 +11,16 @@ import { ReplaceArgsPipe } from './pipes/replace-args.pipe';
   declarations: [
     SpinnerComponent,
     CreatedBeforePipe,
-    ReplaceArgsPipe
+    ReplaceArgsPipe,
+    GenerateCommentsMsgPipe
   ],
   imports: [
     CommonModule
   ], exports: [
     SpinnerComponent,
     CreatedBeforePipe,
-    ReplaceArgsPipe
+    ReplaceArgsPipe,
+    GenerateCommentsMsgPipe
   ]
 })
 export class SharedModule { }
