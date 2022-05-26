@@ -2,7 +2,7 @@
     <h2>{{menu.title}}</h2>
     <div>
         <label for="username">{{shared.labels.username}}</label>
-        <input formControlName="username" type="text" placeholder="Username" name="username">
+        <input formControlName="username" type="text" placeholder="{{shared.labels.username}}" name="username">
         <ng-container *ngIf="showError('username')">
             <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
             <p *ngIf="getValError('username', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.username}}</p>
@@ -16,7 +16,7 @@
     </div>
     <div>
         <label for="password">{{shared.labels.password}}</label>
-        <input formControlName="password" type="password" placeholder="Password" name="password">
+        <input formControlName="password" type="password" placeholder="{{shared.labels.password}}" name="password">
         <ng-container *ngIf="showError('password')">
             <p *ngIf="getValError('password', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
             <p *ngIf="getValError('password', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.password}}</p>

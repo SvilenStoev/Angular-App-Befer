@@ -175,6 +175,7 @@
       "rePass": "Repeat Password"
     },
     "symbols": "symbols",
-    "symbol": "symbol"
+    "symbol": "symbol",
+    "authGuardLoggedIn": "You should be logged in to access this page!"
   }
 }

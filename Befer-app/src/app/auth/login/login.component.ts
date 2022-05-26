@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   passwordMaxLength: number = userConsts.passwordMaxLength;
   usernameSymb: number;
   passwordSymb: number;
+  isServerErr: boolean = false;
 
   showLoader: boolean = false;
 
@@ -93,12 +94,23 @@ export class LoginComponent implements OnInit {
         this.loginFormGroup.controls['username'].setErrors({ 'serverErr': true });
         this.loginFormGroup.controls['password'].setErrors({ 'serverErr': true });
 
+        this.isServerErr = true;
         this.showLoader = false;
       }
     });
   }
 
   showError(controlName: string): boolean {
+    if (this.isServerErr) {
+      if (!this.loginFormGroup.controls['username'].errors?.['serverErr']) {
+        this.loginFormGroup.controls['password'].setErrors(null);
+        this.isServerErr = false;
+      } else if (!this.loginFormGroup.controls['password'].errors?.['serverErr']) {
+        this.loginFormGroup.controls['username'].setErrors(null);
+        this.isServerErr = false;
+      }
+    }
+
     return this.loginFormGroup.controls[controlName].touched && this.loginFormGroup.controls[controlName].invalid;
   }
 
