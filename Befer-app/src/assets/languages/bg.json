@@ -67,6 +67,22 @@
     "like": "харесване",
     "seeAfter": "Виж \"След\""
   },
+  "postsAll": {
+    "title": "Постове",
+    "my": "Моите",
+    "all": "Всички",
+    "postsSortedBy": "Постове | Сортирани по {0}",
+    "sortByDate": "Сортирай по дата",
+    "sortByLikes": "Сортирай по харесвания",
+    "date": "Дата",
+    "likes": "Харесвания",
+    "likesCount": "харесвания",
+    "like": "харесване",
+    "details": "Детайли",
+    "seeAfter": "Виж \"След\"",
+    "public": "Публичен",
+    "private": "Частен"
+  },
   "postModify": {
     "editTitle": "Редактиране на пост",
     "createTitle": "Създай Пост",

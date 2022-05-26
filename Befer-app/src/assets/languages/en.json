@@ -67,6 +67,22 @@
     "like": "like",
     "seeAfter": "See \"After\""
   },
+  "postsAll": {
+    "title": "Posts",
+    "my": "My",
+    "all": "All",
+    "postsSortedBy": "Posts | Sorted by {0}",
+    "sortByDate": "Sort by Date",
+    "sortByLikes": "Sort by Likes",
+    "date": "Date",
+    "likes": "Likes",
+    "likesCount": "likes",
+    "like": "like",
+    "details": "Details",
+    "seeAfter": "See \"After\"",
+    "public": "Public",
+    "private": "Private"
+  },
   "postModify": {
     "editTitle": "Edit Post",
     "createTitle": "Create Post",
@@ -98,7 +114,7 @@
       "notAuthorized": "You are not authorized to delete this post!",
       "confirmDeletion": "Are you sure you want to delete this post?",
       "canNotLike": "You can not like this post!",
-      "canNotDislike" : "You can not dislike this post!"
+      "canNotDislike": "You can not dislike this post!"
     }
   },
   "profile": {
@@ -130,7 +146,7 @@
     "content": "Content",
     "newComment": "New comment",
     "commentPlaceholder": "Type a comment",
-    "noComments":"No comments for this post!",
+    "noComments": "No comments for this post!",
     "messages": {
       "commentAdded": "The comment is added!",
       "notAuthorized": "You are not authorized to delete this comment!",
@@ -154,7 +170,7 @@
     "whitespace": "{0} should not contains whitespace!",
     "invalid": "{0} is invalid!",
     "invalidUrl": "{0} should be valid URL!",
-    "passMissmatch" : "The passwords doesn't match!"
+    "passMissmatch": "The passwords doesn't match!"
   },
   "shared": {
     "btns": {

@@ -3,61 +3,61 @@
     <ng-container *ngIf="!isEditMode">
         <h3>{{menu.userInfo}}</h3>
         <div class="flex">
-            <p>{{menu.username}} </p>
+            <p>{{shared.labels.username}}:</p>
             <p>{{currUser.username}}</p>
         </div>
         <div class="flex">
-            <p>{{menu.fullName}} </p>
+            <p>{{shared.labels.firstLastName}}:</p>
             <p>{{currUser.fullName}}</p>
         </div>
         <div class="flex">
-            <p>{{menu.email}} </p>
+            <p>{{shared.labels.email}}:</p>
             <p>{{currUser.email}}</p>
         </div>
         <!-- <div class="flex">
             <p>Profile picture: </p>
             <p>Something</p>
         </div> -->
-        <button (click)="editHandler()" class="btn edit">{{menuBtns.edit}}</button>
+        <button (click)="editHandler()" class="btn edit">{{shared.btns.edit}}</button>
     </ng-container>
 
     <ng-container *ngIf="isEditMode">
         <form #saveProfileForm="ngForm" (ngSubmit)="saveHandler(saveProfileForm)" class="profileForm">
             <h3>{{menu.editUser}}</h3>
                 <div class="flex">
-                    <p>{{menu.username}} </p>
+                    <p>{{shared.labels.username}}:</p>
                     <input #username="ngModel" ngModel required minlength="{{nameMinLength}}" maxlength="{{userNameMaxLength}}" type="text" name="username">
                     <ng-container *ngIf="username.touched && username.invalid">
-                        <p *ngIf="username.errors?.['required']" class="errorText">{{validations.required.username}}</p>
+                        <p *ngIf="username.errors?.['required']" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
                         <p *ngIf="username.errors?.['minlength'] && !username.errors?.['required']" class="errorText">
-                            {{validations.minlength.username | replaceArgs: nameMinLength}}
+                            {{validations.minlengthShort | replaceArgs: shared.labels.username: nameMinLength}}
                         </p>
                     </ng-container>
                 </div>
                 <div class="flex">
-                    <p>{{menu.fullName}} </p>
+                    <p>{{shared.labels.firstLastName}}:</p>
                     <input #fullName="ngModel" ngModel required minlength="{{nameMinLength}}" maxlength="{{maxLength}}" type="text" name="fullName">
                     <ng-container *ngIf="fullName.touched && fullName.invalid">
-                        <p *ngIf="fullName.errors?.['required']" class="errorText">{{validations.required.fullName}}</p>
+                        <p *ngIf="fullName.errors?.['required']" class="errorText">{{validations.required | replaceArgs: shared.labels.firstLastName}}</p>
                         <p *ngIf="fullName.errors?.['minlength'] && !fullName.errors?.['required']" class="errorText">
-                            {{validations.minlength.fullName | replaceArgs: nameMinLength}}
+                            {{validations.minlengthShort | replaceArgs: shared.labels.firstLastName: nameMinLength}}
                         </p>
                     </ng-container> 
                 </div >
                 <div class="flex">
-                    <p>{{menu.email}} </p>
+                    <p>{{shared.labels.email}}:</p>
                     <input #email="ngModel" ngModel required emailValidator type="email" name="email">
                     <ng-container *ngIf="email.touched && email.invalid">
-                        <p *ngIf="email.errors?.['required']" class="errorText">{{validations.required.email}}</p>
-                        <p *ngIf="email.errors?.['emailVal'] && !email.errors?.['required']" class="errorText">{{validations.invalidEmail}}</p>
+                        <p *ngIf="email.errors?.['required']" class="errorText">{{validations.required | replaceArgs: shared.labels.email}}</p>
+                        <p *ngIf="email.errors?.['emailVal'] && !email.errors?.['required']" class="errorText">{{validations.invalid | replaceArgs: shared.labels.email}}</p>
                     </ng-container>
                 </div>
                 <!-- <div class="flex">
                     <p>Profile picture: </p>
                     <input type="file" name="profilePicture" accept="image/jpg" id="profile-picture" (change)="updateProfilePicture($event)">
                 </div> -->
-                <button type="button" (click)="isEditMode = false" class="btn cancel">{{menuBtns.cancel}}</button>
-                <button [disabled]="saveProfileForm.invalid" class="btn save">{{menuBtns.save}}</button>
+                <button type="button" (click)="isEditMode = false" class="btn cancel">{{shared.btns.cancel}}</button>
+                <button [disabled]="saveProfileForm.invalid" class="btn save">{{shared.btns.save}}</button>
             </form>
     </ng-container>
   </ng-container>

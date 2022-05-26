@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
 
   //menu languages
   menu: any = this.langService.get().profile;
-  menuBtns: any = this.langService.get().shared;
+  shared: any = this.langService.get().shared;
   validations: any = this.langService.get().validations; 
 
   @ViewChild('saveProfileForm') saveProfileForm: NgForm;
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
 
     this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.profile;
-      this.menuBtns = langJson.shared;
+      this.shared = langJson.shared;
       this.validations = langJson.validations;
       this.setTitle();
     });

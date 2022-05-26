@@ -1,11 +1,11 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 import { IPost } from 'src/app/interfaces';
-import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
 import { PostService } from 'src/app/services/components/post.service';
+import { LanguageService } from 'src/app/services/common/language.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-posts-all',
@@ -13,21 +13,45 @@ import { PostService } from 'src/app/services/components/post.service';
   styleUrls: ['./posts-all.component.css']
 })
 export class PostsAllComponent implements OnInit {
-  
+
   posts: IPost[];
   limitPosts: number = 8;
-  sortType: string = 'Date';
   showLoader: boolean = false;
   isMyPosts: boolean = false;
 
+  //menu languages
+  menu: any = this.langService.get().postsAll;
+
+  //default sortType
+  sortType: string = this.menu.date;
+
   constructor(
-    private postService: PostService, 
-    private router: Router, 
+    private postService: PostService,
+    private router: Router,
     private userService: UserService,
-    private titleService: Title) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService) {
+    this.isMyPosts = this.router.url == '/posts/mine';
+  }
+
+  setTitle(): void {
+    this.titleService.setTitle(`${this.isMyPosts ? this.menu.my : this.menu.all} ${this.menu.title}`);
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(`${environment.appName} | All Posts`);
+    this.setTitle();
+
+    this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.postsAll;
+      this.setTitle();
+
+      //Update sortType when language is changed
+      if (this.sortType == 'Date' || this.sortType == 'Дата') {
+        this.sortType = this.menu.date;
+      } else {
+        this.sortType = this.menu.likes;
+      }
+    });
 
     this.loadPosts(this.limitPosts);
   }
@@ -36,17 +60,13 @@ export class PostsAllComponent implements OnInit {
     this.showLoader = true;
     this.limitPosts = limit;
 
-    const url = this.router.url;
-
-    if (url == '/posts/all') {
-      this.isMyPosts = false;
-
+    if (!this.isMyPosts) {
       this.postService.loadPosts$(this.limitPosts, this.sortType).subscribe({
         next: (data) => {
-          if (this.sortType == 'Likes') {
-            this.sortByLikes(data.results);
-          } else {
+          if (this.sortType == this.menu.date) {
             this.sortByDate(data.results);
+          } else {
+            this.sortByLikes(data.results);
           }
         },
         complete: () => {
@@ -56,16 +76,15 @@ export class PostsAllComponent implements OnInit {
           this.showLoader = false;
         }
       });
-    } else if (url == '/posts/mine') {
-      this.isMyPosts = true;
+    } else if (this.isMyPosts) {
       const userId = this.userService.userId;
 
       this.postService.loadMyPosts$(this.limitPosts, userId, this.sortType).subscribe({
         next: (data) => {
-          if (this.sortType == 'Likes') {
-            this.sortByLikes(data.results);
-          } else {
+          if (this.sortType == this.menu.date) {
             this.sortByDate(data.results);
+          } else {
+            this.sortByLikes(data.results);
           }
         },
         complete: () => {
@@ -79,12 +98,12 @@ export class PostsAllComponent implements OnInit {
   }
 
   sortByDate(postsArr: IPost[]): void {
-    this.sortType = 'Date';
+    this.sortType = this.menu.date;
     this.posts = postsArr.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
   }
 
   sortByLikes(postsArr: IPost[]): void {
-    this.sortType = 'Likes';
+    this.sortType = this.menu.likes;
     this.posts = postsArr.sort((a, b) => b.likes.length - a.likes.length);
   }
 }

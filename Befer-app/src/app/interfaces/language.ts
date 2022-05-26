@@ -4,6 +4,7 @@ export interface ILanguage {
     footer?: {},
     home?: {},
     postsHome?: {},
+    postsAll?: {},
     postModify?: {},
     postsDetails?: {},
     profile?: {},
