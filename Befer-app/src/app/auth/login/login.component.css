@@ -1,0 +1,33 @@
+  .login {
+      position: relative;
+      margin: 30px auto;
+      padding: 20px 20px 20px;
+      width: 450px;
+  }
+
+  .login p.password-wrapper {
+      text-align: right;
+  }
+
+  input[type=text],
+  input[type=password] {
+      margin: 5px;
+      padding: 0 10px;
+      width: 340px;
+      height: 34px;
+  }
+
+  .password-wrapper {
+      margin-bottom: -15px;
+  }
+
+  .password-wrapper .fa-solid  {
+      position: relative;
+      bottom: 30px;
+      right: 10px;
+      cursor: pointer;
+  }
+
+  p.password-wrapper .fa-solid {
+      right: 20px;
+  }

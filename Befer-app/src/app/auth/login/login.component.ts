@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   isServerErr: boolean = false;
 
   showLoader: boolean = false;
+  isPassVisible: boolean = false;
 
   //menu languages
   menu: any = this.langService.get().login;
@@ -120,5 +121,10 @@ export class LoginComponent implements OnInit {
 
   getSymbText(currSymbs: number): string {
     return currSymbs > 1 ? this.shared.symbols : this.shared.symbol;
+  }
+
+  eyeToggle(inputEl: any, passType: string) {
+    this.isPassVisible = !this.isPassVisible;
+    inputEl.type = passType;
   }
 }

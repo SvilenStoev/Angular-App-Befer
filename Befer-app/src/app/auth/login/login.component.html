@@ -1,6 +1,7 @@
+<div class="login"> 
 <form [formGroup]="loginFormGroup" (ngSubmit)="loginHandler()">
     <h2>{{menu.title}}</h2>
-    <div>
+    <div >
         <label for="username">{{shared.labels.username}}</label>
         <input formControlName="username" type="text" placeholder="{{shared.labels.username}}" name="username">
         <ng-container *ngIf="showError('username')">
@@ -16,7 +17,11 @@
     </div>
     <div>
         <label for="password">{{shared.labels.password}}</label>
-        <input formControlName="password" type="password" placeholder="{{shared.labels.password}}" name="password">
+        <p class="password-wrapper">
+            <input #passEl formControlName="password" type="password" placeholder="{{shared.labels.password}}" name="password">
+            <i *ngIf="isPassVisible" (click)="eyeToggle(passEl, 'password')" class="fa-solid fa-eye"></i>
+            <i *ngIf="!isPassVisible" (click)="eyeToggle(passEl, 'text')" class="fa-solid fa-eye-slash"></i>
+        </p>
         <ng-container *ngIf="showError('password')">
             <p *ngIf="getValError('password', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
             <p *ngIf="getValError('password', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.password}}</p>
@@ -31,5 +36,5 @@
     <button class="btn" type="submit" [disabled]="!loginFormGroup.valid">{{menu.title}}</button>
     <div class="registerPath">{{menu.notRegistered}} &nbsp; <a class="registerPath" routerLink="/user/register"><b><u>{{menu.joinBefer}}</u></b></a></div>
 </form>
-
+</div>
 <app-spinner [showLoader]="showLoader"></app-spinner>
