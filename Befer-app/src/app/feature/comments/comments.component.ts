@@ -21,6 +21,11 @@ export class CommentsComponent implements OnInit {
   showLoader: boolean = false;
   userId: string = this.userService.userId;
 
+  //Edit comment variables
+  isEditMode: boolean = false;
+  editedCommentId: string = '';
+  oldContent: string = '';
+
   @Input() postId: string;
   @ViewChild('saveCommentForm') saveCommentForm: NgForm;
   @Output() commentsCount = new EventEmitter<any>();
@@ -86,10 +91,7 @@ export class CommentsComponent implements OnInit {
   }
 
   onDelete(authorId: string, commentId: string) {
-    if (this.userId != authorId) {
-      notifyErr(this.menu.messages.notAuthorized)
-      this.router.navigate(['/home']);
-    }
+    this.checkIfNotAuthor(authorId);
 
     const choise = confirm(this.menu.messages.confirmDeletion);
 
@@ -113,6 +115,58 @@ export class CommentsComponent implements OnInit {
           this.showLoader = false;
         }
       });
+    }
+  }
+
+  enterEditMode(authorId: string, commentContent: string, commentId: string) {
+    this.checkIfNotAuthor(authorId);
+    this.editedCommentId = commentId;
+
+    this.isEditMode = true;
+
+    setTimeout(() => {
+      this.oldContent = commentContent;
+      (document.getElementById('editComment') as HTMLInputElement).value = commentContent;
+    });
+  }
+
+  onEditSave(authorId: string, commentId: string) {
+    this.checkIfNotAuthor(authorId);
+
+    const content = (document.getElementById('editComment') as HTMLInputElement).value;
+    const newComment = { content: content } as any;
+
+    this.isEditMode = false;
+    this.editedCommentId = '';
+
+    if (this.oldContent == content || content == '') {
+      return;
+    }
+
+    setTimeout(() => {
+      (document.getElementById('commentContent') as HTMLParagraphElement).textContent = content;
+    });
+
+    this.commentService.editComment$(newComment, this.postId, commentId).subscribe({
+      next: () => {
+        this.loadComments(this.limitComments);
+      },
+      complete: () => {
+      },
+      error: () => {
+      }
+    });
+  }
+
+  onEditCancel(): void {
+    this.isEditMode = false;
+    this.editedCommentId = '';
+  }
+
+  checkIfNotAuthor(authorId: string): void {
+    if (this.userId != authorId) {
+      notifyErr(this.menu.messages.notAuthorized)
+      this.router.navigate(['/home']);
     }
   }
 }

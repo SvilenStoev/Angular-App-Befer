@@ -23,26 +23,26 @@ export class CreatedBeforePipe implements PipeTransform {
     const year = 365 * day;
 
     if (elapsedTime < min) {
-      return `commented ${Math.floor(elapsedTime / milisec)} seconds ago`;
+      return `comment ${Math.floor(elapsedTime / milisec)} seconds ago`;
     }
 
     if (elapsedTime < hour) {
-      return `commented ${Math.floor(elapsedTime / min)} minutes ago`;
+      return `comment ${Math.floor(elapsedTime / min)} minutes ago`;
     }
 
     if (elapsedTime < day) {
-      return `commented ${Math.floor(elapsedTime / hour)} hours ago`;
+      return `comment ${Math.floor(elapsedTime / hour)} hours ago`;
     }
 
     if (elapsedTime < month) {
-      return `commented ${Math.floor(elapsedTime / day)} days ago`;
+      return `comment ${Math.floor(elapsedTime / day)} days ago`;
     }
 
     if (elapsedTime < year) {
-      return `commented ${Math.floor(elapsedTime / month)} month ago`;
+      return `comment ${Math.floor(elapsedTime / month)} month ago`;
     }
 
-    return `commented ${Math.floor(elapsedTime / year)} years ago`;
+    return `comment ${Math.floor(elapsedTime / year)} years ago`;
   }
 
 }

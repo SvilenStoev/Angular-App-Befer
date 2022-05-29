@@ -58,4 +58,20 @@ export class CommentService {
   deleteComment$(id: string): Observable<any> {
     return this.api.delete(`${this.postColl}/${id}`);
   }
+
+  editComment$(commentData: CreateCommentDto, postId: string, commentId: string): Observable<IComment> {
+    const userId = this.userService.userId;
+
+    if (!userId || !postId) {
+      throw new Error('Something went wrong!');
+    }
+
+    commentData.author = createPointer('_User', userId);
+    commentData.publication = createPointer('Publication', postId);
+
+    return this.api
+      .put<IComment>(`${this.postColl}/${commentId}`, commentData)
+      .pipe(
+        map(response => response.body));
+  }
 }
