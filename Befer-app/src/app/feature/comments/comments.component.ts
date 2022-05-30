@@ -25,6 +25,7 @@ export class CommentsComponent implements OnInit {
   isEditMode: boolean = false;
   editedCommentId: string = '';
   oldContent: string = '';
+  inputClicked: boolean = false;
 
   @Input() postId: string;
   @ViewChild('saveCommentForm') saveCommentForm: NgForm;
@@ -118,16 +119,23 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  enterEditMode(authorId: string, commentContent: string, commentId: string) {
-    this.checkIfNotAuthor(authorId);
+  enterEditMode(authorId: string, commentId: string, commentContent: string): void {
+    if (this.userId != authorId) {
+      return;
+    }
+
+    this.oldContent = commentContent;
     this.editedCommentId = commentId;
-
     this.isEditMode = true;
+  }
 
-    setTimeout(() => {
-      this.oldContent = commentContent;
-      (document.getElementById('editComment') as HTMLInputElement).value = commentContent;
-    });
+  leaveEditMode(): void {
+    if (this.inputClicked) {
+      return;
+    }
+
+    this.editedCommentId = '';
+    this.isEditMode = false;
   }
 
   onEditSave(authorId: string, commentId: string) {
@@ -136,15 +144,16 @@ export class CommentsComponent implements OnInit {
     const content = (document.getElementById('editComment') as HTMLInputElement).value;
     const newComment = { content: content } as any;
 
-    this.isEditMode = false;
-    this.editedCommentId = '';
+    this.clearEditMode();
 
     if (this.oldContent == content || content == '') {
       return;
     }
 
-    setTimeout(() => {
-      (document.getElementById('commentContent') as HTMLParagraphElement).textContent = content;
+    this.comments.forEach(c => {
+      if (c.objectId == commentId) {
+        c.content = content;
+      }
     });
 
     this.commentService.editComment$(newComment, this.postId, commentId).subscribe({
@@ -159,7 +168,12 @@ export class CommentsComponent implements OnInit {
   }
 
   onEditCancel(): void {
+    this.clearEditMode();
+  }
+
+  clearEditMode() {
     this.isEditMode = false;
+    this.inputClicked = false;
     this.editedCommentId = '';
   }
 

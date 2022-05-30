@@ -23,13 +23,22 @@
                                 <b *ngIf="comment.updatedAt != comment.createdAt">{{(comment.updatedAt || '') | updatedBefore}}</b>
                             </span>
                         </header>
-                        <p id="commentContent" *ngIf="comment.objectId != editedCommentId">{{comment.content}}</p>
-                        <p *ngIf="isEditMode && comment.objectId == editedCommentId"><input id="editComment" name="editContent" type="text"></p>
+                        <p *ngIf="comment.objectId != editedCommentId" (mouseenter)="enterEditMode(comment.author?.objectId || '', comment.objectId!, comment.content)">{{comment.content}}</p>
+                        <p *ngIf="isEditMode && comment.objectId == editedCommentId" (mouseleave)="leaveEditMode()">
+                            <input id="editComment" name="editContent" type="text" value="{{comment.content}}" (click)="inputClicked = true">
+                        </p>
                         <ng-container *ngIf="comment.author?.objectId == userId">
-                            <a href="javascript:void(0)" *ngIf="comment.objectId != editedCommentId" (click)="enterEditMode(comment.author?.objectId || '', comment.content, comment.objectId!)" class="btn edit">{{shared.btns.edit}}</a>
-                            <a href="javascript:void(0)" *ngIf="isEditMode && comment.objectId == editedCommentId" (click)="onEditSave(comment.author?.objectId || '', comment.objectId || '')" class="btn save">{{shared.btns.save}}</a>
-                            <a href="javascript:void(0)" *ngIf="comment.objectId != editedCommentId" (click)="onDelete(comment.author?.objectId || '', comment.objectId || '')" class="btn delete">{{shared.btns.delete}}</a>
-                            <a href="javascript:void(0)" *ngIf="isEditMode && comment.objectId == editedCommentId" (click)="onEditCancel()" class="btn delete">{{shared.btns.cancel}}</a>
+                            <ng-container *ngIf="comment.objectId != editedCommentId">
+                                <div class="editBtns">
+                                   <a href="javascript:void(0)" (click)="onDelete(comment.author?.objectId || '', comment.objectId || '')" class="btn delete">{{shared.btns.delete}}</a>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isEditMode && comment.objectId == editedCommentId">
+                                <div class="editBtns">
+                                    <a href="javascript:void(0)" (click)="onEditSave(comment.author?.objectId || '', comment.objectId || '')" class="btn save">{{shared.btns.save}}</a>
+                                    <a href="javascript:void(0)" (click)="onEditCancel()" class="btn delete">{{shared.btns.cancel}}</a>
+                                </div>
+                            </ng-container>
                         </ng-container>
                     </li>
                 </ul>
