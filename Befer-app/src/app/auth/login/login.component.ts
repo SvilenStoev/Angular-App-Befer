@@ -1,9 +1,10 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { whitespaceValidator } from '../util';
 import { userConsts } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { UserService } from 'src/app/services/auth/user.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
@@ -14,7 +15,7 @@ import { LanguageService } from 'src/app/services/common/language.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   //validations variables
   userNameMinLength: number = userConsts.userNameMinLength;
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
   menu: any = this.langService.get().login;
   shared: any = this.langService.get().shared;
   validations: any = this.langService.get().validations;
+  subscription: Subscription;
 
   loginFormGroup: FormGroup = this.formBuilder.group({
     'username': new FormControl(null, [Validators.required, Validators.minLength(this.userNameMinLength), Validators.maxLength(this.userNameMaxLength), whitespaceValidator]),
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.login;
       this.shared = langJson.shared;
       this.validations = langJson.validations;
@@ -126,5 +128,9 @@ export class LoginComponent implements OnInit {
   eyeToggle(inputEl: any, passType: string) {
     this.isPassVisible = !this.isPassVisible;
     inputEl.type = passType;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

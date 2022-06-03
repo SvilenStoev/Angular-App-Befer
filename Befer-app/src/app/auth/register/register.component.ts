@@ -1,8 +1,9 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { userConsts } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { LanguageService } from 'src/app/services/common/language.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
@@ -14,7 +15,7 @@ import { emailValidator, passMissmatchValidator, whitespaceValidator } from '../
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   //validations variables
   usernameSymb: number;
@@ -31,6 +32,7 @@ export class RegisterComponent implements OnInit {
   menu: any = this.langService.get().register;
   shared: any = this.langService.get().shared;
   validations: any = this.langService.get().validations;
+  subscription: Subscription;
 
   get passwordsGroup(): FormGroup {
     return this.registerFormGroup.controls['passwords'] as FormGroup;
@@ -60,7 +62,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.register;
       this.shared = langJson.shared;
       this.validations = langJson.validations;
@@ -138,5 +140,9 @@ export class RegisterComponent implements OnInit {
 
   getSymbText(currSymbs: number): string {
     return currSymbs > 1 ? this.shared.symbols : this.shared.symbol;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

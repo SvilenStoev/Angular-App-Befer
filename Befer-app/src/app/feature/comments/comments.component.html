@@ -25,7 +25,7 @@
                         </header>
                         <p *ngIf="comment.objectId != editedCommentId" (mouseenter)="enterEditMode(comment.author?.objectId || '', comment.objectId!, comment.content)">{{comment.content}}</p>
                         <p *ngIf="isEditMode && comment.objectId == editedCommentId" (mouseleave)="leaveEditMode()">
-                            <input id="editComment" name="editContent" type="text" value="{{comment.content}}" (click)="inputClicked = true">
+                            <input id="editComment" title="Click here to edit your comment!" name="editContent" type="text" value="{{comment.content}}" (click)="inputClicked = true">
                         </p>
                         <ng-container *ngIf="comment.author?.objectId == userId">
                             <ng-container *ngIf="comment.objectId != editedCommentId">

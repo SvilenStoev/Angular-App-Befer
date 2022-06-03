@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { IPost } from 'src/app/interfaces';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { UserService } from 'src/app/services/auth/user.service';
 import { PostService } from 'src/app/services/components/post.service';
 import { LanguageService } from 'src/app/services/common/language.service';
@@ -12,7 +13,7 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
   templateUrl: './posts-all.component.html',
   styleUrls: ['./posts-all.component.css']
 })
-export class PostsAllComponent implements OnInit {
+export class PostsAllComponent implements OnInit, OnDestroy {
 
   posts: IPost[];
   limitPosts: number = 8;
@@ -21,6 +22,7 @@ export class PostsAllComponent implements OnInit {
 
   //menu languages
   menu: any = this.langService.get().postsAll;
+  subscription: Subscription;
 
   //default sortType
   sortType: string = this.menu.date;
@@ -41,7 +43,7 @@ export class PostsAllComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.postsAll;
       this.setTitle();
 
@@ -105,5 +107,9 @@ export class PostsAllComponent implements OnInit {
   sortByLikes(postsArr: IPost[]): void {
     this.sortType = this.menu.likes;
     this.posts = postsArr.sort((a, b) => b.likes.length - a.likes.length);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

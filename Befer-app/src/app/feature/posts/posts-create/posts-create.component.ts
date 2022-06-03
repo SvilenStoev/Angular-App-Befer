@@ -1,9 +1,9 @@
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { postConsts } from 'src/app/shared/constants';
-import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { PostService } from 'src/app/services/components/post.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
@@ -14,7 +14,7 @@ import { LanguageService } from 'src/app/services/common/language.service';
   templateUrl: './posts-create.component.html',
   styleUrls: ['./posts-create.component.css']
 })
-export class PostsCreateComponent implements OnInit {
+export class PostsCreateComponent implements OnInit, OnDestroy {
   //validations variables
   titleMinLength: number = postConsts.titleMinLength;
   titleMaxLength: number = postConsts.titleMaxLength;
@@ -26,6 +26,7 @@ export class PostsCreateComponent implements OnInit {
   menu: any = this.langService.get().postModify;
   validations: any = this.langService.get().validations;
   shared: any = this.langService.get().shared;
+  subscription: Subscription;
 
   constructor(
     private router: Router,
@@ -40,7 +41,7 @@ export class PostsCreateComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.postModify;
       this.validations = langJson.validations;
       this.shared = langJson.shared;
@@ -72,5 +73,9 @@ export class PostsCreateComponent implements OnInit {
 
   navigateToHome() {
     this.router.navigate(['/home']);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

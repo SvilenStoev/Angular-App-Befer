@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
 import { LanguageService } from 'src/app/services/common/language.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
@@ -10,9 +10,10 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 
   menu: any = this.langService.get().home;
+  subscription: Subscription;
 
   get isLogged(): boolean {
     return this.userService.isLogged;
@@ -26,7 +27,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.home;
       this.setTitle();
     });
@@ -34,5 +35,9 @@ export class HomePageComponent implements OnInit {
 
   setTitle(): void {
     this.titleService.setTitle(this.menu.title);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

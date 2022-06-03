@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { IPost } from 'src/app/interfaces';
@@ -9,13 +9,14 @@ import { PostService } from 'src/app//services/components/post.service';
 import { TransferService } from 'src/app/services/common/transfer.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
 import { LanguageService } from 'src/app/services/common/language.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-details-page',
   templateUrl: './post-details-page.component.html',
   styleUrls: ['./post-details-page.component.css']
 })
-export class PostDetailsPageComponent implements OnInit {
+export class PostDetailsPageComponent implements OnInit,OnDestroy {
 
   post: IPost;
   showLoader: boolean = false;
@@ -30,6 +31,7 @@ export class PostDetailsPageComponent implements OnInit {
   //menu languages
   menu: any = this.langService.get().postsDetails;
   shared: any = this.langService.get().shared;
+  subscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,7 +49,7 @@ export class PostDetailsPageComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.postsDetails;
       this.shared = langJson.shared;
       this.setTitle();
@@ -167,6 +169,7 @@ export class PostDetailsPageComponent implements OnInit {
       },
       error: (err) => {
         this.isDisliking = false;
+        this.isLiked = true;
         this.post.likes = previousLikes;
 
         notifyErr(err.message);
@@ -180,5 +183,9 @@ export class PostDetailsPageComponent implements OnInit {
 
   setCommentsCount(count: number): void {
     this.commCount = count;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

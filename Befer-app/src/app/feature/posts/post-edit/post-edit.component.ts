@@ -1,9 +1,10 @@
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { IPost } from 'src/app/interfaces';
 import { postConsts } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { PostService } from 'src/app/services/components/post.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
@@ -15,7 +16,7 @@ import { LanguageService } from 'src/app/services/common/language.service';
   templateUrl: './post-edit.component.html',
   styleUrls: ['./post-edit.component.css']
 })
-export class PostEditComponent implements OnInit {
+export class PostEditComponent implements OnInit, OnDestroy {
   //validations variables
   titleMinLength: number = postConsts.titleMinLength;
   titleMaxLength: number = postConsts.titleMaxLength;
@@ -29,6 +30,7 @@ export class PostEditComponent implements OnInit {
   menu: any = this.langService.get().postModify;
   validations: any = this.langService.get().validations;
   shared: any = this.langService.get().shared;
+  subscription: Subscription;
 
   @ViewChild('editPostForm') editPostForm: NgForm;
 
@@ -47,7 +49,7 @@ export class PostEditComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.postModify;
       this.validations = langJson.validations;
       this.shared = langJson.shared;
@@ -92,5 +94,9 @@ export class PostEditComponent implements OnInit {
 
   navigateBack() {
     this.router.navigate([`/posts/details/${this.postId}`]);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

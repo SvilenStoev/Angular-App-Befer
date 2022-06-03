@@ -79,6 +79,7 @@
 }
 
 #editComment {
+    cursor: text;
     width: 42em;
     height: 25px;
 }

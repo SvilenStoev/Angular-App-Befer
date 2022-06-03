@@ -1,9 +1,10 @@
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 import { IUser } from 'src/app/interfaces';
 import { userConsts } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { UserService } from 'src/app/services/auth/user.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { LanguageService } from 'src/app/services/common/language.service';
@@ -14,7 +15,7 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   //validations variables
   nameMinLength: number = userConsts.fullNameMinLength;
   maxLength: number = userConsts.fullNameMaxLength;
@@ -29,7 +30,8 @@ export class ProfileComponent implements OnInit {
   //menu languages
   menu: any = this.langService.get().profile;
   shared: any = this.langService.get().shared;
-  validations: any = this.langService.get().validations; 
+  validations: any = this.langService.get().validations;
+  subscription: Subscription;
 
   @ViewChild('saveProfileForm') saveProfileForm: NgForm;
 
@@ -46,7 +48,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.setTitle();
 
-    this.langService.langEvent$.subscribe(langJson => {
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
       this.menu = langJson.profile;
       this.shared = langJson.shared;
       this.validations = langJson.validations;
@@ -120,6 +122,10 @@ export class ProfileComponent implements OnInit {
         this.showLoader = false;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   // updateProfilePicture(event: Event) {
