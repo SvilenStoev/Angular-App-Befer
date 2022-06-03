@@ -48,7 +48,7 @@ export class PostsHomeComponent implements OnInit {
     this.showLoader = true;
     this.limitPosts = limit;
 
-    this.postService.loadPosts$(this.limitPosts, this.sortType).subscribe({
+    this.postService.loadAllPosts$(this.limitPosts, this.sortType, 0).subscribe({
       next: (data) => {
         if (this.sortType == this.menu.date) {
           this.sortByDate(data.results);

@@ -9,8 +9,9 @@
 
 .publications-container>div {
   /* flex: 0 0 5em; */
-  flex: 0 1 calc(20% - 6px)  !important; /* <-- adjusting for margin */
-  margin: 1.5em  !important;
+  flex: 0 1 calc(20% - 6px) !important;
+  /* <-- adjusting for margin */
+  margin: 1.5em !important;
   background-color: gray;
   box-shadow: 2px 2px 1.5em 5px rgba(65, 199, 255, 255);
 
@@ -34,4 +35,22 @@ h3 {
   text-align: center;
   margin-top: 3em;
   margin-bottom: 2em;
+}
+
+.pagination {
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.pagination>.btn {
+  font-size: 18px;
+}
+
+.paginationText {
+  text-align: center;
+  margin-bottom: 1.3em;
+}
+
+.aux {
+  margin: 1em;
 }

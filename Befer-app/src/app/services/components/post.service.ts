@@ -30,30 +30,41 @@ export class PostService {
 
   postColl: string = '/classes/Publication';
   menuPostsHome: any = this.langService.get().postsHome;
+  onlyPublic: string = JSON.stringify({
+    isPublic: true
+  });
 
   constructor(
-    private api: ApiService, 
+    private api: ApiService,
     private userService: UserService,
     private langService: LanguageService) { }
 
-  loadPosts$(limit: number, sortType: string): Observable<any> {
-    const onlyPublic = JSON.stringify({
-      isPublic: true
-    });
-
-    sortType = this.getSortType(sortType);
-
-    return this.api.get(`${this.postColl}/?where=${onlyPublic}&order=${sortType}${limit ? `&limit=${limit}` : ''}`);
+  getAllPostsCount$(): Observable<any> {
+    return this.api.get(`${this.postColl}/?where=${this.onlyPublic}&count=1`);
   }
 
-  loadMyPosts$(limit: number, userId: string, sortType: string): Observable<any> {
+  getMyPostsCount$(userId: string): Observable<any> {
+    const pointerQuery = JSON.stringify({
+      "owner": createPointer('_User', userId)
+    });
+
+    return this.api.get(`${this.postColl}/?where=${pointerQuery}&count=1`);
+  }
+
+  loadAllPosts$(limit: number, sortType: string, skipPosts: number): Observable<any> {
+    sortType = this.getSortType(sortType);
+
+    return this.api.get(`${this.postColl}/?where=${this.onlyPublic}&order=${sortType}&skip=${skipPosts}${limit ? `&limit=${limit}` : ''}`);
+  }
+
+  loadMyPosts$(limit: number, userId: string, sortType: string, skipPosts: number): Observable<any> {
     const pointerQuery = JSON.stringify({
       "owner": createPointer('_User', userId)
     });
 
     sortType = this.getSortType(sortType);
 
-    return this.api.get(`${this.postColl}/?where=${pointerQuery}&order=${sortType}${limit ? `&limit=${limit}` : ''}`);
+    return this.api.get(`${this.postColl}/?where=${pointerQuery}&order=${sortType}&skip=${skipPosts}${limit ? `&limit=${limit}` : ''}`);
   }
 
   loadPostById$(id: string): Observable<any> {

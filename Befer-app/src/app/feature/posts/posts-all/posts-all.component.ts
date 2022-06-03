@@ -16,7 +16,6 @@ import { TabTitleService } from 'src/app/services/common/tab-title.service';
 export class PostsAllComponent implements OnInit, OnDestroy {
 
   posts: IPost[];
-  limitPosts: number = 8;
   showLoader: boolean = false;
   isMyPosts: boolean = false;
 
@@ -26,6 +25,13 @@ export class PostsAllComponent implements OnInit, OnDestroy {
 
   //default sortType
   sortType: string = this.menu.date;
+
+  //pagination
+  limitPosts: number = 8;
+  currPage: number = 1;
+  allPostsCount: number = 0;
+  lastPage: number = 1;
+  skipPosts: number = (this.currPage - 1) * this.limitPosts;
 
   constructor(
     private postService: PostService,
@@ -55,15 +61,21 @@ export class PostsAllComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.loadPosts(this.limitPosts);
+    this.loadPosts();
   }
 
-  loadPosts(limit: number) {
+  loadPosts() {
     this.showLoader = true;
-    this.limitPosts = limit;
 
     if (!this.isMyPosts) {
-      this.postService.loadPosts$(this.limitPosts, this.sortType).subscribe({
+      this.postService.getAllPostsCount$().subscribe({
+        next: (data) => {
+          this.allPostsCount = data.count;
+          this.lastPage = Math.ceil(this.allPostsCount / this.limitPosts);
+        }
+      });
+
+      this.postService.loadAllPosts$(this.limitPosts, this.sortType, this.skipPosts).subscribe({
         next: (data) => {
           if (this.sortType == this.menu.date) {
             this.sortByDate(data.results);
@@ -81,7 +93,14 @@ export class PostsAllComponent implements OnInit, OnDestroy {
     } else if (this.isMyPosts) {
       const userId = this.userService.userId;
 
-      this.postService.loadMyPosts$(this.limitPosts, userId, this.sortType).subscribe({
+      this.postService.getMyPostsCount$(userId).subscribe({
+        next: (data) => {
+          this.allPostsCount = data.count;
+          this.lastPage = Math.ceil(this.allPostsCount / this.limitPosts);
+        }
+      });
+
+      this.postService.loadMyPosts$(this.limitPosts, userId, this.sortType, this.skipPosts).subscribe({
         next: (data) => {
           if (this.sortType == this.menu.date) {
             this.sortByDate(data.results);
@@ -107,6 +126,48 @@ export class PostsAllComponent implements OnInit, OnDestroy {
   sortByLikes(postsArr: IPost[]): void {
     this.sortType = this.menu.likes;
     this.posts = postsArr.sort((a, b) => b.likes.length - a.likes.length);
+  }
+
+
+  //pagination logic
+  goToPreviousPage(): void {
+    if (this.currPage == 1) {
+      return;
+    }
+
+    this.currPage--;
+    this.updateSkipPosts();
+
+    this.loadPosts();
+  }
+
+  goToNextPage(): void {
+    if (this.currPage == this.lastPage) {
+      return;
+    }
+
+    this.currPage++;
+    this.updateSkipPosts();
+
+    this.loadPosts();
+  }
+
+  goToFirstPage(): void {
+    this.currPage = 1;
+    this.updateSkipPosts();
+
+    this.loadPosts();
+  }
+
+  goToLastPage(): void {
+    this.currPage = this.lastPage;
+    this.updateSkipPosts();
+
+    this.loadPosts();
+  }
+
+  updateSkipPosts(): void {
+    this.skipPosts = (this.currPage - 1) * this.limitPosts;
   }
 
   ngOnDestroy(): void {

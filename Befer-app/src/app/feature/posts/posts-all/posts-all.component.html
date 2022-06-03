@@ -11,6 +11,16 @@
         </div>
     </div>
     <div *ngIf="!!posts">
+        <div class="pagination">
+            <button class="btn" type="button" [disabled]="currPage == 1" (click)="goToFirstPage()">{{menu.firstPage}}</button>
+            <button class="btn" type="button" [disabled]="currPage == 1" (click)="goToPreviousPage()"><<</button>
+            <button class="btn" type="button">{{currPage}}</button>
+            <button class="btn" type="button" [disabled]="currPage == lastPage" (click)="goToNextPage()">>></button>
+            <button class="btn" type="button" [disabled]="currPage == lastPage" (click)="goToLastPage()">{{menu.lastPage}}</button>
+        </div>
+        <div class="paginationText">
+            {{menu.postsCountText | replaceArgs: posts.length: allPostsCount}}
+        </div>
         <div *ngIf="posts.length != 0" class="publications-container">
             <div *ngFor="let post of posts">
                 <div class="home-image">

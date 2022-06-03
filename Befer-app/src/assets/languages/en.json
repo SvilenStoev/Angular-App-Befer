@@ -81,7 +81,10 @@
     "details": "Details",
     "seeAfter": "See \"After\"",
     "public": "Public",
-    "private": "Private"
+    "private": "Private",
+    "firstPage": "First page",
+    "lastPage": "Last page",
+    "postsCountText": "Showing {0} public posts out of {1} in total."
   },
   "postModify": {
     "editTitle": "Edit Post",
