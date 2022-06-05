@@ -2,7 +2,10 @@
 <form [formGroup]="loginFormGroup" (ngSubmit)="loginHandler()">
     <h2>{{menu.title}}</h2>
     <div >
-        <label for="username">{{shared.labels.username}}</label>
+        <label for="username">
+            <i class="fa-solid fa-user"></i>
+            {{shared.labels.username}}
+        </label>
         <input formControlName="username" type="text" placeholder="{{shared.labels.username}}" name="username">
         <ng-container *ngIf="showError('username')">
             <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
@@ -16,7 +19,10 @@
         </ng-container>
     </div>
     <div>
-        <label for="password">{{shared.labels.password}}</label>
+        <label for="password">
+            <i class="fa-solid fa-key"></i>
+            {{shared.labels.password}}
+        </label>
         <p class="password-wrapper">
             <input #passEl formControlName="password" type="password" placeholder="{{shared.labels.password}}" name="password">
             <i *ngIf="isPassVisible" (click)="eyeToggle(passEl, 'password')" class="fa-solid fa-eye"></i>

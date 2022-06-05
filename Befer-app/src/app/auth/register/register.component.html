@@ -1,7 +1,10 @@
 <form [formGroup]="registerFormGroup" (ngSubmit)="registerHandler()">
     <h2>{{menu.title}}</h2>
     <div class="on-dark">
-        <label for="fullName">{{shared.labels.firstLastName}}</label>
+        <label for="fullName">
+            <i class="fa-solid fa-id-card"></i>
+            {{shared.labels.firstLastName}}
+        </label>
         <input formControlName="fullName" type="text" placeholder="John Jonsen" name="fullName">
         <ng-container *ngIf="showError('fullName')">
             <p *ngIf="getValError('fullName', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.firstLastName}}</p>
@@ -14,7 +17,10 @@
         </ng-container>
     </div>
     <div class="on-dark">
-        <label>{{shared.labels.username}}</label>
+        <label>
+            <i class="fa-solid fa-user"></i>
+            {{shared.labels.username}}
+        </label>
         <input formControlName="username" type="text" placeholder="John93" name="username">
         <ng-container *ngIf="showError('username')">
             <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
@@ -28,15 +34,22 @@
         </ng-container>
     </div>
     <div class="on-dark">
-        <label for="email">{{shared.labels.email}}</label>
+        <label for="email">
+            <i class="fa-solid fa-envelope"></i>
+            {{shared.labels.email}}
+        </label>
         <input formControlName="email" type="email" placeholder="John93@gmail.com" name="email">
+
         <ng-container *ngIf="showError('email')">
             <p *ngIf="getValError('email', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.email}}</p>
             <p *ngIf="getValError('email', 'emailVal') && !getValError('email', 'required')" class="errorText">{{validations.invalid | replaceArgs: shared.labels.email}}</p>
         </ng-container>
     </div>
         <div formGroupName="passwords" class="on-dark">
-            <label for="password">{{shared.labels.password}}</label>
+            <label for="password">
+                <i class="fa-solid fa-key"></i>
+                {{shared.labels.password}}
+            </label>
             <input formControlName="password" type="password" placeholder="*********" name="password">
             <ng-container *ngIf="showError('password', passwordsGroup)">
                 <p *ngIf="getValError('password', 'required', passwordsGroup)" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
@@ -53,7 +66,10 @@
             </ng-container>
         </div>
         <div formGroupName="passwords" class="on-dark">
-            <label>{{shared.labels.rePass}}</label>
+            <label>
+                <i class="fa-solid fa-repeat"></i>
+                {{shared.labels.rePass}}
+            </label>
             <input formControlName="repeatPass" type="password" placeholder="*********" name="repeatPass">
             <ng-container *ngIf="showError('repeatPass', passwordsGroup)">
                 <p *ngIf="getValError('repeatPass', 'required', passwordsGroup)" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
