@@ -1,11 +1,11 @@
 <form [formGroup]="registerFormGroup" (ngSubmit)="registerHandler()">
     <h2>{{menu.title}}</h2>
     <div class="on-dark">
-        <label for="fullName">
+        <label for="fullNameInput">
             <i class="fa-solid fa-id-card"></i>
             {{shared.labels.firstLastName}}
         </label>
-        <input formControlName="fullName" type="text" placeholder="John Jonsen" name="fullName">
+        <input id="fullNameInput" formControlName="fullName" type="text" placeholder="John Jonsen" name="fullName">
         <ng-container *ngIf="showError('fullName')">
             <p *ngIf="getValError('fullName', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.firstLastName}}</p>
             <p *ngIf="getValError('fullName', 'minlength')" class="errorText">
@@ -17,11 +17,11 @@
         </ng-container>
     </div>
     <div class="on-dark">
-        <label>
+        <label for="usernameInput">
             <i class="fa-solid fa-user"></i>
             {{shared.labels.username}}
         </label>
-        <input formControlName="username" type="text" placeholder="John93" name="username">
+        <input id="usernameInput" formControlName="username" type="text" placeholder="John93" name="username">
         <ng-container *ngIf="showError('username')">
             <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
             <p *ngIf="getValError('username', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.username}}</p>
@@ -34,11 +34,11 @@
         </ng-container>
     </div>
     <div class="on-dark">
-        <label for="email">
+        <label for="emailInput">
             <i class="fa-solid fa-envelope"></i>
             {{shared.labels.email}}
         </label>
-        <input formControlName="email" type="email" placeholder="John93@gmail.com" name="email">
+        <input id="emailInput" formControlName="email" type="email" placeholder="John93@gmail.com" name="email">
 
         <ng-container *ngIf="showError('email')">
             <p *ngIf="getValError('email', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.email}}</p>
@@ -46,11 +46,11 @@
         </ng-container>
     </div>
         <div formGroupName="passwords" class="on-dark">
-            <label for="password">
+            <label for="passwordInput">
                 <i class="fa-solid fa-key"></i>
                 {{shared.labels.password}}
             </label>
-            <input formControlName="password" type="password" placeholder="*********" name="password">
+            <input id="passwordInput" formControlName="password" type="password" placeholder="*********" name="password">
             <ng-container *ngIf="showError('password', passwordsGroup)">
                 <p *ngIf="getValError('password', 'required', passwordsGroup)" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
                 <p *ngIf="getValError('password', 'whitespace', passwordsGroup)" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.password}}</p>
@@ -66,11 +66,11 @@
             </ng-container>
         </div>
         <div formGroupName="passwords" class="on-dark">
-            <label>
+            <label for="repassInput">
                 <i class="fa-solid fa-repeat"></i>
                 {{shared.labels.rePass}}
             </label>
-            <input formControlName="repeatPass" type="password" placeholder="*********" name="repeatPass">
+            <input id="repassInput" formControlName="repeatPass" type="password" placeholder="*********" name="repeatPass">
             <ng-container *ngIf="showError('repeatPass', passwordsGroup)">
                 <p *ngIf="getValError('repeatPass', 'required', passwordsGroup)" class="errorText">{{validations.required | replaceArgs: shared.labels.password}}</p>
                 <p *ngIf="getValError('repeatPass', 'passMissmatch', passwordsGroup)" class="errorText">{{validations.passMissmatch}}</p>

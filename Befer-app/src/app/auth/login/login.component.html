@@ -2,11 +2,11 @@
 <form [formGroup]="loginFormGroup" (ngSubmit)="loginHandler()">
     <h2>{{menu.title}}</h2>
     <div >
-        <label for="username">
+        <label for="usernameInput">
             <i class="fa-solid fa-user"></i>
             {{shared.labels.username}}
         </label>
-        <input formControlName="username" type="text" placeholder="{{shared.labels.username}}" name="username">
+        <input id="usernameInput" formControlName="username" type="text" placeholder="{{shared.labels.username}}" name="username">
         <ng-container *ngIf="showError('username')">
             <p *ngIf="getValError('username', 'required')" class="errorText">{{validations.required | replaceArgs: shared.labels.username}}</p>
             <p *ngIf="getValError('username', 'whitespace')" class="errorText">{{validations.whitespace | replaceArgs: shared.labels.username}}</p>
@@ -19,12 +19,12 @@
         </ng-container>
     </div>
     <div>
-        <label for="password">
+        <label for="passwordInput">
             <i class="fa-solid fa-key"></i>
             {{shared.labels.password}}
         </label>
         <p class="password-wrapper">
-            <input #passEl formControlName="password" type="password" placeholder="{{shared.labels.password}}" name="password">
+            <input id="passwordInput" #passEl formControlName="password" type="password" placeholder="{{shared.labels.password}}" name="password">
             <i *ngIf="isPassVisible" (click)="eyeToggle(passEl, 'password')" class="fa-solid fa-eye"></i>
             <i *ngIf="!isPassVisible" (click)="eyeToggle(passEl, 'text')" class="fa-solid fa-eye-slash"></i>
         </p>

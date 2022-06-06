@@ -1,32 +1,32 @@
 <form #createPostForm="ngForm" class="publication-form" (ngSubmit)="createHandler(createPostForm)">
     <h1>{{menu.createTitle}}</h1>
     <div>
-        <label>{{menu.title}}</label>
-        <input #title="ngModel" ngModel type="text" placeholder="{{menu.titlePlaceholder}}" name="title" required minlength="{{titleMinLength}}" maxlength="{{titleMaxLength}}">
+        <label for="titleInput">{{menu.title}}</label>
+        <input id="titleInput" #title="ngModel" ngModel type="text" placeholder="{{menu.titlePlaceholder}}" name="title" required minlength="{{titleMinLength}}" maxlength="{{titleMaxLength}}">
         <ng-container *ngIf="title.touched && title.invalid">
             <p *ngIf="title.errors?.['required']" class="errorText">{{validations.required | replaceArgs: menu.title}}</p>
             <p *ngIf="title.errors?.['minlength']" class="errorText">{{validations.minlengthShort | replaceArgs: menu.title: titleMinLength}}</p>
         </ng-container >
     </div>
     <div>
-        <label>{{menu.beforeIUrl}}</label>
-        <input #beforeImgUrl="ngModel" ngModel type="text" placeholder="{{menu.beforeUrlPlaceholder}}" name="beforeImgUrl" appUrlValidator required>
+        <label for="beforeUrlInput">{{menu.beforeIUrl}}</label>
+        <input id="beforeUrlInput" #beforeImgUrl="ngModel" ngModel type="text" placeholder="{{menu.beforeUrlPlaceholder}}" name="beforeImgUrl" appUrlValidator required>
         <ng-container *ngIf="beforeImgUrl.touched && beforeImgUrl.invalid">
             <p *ngIf="beforeImgUrl.errors?.['required']" class="errorText">{{validations.required | replaceArgs: menu.beforeIUrl}}</p>
             <p *ngIf="beforeImgUrl.errors?.['urlVal'] && !beforeImgUrl.errors?.['required']" class="errorText">{{validations.invalidUrl | replaceArgs: menu.beforeIUrl}}</p>
         </ng-container>
     </div>
     <div>
-        <label>{{menu.afterIUrl}}</label>
-        <input #afterImgUrl="ngModel" ngModel type="text" placeholder="{{menu.afterUrlPlaceholder}}" name="afterImgUrl" appUrlValidator required>
+        <label for="afterUrlInput">{{menu.afterIUrl}}</label>
+        <input id="afterUrlInput" #afterImgUrl="ngModel" ngModel type="text" placeholder="{{menu.afterUrlPlaceholder}}" name="afterImgUrl" appUrlValidator required>
         <ng-container *ngIf="afterImgUrl.touched && afterImgUrl.invalid">
             <p *ngIf="afterImgUrl.errors?.['required']" class="errorText">{{validations.required | replaceArgs: menu.afterIUrl}}</p>
             <p *ngIf="afterImgUrl.errors?.['urlVal'] && !afterImgUrl.errors?.['required']" class="errorText">{{validations.invalidUrl | replaceArgs: menu.afterIUrl}}</p>
         </ng-container>
     </div>
     <div>
-        <label>{{menu.description}}</label>
-        <textarea #description="ngModel" ngModel type="text" placeholder="{{menu.descriptionPlaceholder}}" rows="8" name="description" maxlength="{{descriptionMaxLength}}"></textarea>
+        <label for="descriptionInput">{{menu.description}}</label>
+        <textarea id="descriptionInput" #description="ngModel" ngModel type="text" placeholder="{{menu.descriptionPlaceholder}}" rows="8" name="description" maxlength="{{descriptionMaxLength}}"></textarea>
     </div>
     <div class="check">
         <input #isPublic="ngModel" ngModel="true" type="checkbox" name="isPublic">
