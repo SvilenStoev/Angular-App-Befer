@@ -32,7 +32,7 @@
 
 @media (max-height: 600px) {
     html {
-        font-size: 10px;
+        font-size: 11px;
     }
     header {
         margin-top: 0.4em;
@@ -48,7 +48,7 @@
         overflow-x: initial;
     }
     html {
-        font-size: 10px;
+        font-size: 11px;
     }
     header {
         margin-top: 0.4em;
@@ -63,7 +63,7 @@
 
 @media (max-height: 500px) {
     html {
-        font-size: 8px;
+        font-size: 10px;
     }
 }
 
@@ -73,7 +73,7 @@
         overflow-x: initial;
     }
     html {
-        font-size: 8px;
+        font-size: 10px;
     }
 }
 
@@ -82,7 +82,7 @@
 
 @media (max-height: 400px) {
     html {
-        font-size: 7px;
+        font-size: 9px;
     }
 }
 
@@ -92,6 +92,16 @@
         overflow-x: initial;
     }
     html {
-        font-size: 7px;
+        font-size: 9px;
+    }
+}
+
+
+/* width: 400px */
+
+
+@media (max-width: 400px) {
+    section.details {
+        width: 90vw;
     }
 }

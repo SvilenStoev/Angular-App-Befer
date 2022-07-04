@@ -3,7 +3,7 @@ section {
     margin: 1em 3em;
     padding: 1em;
     border-radius: 1rem;
-    box-shadow: 2px 2px 1.5em 4px rgba(65,199,255,255);
+    box-shadow: 2px 2px 1.5em 4px rgba(65, 199, 255, 255);
 }
 
 section.main.container {
@@ -34,12 +34,15 @@ section>h2 {
     margin: 1em;
     background-color: gray;
     position: relative;
-    box-shadow: 2px 2px 1.5em 5px rgba(65,199,255,255);
+    box-shadow: 2px 2px 1.5em 5px rgba(65, 199, 255, 255);
+    background-color: transparent;
+    border-radius: 8px;
+    border: 2px solid black;
 }
 
 .publications-container>div:hover {
-    box-shadow: 2px 2px 1.5em 5px rgba(255,199,44,255);
- }
+    box-shadow: 2px 2px 1.5em 5px rgba(255, 199, 44, 255);
+}
 
 .publications-container>div>.info {
     position: absolute;
@@ -49,6 +52,8 @@ section>h2 {
     bottom: 0;
     background-color: white;
     box-shadow: 2px 2px 1.5em 2px black;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 h4 {
@@ -60,16 +65,20 @@ img {
     margin: 0 auto;
 }
 
-.home-image{
+.home-image {
     max-height: 40em;
+    min-height: 20em;
 }
 
-.home-image>img{
-    max-height: 20em;
-    max-width: 20em;
+.home-image>img {
+    width: 100%;
+    object-fit: cover;
+    max-width: 25em;
+    max-height: 25em;
     min-width: 15em;
-    display: flex;
-    justify-content: center;
+    min-height: 15em;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .aux {

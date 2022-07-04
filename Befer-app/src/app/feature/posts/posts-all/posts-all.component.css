@@ -1,20 +1,19 @@
 .publications-container {
-  background-color: rgba(128, 128, 128, 0.301);
-  display: flex !important;
-  flex-flow: row wrap !important;
-  position: relative !important;
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
   /* flex-basis: auto; */
 }
 
-
 .publications-container>div {
   /* flex: 0 0 5em; */
-  flex: 0 1 calc(20% - 6px) !important;
+  flex: 0 1 calc(20% - 6px);
   /* <-- adjusting for margin */
-  margin: 1.5em !important;
-  background-color: gray;
+  margin: 1.5em;
   box-shadow: 2px 2px 1.5em 5px rgba(65, 199, 255, 255);
-
+  background-color: transparent;
+  border-radius: 8px;
+  border: 2px solid black;
 }
 
 .publications-container>div:hover {
@@ -24,6 +23,8 @@
 .publications-container>div>.info {
   position: absolute;
   display: block;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   width: 100%;
   padding: 0.5rem;
   bottom: 0;
