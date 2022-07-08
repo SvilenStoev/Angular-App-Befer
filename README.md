@@ -1,9 +1,16 @@
 ## &copy; Befer - Logo
 ![BoostUp Logo 4](https://www.linkpicture.com/q/Logo21.png)
 
-## Hosted on:
+## :link: Hosted on
 
 **Firebase -** https://befer-app.web.app/
+
+## :trollface: Test user
+You can try all features without registration using test user. The user has 3 public and 1 private posts for now.
+
+**Username:** Befer_Fan_96
+
+**Password:** test123
 
 ## :eyeglasses: Project Introduction
 
@@ -20,15 +27,15 @@ Befer is a platform, where users can introduce their best pictures and great tra
 
 ### 1. Users
 
-**Befer** supports users with profile page, storing basic information about them like: full name, username, email, default profile picture. Every user have own posts page, where he can store his public or private posts. Users are able to add comments to every posts and like, or disslike posts of other users. Every user have access to all public posts, which can be sorted by date ot likes. Only authenticated users can see full features of the application.
+**Befer** supports users with profile page, storing basic information about them like: full name, username, email, default profile picture. Every user have own posts page, where he can store his public or private posts. Users are able to add comments to every posts and like, or disslike posts of other users. Every user have access to all public posts, which can be sorted by date or likes. Only authenticated users can see full features of the application.
 
 ### 2. Posts
 
-All authenticated users are able to add posts. For this purpose they should fill a form with basic details for their post (title, "Before" image URL, "After" image URL, optionaly: description and to chose whether their post will be public or private).
+All authenticated users are able to add posts. For this purpose they should fill a form with basic details for their post (title, "Before" image URL, "After" image URL, optionaly: description and they can chose whether their post will be public or private).
 > :warning: **Note**: Once successfully added a private post, it is visible only in "My Posts" page and it is not visible to other users.
 
-If the post is public It is shown in all posts page and home page (only if the post entered top 10 posts by creation date or likes).
-All posts can be accessing using "All posts" button in the navbar, where there is a option for sorting them by likes or creation date. Top 5 or top 10 posts can be seen on home page with option for sorting them by likes or creation date.
+If the post is public It is shown in "all posts page" and can be visible on home page, but only if the post entered top 5 / 10 posts by creation date or likes.
+All posts can be accessed using "All posts" button in the navbar, where there is a option for sorting them by likes or creation date. Top 5 or top 10 posts can be seen on home page with option for sorting them by likes or creation date.
 Post details button is provided in every company form as "see After".
 Using post details page, an user can add a comment to the post, like or dislike the post.
 Author of a particular post can see delete and edit buttons in details page of his posts, from where he can access edit post page, or delete the post.
@@ -36,12 +43,12 @@ Author of a particular post can see delete and edit buttons in details page of h
 ### 3. Comments, Likes, Dislikes
 
 Comments can be posted only by authorized users to all public posts. Every single comment is connected to a single post.
-Only author of the comment have the option to delete it.
-Only users, which are not author of a single post can like it. After that they are able to dislike the post.
+Only the author of the comment have the option to delete or edit it.
+Only users, which are not author of a single post can like the post. After that they are able to dislike the post.
 
-### :bulgaria: :us: Internationalization
+## :earth_americas: Internationalization | :bulgaria: :us:
 
-Befer supports translation in English and Bulgarian.
+Befer website supports translation in English and Bulgarian languages.
 
 ## :hammer: Built With
 - [Angular](https://github.com/angular)
@@ -54,7 +61,7 @@ Befer supports translation in English and Bulgarian.
 - Web Api services + AJAX real-time Requests
 - [Font Awesome](https://fontawesome.com/)
 
-## Initial StartUp
+## :rocket: Initial StartUp
 
 1) Download the code from this repo. 
 
