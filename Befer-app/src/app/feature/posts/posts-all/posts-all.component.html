@@ -12,11 +12,15 @@
     </div>
     <div *ngIf="!!posts">
         <div class="pagination">
-            <button class="btn" type="button" [disabled]="currPage == 1" (click)="goToFirstPage()">{{menu.firstPage}}</button>
             <button class="btn" type="button" [disabled]="currPage == 1" (click)="goToPreviousPage()"><<</button>
-            <button class="btn" type="button">{{currPage}}</button>
+            <div class="pagination-inside">
+                 <button class="pagination-inside-left" type="button" [disabled]="currPage == 1" (click)="goToFirstPage()">1</button>
+                 <button class="pagination-inside-middle" type="button">...</button>
+                 <button class="pagination-inside-middle" type="button">{{currPage}}</button>
+                 <button class="pagination-inside-middle" type="button">...</button>
+                 <button class="pagination-inside-right" type="button" [disabled]="currPage == lastPage" (click)="goToLastPage()">{{lastPage}}</button>
+            </div>
             <button class="btn" type="button" [disabled]="currPage == lastPage" (click)="goToNextPage()">>></button>
-            <button class="btn" type="button" [disabled]="currPage == lastPage" (click)="goToLastPage()">{{menu.lastPage}}</button>
         </div>
         <div class="paginationText">
             {{menu.postsCountText | replaceArgs: posts.length: allPostsCount}}

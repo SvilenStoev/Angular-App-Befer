@@ -52,19 +52,33 @@ i.fa-thumbs-down {
     margin-bottom: 20px;
 }
 
-.textCenter>img:not(.befer-logo) {
+.pictures-img-before,
+.pictures-img-after {
     margin: 0px 40px;
     max-height: 25em;
     max-width: 25em;
     min-height: 15em;
     min-width: 15em;
-    border: 3px groove black;
+    border: 3px solid black;
     box-shadow: 2px 2px 1em 5px rgba(65, 199, 255, 255);
     border-radius: 20%;
 }
 
 div.pictures {
     position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media all and (max-width: 500px) {
+    div.pictures {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    img.pictures-img-before{
+        margin-bottom: 40px;
+    }
 }
 
 .befer-logo {

@@ -82,8 +82,8 @@
     "seeAfter": "See \"After\"",
     "public": "Public",
     "private": "Private",
-    "firstPage": "First page",
-    "lastPage": "Last page",
+    "firstPage": "First",
+    "lastPage": "Last",
     "postsCountText": "Showing {0} public posts out of {1} in total."
   },
   "postModify": {

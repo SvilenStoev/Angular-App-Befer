@@ -128,7 +128,6 @@ export class PostsAllComponent implements OnInit, OnDestroy {
     this.posts = postsArr.sort((a, b) => b.likes.length - a.likes.length);
   }
 
-
   //pagination logic
   goToPreviousPage(): void {
     if (this.currPage == 1) {

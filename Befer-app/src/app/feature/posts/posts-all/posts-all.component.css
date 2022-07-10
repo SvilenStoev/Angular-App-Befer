@@ -55,3 +55,47 @@ h3 {
 .aux {
   margin: 1em;
 }
+
+.pagination-inside button {
+  margin: 0px;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+}
+
+button.pagination-inside-left {
+  border-top-left-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+}
+
+button.pagination-inside-right {
+  border-top-right-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
+}
+
+.pagination-inside-right:disabled,
+.pagination-inside-left:disabled {
+  background: #dddddd;
+  cursor: not-allowed;
+}
+
+.pagination-inside-left:hover:enabled,
+.pagination-inside-right:hover:enabled {
+  cursor: pointer;
+  background-color: rgba(255, 199, 44, 255);
+  color: white;
+}
+
+.pagination-inside {
+  display: inline-block;
+  margin: 10px;
+  border-radius: 0.3em;
+  border: 2px solid black;
+  box-shadow: 2px 2px 5px black;
+}
+
+.pagination-inside button.pagination-inside-middle {
+  padding: 8px 4px 8px 4px;
+}
