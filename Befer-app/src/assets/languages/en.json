@@ -84,7 +84,7 @@
     "private": "Private",
     "firstPage": "First",
     "lastPage": "Last",
-    "postsCountText": "Showing {0} public posts out of {1} in total."
+    "postsCountText": "Showing {0} posts out of {1} in total."
   },
   "postModify": {
     "editTitle": "Edit Post",

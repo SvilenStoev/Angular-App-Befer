@@ -84,7 +84,7 @@
     "private": "Частен",
     "firstPage": "Първа",
     "lastPage": "Последна",
-    "postsCountText": "Показани са {0} публични поста от {1} общо."
+    "postsCountText": "Показани са {0} поста от {1} общо."
   },
   "postModify": {
     "editTitle": "Редактиране на пост",
