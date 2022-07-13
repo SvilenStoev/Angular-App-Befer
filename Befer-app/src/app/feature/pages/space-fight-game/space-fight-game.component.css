@@ -1,0 +1,29 @@
+.hidden {
+    display: none;
+}
+
+.game-view {
+    width: 100vw;
+    height: 85vh;
+}
+
+.start-screen {
+    background-color: lightgreen;
+    display: inline-block;
+    width: 300px;
+    height: 50px;
+    border-radius: 40px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    margin: 20px 0px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.start-screen p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
