@@ -18,6 +18,7 @@ import { TabTitleService } from '../services/common/tab-title.service';
 import { CommentService } from '../services/components/comment.service';
 import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
+import { SpaceGameService } from '../services/components/space-game.service';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ export class CoreModule {
         ApiService,
         TransferService,
         CommentService,
+        SpaceGameService,
         LanguageService,
         TabTitleService,
         ReplaceArgsPipe,

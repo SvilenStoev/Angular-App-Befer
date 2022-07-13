@@ -2,6 +2,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { HomePageComponent } from "./feature/pages/home-page/home-page.component";
 import { NotFoundPageComponent } from "./feature/pages/not-found-page/not-found-page.component";
+import { SpaceFightGameComponent } from "./feature/pages/space-fight-game/space-fight-game.component";
 
 const routes: Routes = [
     {
@@ -16,6 +17,10 @@ const routes: Routes = [
     {
         path: 'user',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    },
+    {
+        path: 'spacefight',
+        component: SpaceFightGameComponent
     },
     {
         path: '**',

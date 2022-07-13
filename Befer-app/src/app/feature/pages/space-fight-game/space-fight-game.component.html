@@ -1,4 +1,8 @@
 <div class="game-view">
-    <article class="start-screen"><p>Start New Space Fight</p></article>
-    <article class="play-screen hidden"></article>
+    <article *ngIf="!isGameStarted" class="start-screen" (click)="startGame()">
+        <p>Start New Space Fight</p>
+    </article>
+    <article class="play-screen hidden">
+        
+    </article>
 </div>
