@@ -8,19 +8,34 @@ import { SpaceGameService } from 'src/app/services/components/space-game.service
 })
 export class SpaceFightGameComponent implements OnInit {
 
-  isGameStarted: boolean = false;
+  gameStarted: boolean = false;
+  gameOver: boolean = false;
   spaceship: any = {};
-  playScreen: any = {};
+  gameScreen: any = {};
 
   constructor(private gameService: SpaceGameService) { }
 
   ngOnInit(): void {
-    this.playScreen = document.querySelector('.play-screen');
+    this.gameScreen = document.querySelector('.game-view');
   }
 
   startGame() {
-    this.isGameStarted = true;
+    this.gameStarted = true;
     this.spaceship = this.gameService.createSpaceship(200, 100);
-    this.playScreen.appendChild(this.spaceship);
+    this.gameScreen.appendChild(this.spaceship);
+
+    window.requestAnimationFrame(this.gameLoop.bind(this));
   }
+
+  gameLoop() {
+    console.log('loop');
+
+    if (!this.gameOver) {
+      window.requestAnimationFrame(this.gameLoop.bind(this));
+    } else {
+      alert('Game Over!');
+    }
+
+  }
+
 }

@@ -8,7 +8,6 @@ export class SpaceGameService {
   constructor() { }
 
   createSpaceship(posY: number, posX: number): any {
-    console.log("spaceship created");
     let starshipEl = document.createElement('div');
     starshipEl.classList.add('spaceship');
     starshipEl.style.position = 'absolute';
@@ -21,10 +20,8 @@ export class SpaceGameService {
 
     starshipEl.appendChild(starshipImg);
 
-
     // <div class="spaceship"><img src="" alt="spaceship"></div>
     
-
     return starshipEl;
   }
 
