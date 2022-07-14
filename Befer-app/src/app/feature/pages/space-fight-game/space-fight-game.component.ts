@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpaceGameService } from 'src/app/services/components/space-game.service';
+import { state, spaceship, availableKeys } from 'src/app/shared/space-fight-game/gameState';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -10,16 +11,6 @@ export class SpaceFightGameComponent implements OnInit {
 
   gameStarted: boolean = false;
   gameOver: boolean = false;
-  state: any = {
-    keys: {},
-  };
-
-  spaceship: any = {
-    x: -180,
-    y: 300,
-    speed: 5,
-    entered: false
-  };
 
   spaceshipEl: any = {};
   gameScreen: any = {};
@@ -35,21 +26,21 @@ export class SpaceFightGameComponent implements OnInit {
     document.addEventListener('keydown', this.onKeyDown.bind(this));
     document.addEventListener('keyup', this.onKeyUp.bind(this));
 
-    this.spaceshipEl = this.gameService.createSpaceship(this.spaceship.y, this.spaceship.x);
+    this.spaceshipEl = this.gameService.createSpaceship(spaceship.y, spaceship.x);
     this.gameScreen.appendChild(this.spaceshipEl);
 
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   gameLoop() {
-    if (!this.spaceship.entered) {
+    if (!spaceship.entered) {
       this.spaceshipEnters();
     }
 
     this.calcSpaceshipPos();
 
-    this.spaceshipEl.style.top = this.spaceship.y + 'px';
-    this.spaceshipEl.style.left = this.spaceship.x + 'px';
+    this.spaceshipEl.style.top = spaceship.y + 'px';
+    this.spaceshipEl.style.left = spaceship.x + 'px';
 
     if (!this.gameOver) {
       window.requestAnimationFrame(this.gameLoop.bind(this));
@@ -59,37 +50,40 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   spaceshipEnters(): void {
-    if (this.spaceship.x >= 150) {
-      this.spaceship.entered = true;
+    if (spaceship.x >= 150) {
+      spaceship.entered = true;
     }
 
-    this.spaceship.x += this.spaceship.speed;
+    spaceship.x += spaceship.speed;
   }
 
   calcSpaceshipPos(): void {
-
-    if (this.spaceship.y >= 0 && (this.state.keys.KeyW || this.state.keys.ArrowUp)) {
-      this.spaceship.y -= this.spaceship.speed;
+    if (spaceship.y >= 0 && (state.keys.KeyW || state.keys.ArrowUp)) {
+      spaceship.y -= spaceship.speed;
     }
 
-    if (this.state.keys.KeyS || this.state.keys.ArrowDown) {
-      this.spaceship.y += this.spaceship.speed;
+    if (state.keys.KeyS || state.keys.ArrowDown) {
+      spaceship.y += spaceship.speed;
     }
 
-    if (this.spaceship.x >= 0 && (this.state.keys.KeyA || this.state.keys.ArrowLeft)) {
-      this.spaceship.x -= this.spaceship.speed;
+    if (spaceship.x >= 0 && (state.keys.KeyA || state.keys.ArrowLeft)) {
+      spaceship.x -= spaceship.speed;
     }
 
-    if (this.state.keys.KeyD || this.state.keys.ArrowRight) {
-      this.spaceship.x += this.spaceship.speed;
+    if (state.keys.KeyD || state.keys.ArrowRight) {
+      spaceship.x += spaceship.speed;
     }
   }
 
   onKeyDown(e: any) {
-    this.state.keys[e.code] = true;
+    if (availableKeys.includes(e.code)) {
+      state.keys[e.code as keyof typeof state.keys] = true;
+    }
   }
 
   onKeyUp(e: any) {
-    this.state.keys[e.code] = false;
+    if (availableKeys.includes(e.code)) {
+      state.keys[e.code as keyof typeof state.keys] = false;
+    }
   }
 }
