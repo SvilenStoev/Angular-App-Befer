@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SpaceGameService } from 'src/app/services/components/space-game.service';
-import { spaceship, alien } from 'src/app/shared/space-fight-game/gameState';
+import { state, spaceship, alien } from 'src/app/shared/space-fight-game/gameState';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -29,25 +29,22 @@ export class SpaceFightGameComponent implements OnInit {
   gameLoop(timestamp: number) {
     if (!spaceship.entered) {
       this.gameService.spaceshipEntering();
+    } else {
+      
+      //Create an alien
+      if (alien.nextCreation < timestamp) {
+        this.gameService.craeteAlien();
+        alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
+      }
+
+      this.gameService.moveAllAliens();
     }
-
-    //Move alien
-    Array.from(document.getElementsByClassName('alien'))
-      .forEach(a => {
-        let currentPosition = parseInt((a as HTMLDivElement).style.right);
-        (a as HTMLDivElement).style.right = currentPosition + alien.speed + 'px';
-      });
-
-    //Create alien
-    if (alien.nextCreation < timestamp) {
-      this.gameService.craeteAlien();
-      alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 100;
-    }
-
 
     this.gameService.calcSpaceshipPos();
     this.gameService.moveSpaceship();
 
+    this.gameOver = state.gameOver;
+    
     if (!this.gameOver) {
       window.requestAnimationFrame(this.gameLoop.bind(this));
     } else {

@@ -26,7 +26,7 @@ export class SpaceGameService {
     starshipEl.classList.add('spaceship');
     starshipEl.style.position = 'absolute';
     starshipEl.style.left = spaceship.x + 'px';
-    starshipEl.style.top = spaceship.y + 'px'; 
+    starshipEl.style.top = spaceship.y + 'px';
 
     let starshipImg = document.createElement('img');
     starshipImg.alt = 'spaceship';
@@ -35,7 +35,7 @@ export class SpaceGameService {
     starshipEl.appendChild(starshipImg);
 
     // <div class="spaceship"><img src="" alt="spaceship"></div>
-    
+
     this.spaceshipEl = starshipEl;
     this.gameScreenEl.appendChild(starshipEl);
   }
@@ -70,7 +70,7 @@ export class SpaceGameService {
     if ((state.keys.KeyS || state.keys.ArrowDown) && spaceship.y + spaceship.height + 10 < this.gameScreenEl.offsetHeight) {
       spaceship.y += spaceship.speed;
     }
- 
+
     if ((state.keys.KeyA || state.keys.ArrowLeft) && spaceship.x > 0) {
       spaceship.x -= spaceship.speed;
     }
@@ -100,5 +100,33 @@ export class SpaceGameService {
     alienEl.appendChild(alienImgEl);
 
     this.gameScreenEl.appendChild(alienEl);
+  }
+
+  //Move alien
+  moveAllAliens(): void {
+    Array.from(document.getElementsByClassName('alien'))
+      .forEach(alienEl => {
+        let currentPosition = parseInt((alienEl as HTMLDivElement).style.right);
+   
+        if (this.hasCollision(this.spaceshipEl, alienEl)) {
+          state.gameOver = true;
+        }
+
+        if (currentPosition < this.gameScreenEl.offsetWidth) {
+          (alienEl as HTMLDivElement).style.right = currentPosition + alien.speed + 'px';
+        } else {
+          alienEl.remove();
+        }
+      });
+  }
+
+  //Check for collision
+  hasCollision(firstEl: any, secondEl: any): boolean {
+    const first = firstEl.getBoundingClientRect();
+    const second = secondEl.getBoundingClientRect();
+
+    const hasCollision = !(first.bottom - 10 < second.top || first.top + 10 > second.bottom || first.left + 10 > second.right || first.right - 10 < second.left)
+
+    return hasCollision;
   }
 }

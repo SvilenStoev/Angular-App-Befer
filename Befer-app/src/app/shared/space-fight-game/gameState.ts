@@ -2,6 +2,7 @@ export const spaceshipUrl = '../../../../assets/images/spaceship.png';
 export const alienUrl = '../../../../assets/images/alien.png';
 
 export const state = {
+    gameOver: false,
     keys: {
         'KeyW': false,
         'KeyS': false,
@@ -20,17 +21,17 @@ export const spaceship = {
     x: -180,
     y: 300,
     speed: 6,
-    width: 167,
-    height: 97,
+    width: 149,
+    height: 86,
     entered: false
 };
 
 export const alien = {
-    x: 0,
+    x: -100,
     width: 77,
-    height: 62,
-    nextCreation: 3000,
-    creationInterval: 3000,
+    height: 53,
+    nextCreation: 0,
+    creationInterval: 2500,
     speed: 2
 }
 export const availableKeys = [
