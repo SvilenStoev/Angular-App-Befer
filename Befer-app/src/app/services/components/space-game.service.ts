@@ -107,9 +107,10 @@ export class SpaceGameService {
     Array.from(document.getElementsByClassName('alien'))
       .forEach(alienEl => {
         let currentPosition = parseInt((alienEl as HTMLDivElement).style.right);
-   
+
         if (this.hasCollision(this.spaceshipEl, alienEl)) {
           state.gameOver = true;
+          this.displayCollisionImg();
         }
 
         if (currentPosition < this.gameScreenEl.offsetWidth) {
@@ -128,5 +129,25 @@ export class SpaceGameService {
     const hasCollision = !(first.bottom - 10 < second.top || first.top + 10 > second.bottom || first.left + 10 > second.right || first.right - 10 < second.left)
 
     return hasCollision;
+  }
+
+  displayCollisionImg() {
+    const collEl = document.createElement('div');
+    const img = document.createElement('img');
+    img.src = '../../../../assets/images/collision.png';
+    collEl.appendChild(img);
+
+    collEl.style.position = 'absolute';
+    collEl.style.left = spaceship.x + 61 + 'px';
+    collEl.style.top = spaceship.y - 16 + 'px';
+
+    this.gameScreenEl.appendChild(collEl);
+  }
+
+  //Other
+  sleep(ms: number) {
+    return new Promise(
+      resolve => setTimeout(resolve, ms)
+    );
   }
 }

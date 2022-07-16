@@ -2,6 +2,14 @@ export const spaceshipUrl = '../../../../assets/images/spaceship.png';
 export const alienUrl = '../../../../assets/images/alien.png';
 
 export const state = {
+    level: 1,
+    levelsRange: {
+        2: 5000,
+        3: 10000,
+        4: 20000,
+        5: 50000,
+    },
+    points: 0,
     gameOver: false,
     keys: {
         'KeyW': false,
@@ -32,7 +40,8 @@ export const alien = {
     height: 53,
     nextCreation: 0,
     creationInterval: 2500,
-    speed: 2
+    speed: 2,
+    pointsToKill: 500,
 }
 export const availableKeys = [
     'KeyW',

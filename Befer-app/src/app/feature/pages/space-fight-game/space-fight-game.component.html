@@ -1,5 +1,11 @@
+<div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="points">
+    <p>Points: <span class="points-current">{{points}}</span></p>
+</div>
 <div class="game-view">
     <article *ngIf="!gameStarted" class="start-screen" (click)="startGame()">
         <p>Start New Space Fight</p>
     </article>
+</div>
+<div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
+    <p>Level: <span class="game-footer-level">{{level}}</span></p>
 </div>
