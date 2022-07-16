@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { state, spaceship, availableKeys, spaceshipUrl } from 'src/app/shared/space-fight-game/gameState';
+import { state, spaceship, availableKeys, spaceshipUrl, alien, alienUrl } from 'src/app/shared/space-fight-game/gameState';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,14 @@ export class SpaceGameService {
   }
 
   //Modify spaceship possition
+  spaceshipEntering(): void {
+    if (spaceship.x >= 150) {
+      spaceship.entered = true;
+    }
+
+    spaceship.x += spaceship.speed;
+  }
+
   calcSpaceshipPos(): void {
     if ((state.keys.KeyW || state.keys.ArrowUp) && spaceship.y > 0) {
       spaceship.y -= spaceship.speed;
@@ -75,5 +83,22 @@ export class SpaceGameService {
   moveSpaceship(): void {
     this.spaceshipEl.style.top = spaceship.y + 'px';
     this.spaceshipEl.style.left = spaceship.x + 'px';
+  }
+
+  //Create and modify alien
+  craeteAlien(): void {
+    let alienEl = document.createElement('div');
+    alienEl.classList.add('alien');
+    alienEl.style.position = 'absolute';
+    alienEl.style.right = alien.x + 'px';
+    alienEl.style.top = (this.gameScreenEl.offsetHeight - alien.height) * Math.random() + 'px';
+
+    let alienImgEl = document.createElement('img');
+    alienImgEl.alt = 'Alien';
+    alienImgEl.src = alienUrl;
+
+    alienEl.appendChild(alienImgEl);
+
+    this.gameScreenEl.appendChild(alienEl);
   }
 }
