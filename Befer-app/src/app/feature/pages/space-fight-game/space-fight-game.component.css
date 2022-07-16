@@ -28,3 +28,13 @@
     font-size: large;
     font-weight: bold;
 }
+
+div.spaceship {
+    width: 167px;
+    height: 97px;
+}
+
+div.spaceship img {
+    width: 100%;
+    height: 100%;
+}
