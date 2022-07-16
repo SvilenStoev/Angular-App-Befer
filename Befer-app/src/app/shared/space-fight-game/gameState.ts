@@ -1,5 +1,6 @@
 export const spaceshipUrl = '../../../../assets/images/spaceship.png';
 export const alienUrl = '../../../../assets/images/alien.png';
+export const bombUrl = '../../../../assets/images/bomb.png';
 
 export const state = {
     level: 1,
@@ -28,7 +29,7 @@ export const state = {
 export const spaceship = {
     x: -180,
     y: 300,
-    speed: 6,
+    speed: 7,
     width: 149,
     height: 86,
     entered: false
@@ -38,11 +39,20 @@ export const alien = {
     x: -100,
     width: 77,
     height: 53,
+    speed: 2,
     nextCreation: 0,
     creationInterval: 2500,
-    speed: 2,
     pointsToKill: 500,
 }
+
+export const bomb = {
+    width: 73,
+    height: 25,
+    speed: 14,
+    fireInterval: 500,
+    nextFire: 0,
+}
+
 export const availableKeys = [
     'KeyW',
     'KeyS',

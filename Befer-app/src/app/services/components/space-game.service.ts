@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { state, spaceship, availableKeys, spaceshipUrl, alien, alienUrl } from 'src/app/shared/space-fight-game/gameState';
+import { state, spaceship, availableKeys, spaceshipUrl, alien, alienUrl, bombUrl, bomb } from 'src/app/shared/space-fight-game/gameState';
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +102,29 @@ export class SpaceGameService {
     this.gameScreenEl.appendChild(alienEl);
   }
 
+  fireBombs(): void {
+    if (state.keys.Space) {
+      this.craeteBomb();
+    }
+  }
+
+  //Create and modify bomb
+  craeteBomb(): void {
+    let bombEl = document.createElement('div');
+    bombEl.classList.add('bomb');
+    bombEl.style.position = 'absolute';
+    bombEl.style.left = spaceship.x + spaceship.width + 'px';
+    bombEl.style.top = (spaceship.y + (spaceship.height / 2) - bomb.height / 2) + 'px';
+
+    let bombImgEl = document.createElement('img');
+    bombImgEl.alt = 'Bomb';
+    bombImgEl.src = bombUrl;
+
+    bombEl.appendChild(bombImgEl);
+
+    this.gameScreenEl.appendChild(bombEl);
+  }
+
   //Move alien
   moveAllAliens(): void {
     Array.from(document.getElementsByClassName('alien'))
@@ -117,6 +140,20 @@ export class SpaceGameService {
           (alienEl as HTMLDivElement).style.right = currentPosition + alien.speed + 'px';
         } else {
           alienEl.remove();
+        }
+      });
+  }
+
+  //Move bombs
+  moveAllBombs(): void {
+    Array.from(document.getElementsByClassName('bomb'))
+      .forEach(bombEl => {
+        let currentPosition = parseInt((bombEl as HTMLDivElement).style.left);
+
+        if (currentPosition - 300 < this.gameScreenEl.offsetWidth) {
+          (bombEl as HTMLDivElement).style.left = currentPosition + bomb.speed + 'px';
+        } else {
+          bombEl.remove();
         }
       });
   }

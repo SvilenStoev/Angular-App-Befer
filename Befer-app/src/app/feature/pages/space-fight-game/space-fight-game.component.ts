@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SpaceGameService } from 'src/app/services/components/space-game.service';
-import { state, spaceship, alien } from 'src/app/shared/space-fight-game/gameState';
+import { state, spaceship, alien, bomb } from 'src/app/shared/space-fight-game/gameState';
 import { notifySuccess } from 'src/app/shared/other/notify';
 
 @Component({
@@ -44,6 +44,13 @@ export class SpaceFightGameComponent implements OnInit {
 
     this.gameService.calcSpaceshipPos();
     this.gameService.moveSpaceship();
+
+    if (bomb.nextFire < timestamp) {
+      this.gameService.fireBombs();
+      bomb.nextFire = timestamp + bomb.fireInterval;
+    }
+
+    this.gameService.moveAllBombs();
 
     if (!state.gameOver) {
       state.points++;
