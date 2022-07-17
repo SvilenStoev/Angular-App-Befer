@@ -21,7 +21,7 @@ export class SpaceFightGameComponent implements OnInit {
   constructor(private gameService: SpaceGameService) { }
 
   ngOnInit(): void {
-    
+
   }
 
   async startGame() {
@@ -79,9 +79,23 @@ export class SpaceFightGameComponent implements OnInit {
         }
       }
 
-      window.requestAnimationFrame(this.gameLoop.bind(this));
+      //Pause game
+      if (!state.isPaused) {
+        window.requestAnimationFrame(this.gameLoop.bind(this));
+      } else {
+        document.addEventListener('keypress', this.onResume.bind(this));
+      }
     } else {
       console.log('game over!', state.points);
+    }
+  }
+
+  onResume(e: any) {
+    if (state.isPaused && e.code == 'KeyR') {
+      state.isPaused = false;
+      window.requestAnimationFrame(this.gameLoop.bind(this));
+      //TODO: This doesn't remove the event listener!?!
+      document.removeEventListener('keypress', this.onResume);
     }
   }
 
@@ -89,7 +103,6 @@ export class SpaceFightGameComponent implements OnInit {
     alien.speed++;
     alien.creationInterval -= 600;
   }
-
 
   createBonuses(timestamp: number): void {
     //Create an double-fire-bonus

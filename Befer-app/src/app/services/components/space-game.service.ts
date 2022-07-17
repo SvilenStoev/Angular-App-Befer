@@ -28,6 +28,10 @@ export class SpaceGameService {
   onKeyDown(e: any) {
     if (availableKeys.includes(e.code)) {
       state.keys[e.code as keyof typeof state.keys] = true;
+
+      if (e.code == 'KeyP') {
+        state.isPaused = true;
+      }
     }
   }
 

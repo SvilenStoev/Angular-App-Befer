@@ -9,6 +9,7 @@ export const state = {
         7: 19000,
     },
     points: 0,
+    isPaused: false,
     hasBonuses: false,
     gameOver: false,
     keys: {
