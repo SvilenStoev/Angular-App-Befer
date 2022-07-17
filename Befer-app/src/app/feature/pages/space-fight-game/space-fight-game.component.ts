@@ -44,11 +44,11 @@ export class SpaceFightGameComponent implements OnInit {
     this.gameService.moveSpaceship();
 
     //Fire bombs
-    if (bomb.nextFire < timestamp) {
-      this.gameService.fireBombs();
-      bomb.nextFire = timestamp + bomb.fireInterval;
+    if (state.keys.Space) {
+      this.gameService.fireBombs(timestamp);
     }
 
+    //Move bombs
     this.gameService.moveAllBombs();
 
     if (!state.gameOver) {

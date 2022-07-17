@@ -23,22 +23,7 @@ export class SpaceGameService {
   }
 
   createSpaceship(): void {
-    let starshipEl = document.createElement('div');
-    starshipEl.classList.add('spaceship');
-    starshipEl.style.position = 'absolute';
-    starshipEl.style.left = spaceship.x + 'px';
-    starshipEl.style.top = spaceship.y + 'px';
-
-    let starshipImg = document.createElement('img');
-    starshipImg.alt = 'spaceship';
-    starshipImg.src = spaceshipUrl;
-
-    starshipEl.appendChild(starshipImg);
-
-    // <div class="spaceship"><img src="" alt="spaceship"></div>
-
-    this.spaceshipEl = starshipEl;
-    this.gameScreenEl.appendChild(starshipEl);
+    this.spaceshipEl = this.createEl('spaceship', spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl);
   }
 
   //Track user keyboard input
@@ -89,57 +74,40 @@ export class SpaceGameService {
 
   //Create and modify alien
   craeteAlien(): void {
-    let alienEl = document.createElement('div');
-    alienEl.classList.add('alien');
-    alienEl.style.position = 'absolute';
-    alienEl.style.right = alien.x + 'px';
-    alienEl.style.top = (this.gameScreenEl.offsetHeight - alien.height) * Math.random() + 'px';
+    const alienX = this.gameScreenEl.offsetWidth;
+    const alienY = (this.gameScreenEl.offsetHeight - alien.height) * Math.random();
 
-    let alienImgEl = document.createElement('img');
-    alienImgEl.alt = 'Alien';
-    alienImgEl.src = alienUrl;
-
-    alienEl.appendChild(alienImgEl);
-
-    this.gameScreenEl.appendChild(alienEl);
+    this.createEl('alien', alienX, alienY, 'Alien', alienUrl);
   }
 
-  fireBombs(): void {
-    if (state.keys.Space) {
+  fireBombs(timestamp: number): void {
+    if (bomb.nextFire < timestamp) {
       this.craeteBomb();
+      bomb.nextFire = timestamp + bomb.fireInterval;
     }
   }
 
   //Create and modify bomb
   craeteBomb(): void {
-    let bombEl = document.createElement('div');
-    bombEl.classList.add('bomb');
-    bombEl.style.position = 'absolute';
-    bombEl.style.left = spaceship.x + spaceship.width + 'px';
-    bombEl.style.top = (spaceship.y + (spaceship.height / 2) - bomb.height / 2) + 'px';
+    const bombX = spaceship.x + (spaceship.width / 2);
+    const bombY = (spaceship.y + (spaceship.height / 2) - bomb.height / 2);
 
-    let bombImgEl = document.createElement('img');
-    bombImgEl.alt = 'Bomb';
-    bombImgEl.src = bombUrl;
-
-    bombEl.appendChild(bombImgEl);
-
-    this.gameScreenEl.appendChild(bombEl);
+    this.createEl('bomb', bombX, bombY, 'Bomb', bombUrl);
   }
 
   //Move alien
   moveAllAliens(): void {
     Array.from(document.getElementsByClassName('alien'))
       .forEach(alienEl => {
-        let currentPosition = parseInt((alienEl as HTMLDivElement).style.right);
+        let currentPosition = parseInt((alienEl as HTMLDivElement).style.left);
 
         if (this.hasCollision(this.spaceshipEl, alienEl)) {
           state.gameOver = true;
           this.displayCollisionImg();
         }
 
-        if (currentPosition < this.gameScreenEl.offsetWidth) {
-          (alienEl as HTMLDivElement).style.right = currentPosition + alien.speed + 'px';
+        if (currentPosition > -80) {
+          (alienEl as HTMLDivElement).style.left = currentPosition - alien.speed + 'px';
         } else {
           alienEl.remove();
         }
@@ -193,6 +161,24 @@ export class SpaceGameService {
   }
 
   //Other
+  createEl(className: string, x: number, y: number, imgAlt: string, imgUrl: string): any {
+    let divEl = document.createElement('div');
+    divEl.classList.add(className);
+    divEl.style.position = 'absolute';
+    divEl.style.left = x + 'px';
+    divEl.style.top = y + 'px';
+
+    let imgEl = document.createElement('img');
+    imgEl.alt = imgAlt;
+    imgEl.src = imgUrl;
+
+    divEl.appendChild(imgEl);
+
+    this.gameScreenEl.appendChild(divEl);
+
+    return divEl;
+  }
+  
   sleep(ms: number) {
     return new Promise(
       resolve => setTimeout(resolve, ms)

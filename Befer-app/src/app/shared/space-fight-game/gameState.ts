@@ -36,7 +36,7 @@ export const spaceship = {
 };
 
 export const alien = {
-    x: -100,
+    x: 100,
     width: 77,
     height: 53,
     speed: 2,
@@ -48,7 +48,7 @@ export const alien = {
 export const bomb = {
     width: 73,
     height: 25,
-    speed: 14,
+    speed: 12,
     fireInterval: 500,
     nextFire: 0,
 }
