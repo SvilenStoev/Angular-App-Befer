@@ -6,6 +6,7 @@ export const collisionUrl = '../../../../assets/images/collision.png';
 //bonuses
 export const doubleFireUrl = '../../../../assets/images/bonus-double-fire.png';
 export const aimBonusUrl = '../../../../assets/images/bonus-aim.png';
+export const invisibleBonusUrl = '../../../../assets/images/bonus-invisible.png';
 
 export const spaceship = {
     x: -180,
@@ -17,6 +18,7 @@ export const spaceship = {
     bonuses: {
         doubleFire: false,
         aim: false,
+        invisible: false,
     }
 };
 
@@ -43,7 +45,7 @@ export const doubleFireBonus = {
     width: 56,
     height: 82,
     speed: 3,
-    nextCreation: 10000,
+    nextCreation: 8000,
     creationInterval: 100000,
     timeLast: 10000
 }
@@ -54,4 +56,12 @@ export const aimBonus = {
     nextCreation: 18000,
     creationInterval: 120000,
     timeLast: 15000
+}
+
+export const invisibleBonus = {
+    width: 60,
+    height: 60,
+    nextCreation: 30000,
+    creationInterval: 150000,
+    timeLast: 12000
 }

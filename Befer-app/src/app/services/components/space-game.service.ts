@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState';
-import { spaceship, spaceshipUrl, alien, alienUrl, bombUrl, bomb, doubleFireBonus, doubleFireUrl, collisionUrl, aimBonusUrl, aimBonus } from 'src/app/shared/space-fight-game/gameObjects';
+import { spaceship, spaceshipUrl, alien, alienUrl, bombUrl, bomb, doubleFireBonus, doubleFireUrl, collisionUrl, aimBonusUrl, aimBonus, invisibleBonusUrl, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -89,7 +89,7 @@ export class SpaceGameService {
       .forEach(alienEl => {
         let currentPosition = parseInt((alienEl as HTMLDivElement).style.left);
 
-        if (this.hasCollision(this.spaceshipEl, alienEl, 12)) {
+        if (!spaceship.bonuses.invisible && this.hasCollision(this.spaceshipEl, alienEl, 12)) {
           state.gameOver = true;
           this.displayCollisionImg();
         }
@@ -221,6 +221,14 @@ export class SpaceGameService {
     this.createEl(classesArr, aimBonusX, aimBonusY, 'Aim-bonus', aimBonusUrl, aimBonus.width, aimBonus.height);
   }
 
+  createInsivibleBonus() {
+    const invisibleBonusX = this.gameScreenEl.offsetWidth;
+    const invisibleBonusY = (this.gameScreenEl.offsetHeight - doubleFireBonus.height) * Math.random();
+    const classesArr = ['invisible-bonus', 'bonus'];
+
+    this.createEl(classesArr, invisibleBonusX, invisibleBonusY, 'Invisible-bonus', invisibleBonusUrl, invisibleBonus.width, invisibleBonus.height);
+  }
+
   moveAllBonuses() {
     Array.from(document.getElementsByClassName('bonus'))
       .forEach(bonusEl => {
@@ -243,7 +251,16 @@ export class SpaceGameService {
               spaceship.bonuses.aim = false;
               this.spaceshipEl.classList.add('hide');
             }, aimBonus.timeLast);
-          } else {
+          } else if (bonusEl.classList.contains('invisible-bonus')) {
+            this.spaceshipEl.style.opacity = '40%';
+            spaceship.bonuses.invisible = true;
+
+            setTimeout(() => {
+              spaceship.bonuses.invisible = false;
+              this.spaceshipEl.style.opacity = '100%';
+            }, invisibleBonus.timeLast);
+          }
+          else {
             spaceship.bonuses.doubleFire = true;
 
             setTimeout(() => {
