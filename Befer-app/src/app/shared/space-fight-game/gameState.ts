@@ -42,7 +42,7 @@ export const alien = {
     speed: 2,
     nextCreation: 0,
     creationInterval: 2500,
-    pointsToKill: 500,
+    pointsToKill: 200,
 }
 
 export const bomb = {

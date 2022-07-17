@@ -19,6 +19,7 @@ export class SpaceGameService {
 
     this.gameScreenEl = document.querySelector('.game-view');
     this.createSpaceship();
+    this.spaceshipEntering();
   }
 
   createSpaceship(): void {
@@ -54,12 +55,13 @@ export class SpaceGameService {
   }
 
   //Modify spaceship possition
-  spaceshipEntering(): void {
-    if (spaceship.x >= 150) {
-      spaceship.entered = true;
-    }
+  async spaceshipEntering() {
+    while (spaceship.x < 150) {
+      spaceship.x += spaceship.speed;
+      this.moveSpaceship();
 
-    spaceship.x += spaceship.speed;
+      await this.sleep(15);
+    }
   }
 
   calcSpaceshipPos(): void {
@@ -145,12 +147,21 @@ export class SpaceGameService {
   }
 
   //Move bombs
-  moveAllBombs(): void {
+  moveAllBombs() {
     Array.from(document.getElementsByClassName('bomb'))
       .forEach(bombEl => {
         let currentPosition = parseInt((bombEl as HTMLDivElement).style.left);
 
-        if (currentPosition - 300 < this.gameScreenEl.offsetWidth) {
+        Array.from(document.getElementsByClassName('alien'))
+          .forEach(alienEl => {
+            if (this.hasCollision(bombEl, alienEl)) {
+              bombEl.remove();
+              alienEl.remove();
+              state.points += alien.pointsToKill;
+            }
+          });
+
+        if (currentPosition < this.gameScreenEl.offsetWidth) {
           (bombEl as HTMLDivElement).style.left = currentPosition + bomb.speed + 'px';
         } else {
           bombEl.remove();

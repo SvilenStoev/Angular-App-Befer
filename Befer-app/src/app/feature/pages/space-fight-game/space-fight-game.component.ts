@@ -21,30 +21,29 @@ export class SpaceFightGameComponent implements OnInit {
 
   }
 
-  startGame() {
+  async startGame() {
     this.gameStarted = true;
     this.gameService.initialStartUp();
+
+    await this.gameService.sleep(1200);
 
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   async gameLoop(timestamp: number) {
-    if (!spaceship.entered) {
-      this.gameService.spaceshipEntering();
-    } else {
-
-      //Create an alien
-      if (alien.nextCreation < timestamp) {
-        this.gameService.craeteAlien();
-        alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
-      }
-
-      this.gameService.moveAllAliens();
+    //Create an alien
+    if (alien.nextCreation < timestamp) {
+      this.gameService.craeteAlien();
+      alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
     }
 
+    this.gameService.moveAllAliens();
+
+    //Modify spaceship position
     this.gameService.calcSpaceshipPos();
     this.gameService.moveSpaceship();
 
+    //Fire bombs
     if (bomb.nextFire < timestamp) {
       this.gameService.fireBombs();
       bomb.nextFire = timestamp + bomb.fireInterval;
