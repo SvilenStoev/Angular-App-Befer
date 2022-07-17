@@ -7,7 +7,8 @@
 }
 
 .start-screen {
-    background-color: rgba(65,199,255,255);;
+    background-color: rgba(65, 199, 255, 255);
+    ;
     display: inline-block;
     width: 420px;
     height: 80px;
@@ -69,4 +70,18 @@ div.double-fire-bonus img {
     text-align: center;
     font-size: 20px;
     letter-spacing: 2px;
+}
+
+div.spaceship::after {
+    content: '';
+    position: absolute;
+    width: 2200px;
+    border-bottom: 1px dashed red;
+    top: 42px;
+    left: 66px;
+    z-index: -2;
+}
+
+div.hide::after {
+    display: none;
 }

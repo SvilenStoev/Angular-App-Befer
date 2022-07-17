@@ -1,7 +1,3 @@
-export const spaceshipUrl = '../../../../assets/images/spaceship.png';
-export const alienUrl = '../../../../assets/images/alien.png';
-export const bombUrl = '../../../../assets/images/bomb.png';
-
 export const state = {
     level: 1,
     levelsRange: {

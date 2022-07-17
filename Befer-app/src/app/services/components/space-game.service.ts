@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState';
-import { spaceship, spaceshipUrl, alien, alienUrl, bombUrl, bomb, doubleFireBonus, doubleFireUrl } from 'src/app/shared/space-fight-game/gameObjects';
+import { spaceship, spaceshipUrl, alien, alienUrl, bombUrl, bomb, doubleFireBonus, doubleFireUrl, collisionUrl, aimBonusUrl, aimBonus } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,7 @@ export class SpaceGameService {
 
   //1. Spaceship
   createSpaceship(): void {
-    this.spaceshipEl = this.createEl(['spaceship'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height);
+    this.spaceshipEl = this.createEl(['spaceship', 'hide'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height);
   }
 
   //Modify spaceship possition
@@ -89,7 +89,7 @@ export class SpaceGameService {
       .forEach(alienEl => {
         let currentPosition = parseInt((alienEl as HTMLDivElement).style.left);
 
-        if (this.hasCollision(this.spaceshipEl, alienEl)) {
+        if (this.hasCollision(this.spaceshipEl, alienEl, 12)) {
           state.gameOver = true;
           this.displayCollisionImg();
         }
@@ -110,10 +110,6 @@ export class SpaceGameService {
 
       if (spaceship.bonuses.doubleFire) {
         this.createBomb();
-
-        setTimeout(() => {
-          spaceship.bonuses.doubleFire = false;
-        }, doubleFireBonus.timeLast);
       }
     }
   }
@@ -140,7 +136,7 @@ export class SpaceGameService {
 
         Array.from(document.getElementsByClassName('alien'))
           .forEach(alienEl => {
-            if (this.hasCollision(bombEl, alienEl)) {
+            if (this.hasCollision(bombEl, alienEl, 6)) {
               bombEl.remove();
               alienEl.remove();
               state.points += alien.pointsToKill;
@@ -156,11 +152,11 @@ export class SpaceGameService {
   }
 
   //Check for collision
-  hasCollision(firstEl: any, secondEl: any): boolean {
+  hasCollision(firstEl: any, secondEl: any, tolerance: number): boolean {
     const first = firstEl.getBoundingClientRect();
     const second = secondEl.getBoundingClientRect();
 
-    const hasCollision = !(first.bottom - 10 < second.top || first.top + 10 > second.bottom || first.left + 10 > second.right || first.right - 10 < second.left)
+    const hasCollision = !(first.bottom - tolerance < second.top || first.top + tolerance > second.bottom || first.left + tolerance > second.right || first.right - tolerance < second.left)
 
     return hasCollision;
   }
@@ -168,11 +164,11 @@ export class SpaceGameService {
   displayCollisionImg() {
     const collEl = document.createElement('div');
     const img = document.createElement('img');
-    img.src = '../../../../assets/images/collision.png';
+    img.src = collisionUrl;
     collEl.appendChild(img);
 
     collEl.style.position = 'absolute';
-    collEl.style.left = spaceship.x + 61 + 'px';
+    collEl.style.left = spaceship.x + 39 + 'px';
     collEl.style.top = spaceship.y - 16 + 'px';
 
     this.gameScreenEl.appendChild(collEl);
@@ -217,6 +213,14 @@ export class SpaceGameService {
     this.createEl(classesArr, fireBonusX, fireBonusY, 'Double-fire-bonus', doubleFireUrl, doubleFireBonus.width, doubleFireBonus.height);
   }
 
+  createAimBonus() {
+    const aimBonusX = this.gameScreenEl.offsetWidth;
+    const aimBonusY = (this.gameScreenEl.offsetHeight - doubleFireBonus.height) * Math.random();
+    const classesArr = ['aim-bonus', 'bonus'];
+
+    this.createEl(classesArr, aimBonusX, aimBonusY, 'Aim-bonus', aimBonusUrl, aimBonus.width, aimBonus.height);
+  }
+
   moveAllBonuses() {
     Array.from(document.getElementsByClassName('bonus'))
       .forEach(bonusEl => {
@@ -228,9 +232,26 @@ export class SpaceGameService {
           bonusEl.remove();
         }
 
-        if (this.hasCollision(this.spaceshipEl, bonusEl)) {
+        if (this.hasCollision(this.spaceshipEl, bonusEl, 6)) {
+          //TODO: Impove the check
+          if (bonusEl.classList.contains('aim-bonus')) {
+            spaceship.bonuses.aim = true;
+
+            this.spaceshipEl.classList.remove('hide');
+
+            setTimeout(() => {
+              spaceship.bonuses.aim = false;
+              this.spaceshipEl.classList.add('hide');
+            }, aimBonus.timeLast);
+          } else {
+            spaceship.bonuses.doubleFire = true;
+
+            setTimeout(() => {
+              spaceship.bonuses.doubleFire = false;
+            }, doubleFireBonus.timeLast);
+          }
+
           bonusEl.remove();
-          spaceship.bonuses.doubleFire = true;
         }
       });
   }
