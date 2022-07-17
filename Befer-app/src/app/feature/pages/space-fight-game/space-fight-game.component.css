@@ -41,6 +41,16 @@ div.alien img {
     height: 100%;
 }
 
+div.bomb img {
+    width: 100%;
+    height: 100%;
+}
+
+div.double-fire-bonus img {
+    width: 100%;
+    height: 100%;
+}
+
 .points {
     visibility: hidden;
     font-family: 'Consolas';

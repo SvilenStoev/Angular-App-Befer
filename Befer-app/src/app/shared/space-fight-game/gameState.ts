@@ -11,6 +11,7 @@ export const state = {
         5: 50000,
     },
     points: 0,
+    hasBonuses: false,
     gameOver: false,
     keys: {
         'KeyW': false,
@@ -25,33 +26,6 @@ export const state = {
         'Space': false
     },
 };
-
-export const spaceship = {
-    x: -180,
-    y: 300,
-    speed: 7,
-    width: 149,
-    height: 86,
-    entered: false
-};
-
-export const alien = {
-    x: 100,
-    width: 77,
-    height: 53,
-    speed: 2,
-    nextCreation: 0,
-    creationInterval: 2500,
-    pointsToKill: 200,
-}
-
-export const bomb = {
-    width: 73,
-    height: 25,
-    speed: 12,
-    fireInterval: 500,
-    nextFire: 0,
-}
 
 export const availableKeys = [
     'KeyW',

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { state, spaceship, availableKeys, spaceshipUrl, alien, alienUrl, bombUrl, bomb } from 'src/app/shared/space-fight-game/gameState';
+import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState';
+import { spaceship, spaceshipUrl, alien, alienUrl, bombUrl, bomb, doubleFireBonus, doubleFireUrl } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class SpaceGameService {
 
   spaceshipEl: any = {};
   gameScreenEl: any = {};
+  switchShotGun: boolean = false;
 
   constructor() { }
 
@@ -22,10 +24,6 @@ export class SpaceGameService {
     this.spaceshipEntering();
   }
 
-  createSpaceship(): void {
-    this.spaceshipEl = this.createEl('spaceship', spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl);
-  }
-
   //Track user keyboard input
   onKeyDown(e: any) {
     if (availableKeys.includes(e.code)) {
@@ -37,6 +35,11 @@ export class SpaceGameService {
     if (availableKeys.includes(e.code)) {
       state.keys[e.code as keyof typeof state.keys] = false;
     }
+  }
+
+  //1. Spaceship
+  createSpaceship(): void {
+    this.spaceshipEl = this.createEl(['spaceship'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height);
   }
 
   //Modify spaceship possition
@@ -72,27 +75,12 @@ export class SpaceGameService {
     this.spaceshipEl.style.left = spaceship.x + 'px';
   }
 
-  //Create and modify alien
+  //2. Alien
   craeteAlien(): void {
     const alienX = this.gameScreenEl.offsetWidth;
     const alienY = (this.gameScreenEl.offsetHeight - alien.height) * Math.random();
 
-    this.createEl('alien', alienX, alienY, 'Alien', alienUrl);
-  }
-
-  fireBombs(timestamp: number): void {
-    if (bomb.nextFire < timestamp) {
-      this.craeteBomb();
-      bomb.nextFire = timestamp + bomb.fireInterval;
-    }
-  }
-
-  //Create and modify bomb
-  craeteBomb(): void {
-    const bombX = spaceship.x + (spaceship.width / 2);
-    const bombY = (spaceship.y + (spaceship.height / 2) - bomb.height / 2);
-
-    this.createEl('bomb', bombX, bombY, 'Bomb', bombUrl);
+    this.createEl(['alien'], alienX, alienY, 'Alien', alienUrl, alien.width, alien.height);
   }
 
   //Move alien
@@ -112,6 +100,28 @@ export class SpaceGameService {
           alienEl.remove();
         }
       });
+  }
+
+  //3. Bombs
+  fireBombs(timestamp: number): void {
+    if (!timestamp || bomb.nextFire < timestamp) {
+      this.craeteBomb();
+      bomb.nextFire = timestamp + bomb.fireInterval;
+    }
+  }
+
+  //Create and modify bomb
+  craeteBomb(): void {
+    const bombX = spaceship.x + (spaceship.width / 3);
+    let bombY = (spaceship.y + (spaceship.height / 2));
+
+    if (this.switchShotGun) {
+      bombY -= bomb.height;
+    }
+
+    this.switchShotGun = !this.switchShotGun;
+
+    this.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, bomb.width, bomb.height);
   }
 
   //Move bombs
@@ -161,9 +171,14 @@ export class SpaceGameService {
   }
 
   //Other
-  createEl(className: string, x: number, y: number, imgAlt: string, imgUrl: string): any {
+  createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number): any {
     let divEl = document.createElement('div');
-    divEl.classList.add(className);
+    classes.forEach(c => {
+      divEl.classList.add(c);
+    });
+
+    divEl.style.width = width + 'px';
+    divEl.style.height = height + 'px';
     divEl.style.position = 'absolute';
     divEl.style.left = x + 'px';
     divEl.style.top = y + 'px';
@@ -178,10 +193,37 @@ export class SpaceGameService {
 
     return divEl;
   }
-  
+
   sleep(ms: number) {
     return new Promise(
       resolve => setTimeout(resolve, ms)
     );
+  }
+
+  //4. Modify bonuses
+  createDoubleFireBonus() {
+    const fireBonusX = this.gameScreenEl.offsetWidth;
+    const fireBonusY = (this.gameScreenEl.offsetHeight - doubleFireBonus.height) * Math.random();
+    const classesArr = ['double-fire-bonus', 'bonus'];
+
+    this.createEl(classesArr, fireBonusX, fireBonusY, 'Double-fire-bonus', doubleFireUrl, doubleFireBonus.width, doubleFireBonus.height);
+  }
+
+  moveAllBonuses() {
+    Array.from(document.getElementsByClassName('bonus'))
+      .forEach(bonusEl => {
+        let currentPosition = parseInt((bonusEl as HTMLDivElement).style.left);
+
+        if (currentPosition > 0) {
+          (bonusEl as HTMLDivElement).style.left = currentPosition - doubleFireBonus.speed + 'px';
+        } else {
+          bonusEl.remove();
+        }
+         
+        if (this.hasCollision(this.spaceshipEl, bonusEl)) {
+          bonusEl.remove();
+          spaceship.bonuses.doubleFire = true;
+        }
+      });
   }
 }

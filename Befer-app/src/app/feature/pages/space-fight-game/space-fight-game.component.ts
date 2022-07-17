@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { SpaceGameService } from 'src/app/services/components/space-game.service';
-import { state, spaceship, alien, bomb } from 'src/app/shared/space-fight-game/gameState';
+
 import { notifySuccess } from 'src/app/shared/other/notify';
+import { state } from 'src/app/shared/space-fight-game/gameState';
+import { SpaceGameService } from 'src/app/services/components/space-game.service';
+import { doubleFireBonus, alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -46,10 +48,31 @@ export class SpaceFightGameComponent implements OnInit {
     //Fire bombs
     if (state.keys.Space) {
       this.gameService.fireBombs(timestamp);
+
+      if (spaceship.bonuses.doubleFire) {
+        this.gameService.fireBombs(0);
+      }
     }
 
     //Move bombs
     this.gameService.moveAllBombs();
+
+    //Create an double-fire-bonus
+    if (doubleFireBonus.nextCreation < timestamp) {
+      state.hasBonuses = true;
+
+      this.gameService.createDoubleFireBonus();
+      doubleFireBonus.nextCreation = timestamp + (doubleFireBonus.creationInterval * Math.random()) + 500;
+    }
+
+    //Move bonuses only if there is bonuses on the screen (because they will be really rare).
+    if (state.hasBonuses) {
+      if (document.getElementsByClassName('bonus').length > 0) {
+        this.gameService.moveAllBonuses();
+      } else {
+        state.hasBonuses = false;
+      }
+    }
 
     if (!state.gameOver) {
       state.points++;
