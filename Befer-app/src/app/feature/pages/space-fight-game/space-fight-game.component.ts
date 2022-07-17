@@ -48,10 +48,6 @@ export class SpaceFightGameComponent implements OnInit {
     //Fire bombs
     if (state.keys.Space) {
       this.gameService.fireBombs(timestamp);
-
-      if (spaceship.bonuses.doubleFire) {
-        this.gameService.fireBombs(0);
-      }
     }
 
     //Move bombs
@@ -59,10 +55,10 @@ export class SpaceFightGameComponent implements OnInit {
 
     //Create an double-fire-bonus
     if (doubleFireBonus.nextCreation < timestamp) {
-      state.hasBonuses = true;
-
       this.gameService.createDoubleFireBonus();
-      doubleFireBonus.nextCreation = timestamp + (doubleFireBonus.creationInterval * Math.random()) + 500;
+
+      state.hasBonuses = true;
+      doubleFireBonus.nextCreation = timestamp + (doubleFireBonus.creationInterval * Math.random()) + 10000;
     }
 
     //Move bonuses only if there is bonuses on the screen (because they will be really rare).
@@ -82,6 +78,7 @@ export class SpaceFightGameComponent implements OnInit {
 
         if (state.points >= state.levelsRange[(state.level + 1) as keyof typeof state.levelsRange]) {
           this.level = ++state.level;
+          this.modifyGameDifficulty();
           notifySuccess(`Congratulation! Level ${state.level} reached!`);
           await this.gameService.sleep(2500);
         }
@@ -91,5 +88,10 @@ export class SpaceFightGameComponent implements OnInit {
     } else {
       console.log('game over!', state.points);
     }
+  }
+
+  modifyGameDifficulty(): void {
+    alien.speed++;
+    alien.creationInterval -= 600;
   }
 }

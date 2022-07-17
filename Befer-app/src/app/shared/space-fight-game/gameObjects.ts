@@ -12,7 +12,6 @@ export const spaceship = {
     entered: false,
     bonuses: {
         doubleFire: false,
-        doubleFireTime: 10000,
     }
 };
 
@@ -40,5 +39,6 @@ export const doubleFireBonus = {
     height: 82,
     speed: 3,
     nextCreation: 0,
-    creationInterval: 1000000,
+    creationInterval: 80000,
+    timeLast: 10000
 }

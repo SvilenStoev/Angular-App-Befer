@@ -104,14 +104,22 @@ export class SpaceGameService {
 
   //3. Bombs
   fireBombs(timestamp: number): void {
-    if (!timestamp || bomb.nextFire < timestamp) {
-      this.craeteBomb();
+    if (bomb.nextFire < timestamp) {
+      this.createBomb();
       bomb.nextFire = timestamp + bomb.fireInterval;
+
+      if (spaceship.bonuses.doubleFire) {
+        this.createBomb();
+
+        setTimeout(() => {
+          spaceship.bonuses.doubleFire = false;
+        }, doubleFireBonus.timeLast);
+      }
     }
   }
 
   //Create and modify bomb
-  craeteBomb(): void {
+  createBomb(): void {
     const bombX = spaceship.x + (spaceship.width / 3);
     let bombY = (spaceship.y + (spaceship.height / 2));
 
@@ -219,7 +227,7 @@ export class SpaceGameService {
         } else {
           bonusEl.remove();
         }
-         
+
         if (this.hasCollision(this.spaceshipEl, bonusEl)) {
           bonusEl.remove();
           spaceship.bonuses.doubleFire = true;
