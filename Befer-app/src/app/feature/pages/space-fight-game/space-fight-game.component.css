@@ -7,8 +7,7 @@
 }
 
 .start-screen {
-    background-color: rgba(65, 199, 255, 255);
-    ;
+    background-color: #FFC72C;
     display: inline-block;
     width: 420px;
     height: 80px;
@@ -17,10 +16,10 @@
     text-align: center;
     vertical-align: middle;
     position: relative;
-    margin: 120px 0px;
+    margin: 0px;
     left: 50%;
-    cursor: pointer;
     transform: translate(-50%);
+    cursor: pointer;
 }
 
 .start-screen p {
@@ -28,8 +27,76 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    font-size: large;
-    font-weight: bold;
+    font-size: 24px;
+    text-shadow: 1px 1px 4px blue;
+}
+
+.settings {
+    display: flex;
+    justify-content: space-around;
+    background-color: #232422;
+    opacity: 80%;
+    width: 900px;
+    margin: 60px auto;
+    padding: 28px 0px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px 20px blue;
+    color: white;
+    z-index: 2;
+}
+
+.settings-title {
+    font-size: 28px;
+}
+
+.settings-controls {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.controls-img {
+    width: 100%;
+    height: 100%;
+}
+
+.settings-controls-text {
+    font-size: 20px;
+    margin: 20px 0px 10px 0px;
+    font-style: italic;
+}
+
+.settings-right h2 {
+    text-align: center;
+}
+
+.settings-bonuses {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-bonuses-el {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-style: italic;
+    margin-top: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-other {
+    margin-bottom: 30px;
+}
+
+.settings-bonuses-img {
+    margin: 0px 0px 0px 20px;
+}
+
+@media screen and (max-width: 900px) {
+    .settings {
+        width: 100%;
+    }
 }
 
 div.spaceship img {

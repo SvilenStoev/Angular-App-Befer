@@ -140,10 +140,10 @@ export class SpaceGameService {
 
         Array.from(document.getElementsByClassName('alien'))
           .forEach(alienEl => {
-            if (this.hasCollision(bombEl, alienEl, 6)) {
+            if (this.hasCollision(bombEl, alienEl, 2)) {
               bombEl.remove();
               alienEl.remove();
-              state.points += alien.pointsToKill;
+              state.points += alien.healthPoints;
             }
           });
 
@@ -181,6 +181,7 @@ export class SpaceGameService {
   //Other
   createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number): any {
     let divEl = document.createElement('div');
+
     classes.forEach(c => {
       divEl.classList.add(c);
     });
@@ -190,6 +191,7 @@ export class SpaceGameService {
     divEl.style.position = 'absolute';
     divEl.style.left = x + 'px';
     divEl.style.top = y + 'px';
+    divEl.style.zIndex = '-1';
 
     let imgEl = document.createElement('img');
     imgEl.alt = imgAlt;

@@ -3,8 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
 import { SpaceGameService } from 'src/app/services/components/space-game.service';
-import { doubleFireBonus, alien, spaceship, aimBonus, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
-import { timeout } from 'rxjs';
+import { doubleFireBonus, alien, aimBonus, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -15,6 +14,7 @@ import { timeout } from 'rxjs';
 export class SpaceFightGameComponent implements OnInit {
 
   gameStarted: boolean = false;
+  showSettings: boolean = true;
   points: number = state.points;
   level: number = state.level;
 
@@ -26,6 +26,7 @@ export class SpaceFightGameComponent implements OnInit {
 
   async startGame() {
     this.gameStarted = true;
+    this.showSettings = false;
     this.gameService.initialStartUp();
 
     await this.gameService.sleep(1200);
@@ -83,6 +84,7 @@ export class SpaceFightGameComponent implements OnInit {
       if (!state.isPaused) {
         window.requestAnimationFrame(this.gameLoop.bind(this));
       } else {
+        this.showSettings = true;
         document.addEventListener('keypress', this.onResume.bind(this));
       }
     } else {
@@ -90,12 +92,16 @@ export class SpaceFightGameComponent implements OnInit {
     }
   }
 
+  //TODO: refactor
   onResume(e: any) {
     if (state.isPaused && e.code == 'KeyR') {
       state.isPaused = false;
-      window.requestAnimationFrame(this.gameLoop.bind(this));
+      this.showSettings = false;
+      
       //TODO: This doesn't remove the event listener!?!
       document.removeEventListener('keypress', this.onResume);
+
+      window.requestAnimationFrame(this.gameLoop.bind(this));
     }
   }
 
