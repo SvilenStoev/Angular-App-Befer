@@ -26,20 +26,25 @@
                 <h2 class="settings-title">Bonuses</h2>
                 <div class="settings-bonuses-el">
                     <p class="settings-bonuses-text">Fire with both weapons</p>
-                    <img src="../../../../assets/images/bonus-double-fire.png" alt="Double-Fire" class="settings-bonuses-img">
+                    <div><img src="../../../../assets/images/bonus-double-fire.png" alt="Double-Fire" class="settings-bonuses-img"></div>
                 </div>
                 <div class="settings-bonuses-el">
                     <p class="settings-bonuses-text">Activate spaceship aim</p>
-                    <img src="../../../../assets/images/bonus-aim.png" alt="Aim" class="settings-bonuses-img">
+                    <div><img src="../../../../assets/images/bonus-aim.png" alt="Aim" class="settings-bonuses-img"></div>
                 </div>
                 <div class="settings-bonuses-el">
                     <p class="settings-bonuses-text">Invisible to aliens</p>
-                    <img src="../../../../assets/images/bonus-invisible.png" alt="Invisible" class="settings-bonuses-img">
+                    <div><img src="../../../../assets/images/bonus-invisible.png" alt="Invisible" class="settings-bonuses-img"></div>
                 </div>
             </article>
         </div>
     </article>
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
-    <p>Level: <span class="game-footer-level">{{level}}</span></p>
+     <div class="game-footer-imgs" *ngIf="gameStarted">
+        <div class="game-footer-img-double"><img src="../../../../assets/images/bonus-double-fire.png" alt="Double-Fire"></div>
+        <div class="game-footer-img-aim"><img src="../../../../assets/images/bonus-aim.png" alt="Aim"></div>
+        <div class="game-footer-img-invisible"><img src="../../../../assets/images/bonus-invisible.png" alt="Invisible"></div>
+     </div>
+     <p class="game-footer-level">Level: <span >{{level}}</span></p>
 </div>

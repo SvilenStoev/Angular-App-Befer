@@ -4,7 +4,7 @@ import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState'
 import { SharedService } from './shared.service';
 import { AlienService } from './game-objects/alien.service';
 import { SpaceshipService } from './game-objects/spaceship.service';
-import { spaceship, alien, bombUrl, bomb, doubleFireBonus, doubleFireUrl, aimBonusUrl, aimBonus, invisibleBonusUrl, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien } from 'src/app/shared/space-fight-game/gameObjects';
 import { WeaponService } from './game-objects/weapon.service';
 import { BonusService } from './game-objects/bonus.service';
 
@@ -30,6 +30,7 @@ export class SpaceGameService {
 
     this.gameScreenEl = document.querySelector('.game-view');
     this.sharedService.gameScreenEl = this.gameScreenEl;
+    this.gameScreenEl.style.border = '2px dashed white';
     this.spaceshipEl = this.spaceshipService.createSpaceship();
     this.spaceshipService.spaceshipEntering();
   }

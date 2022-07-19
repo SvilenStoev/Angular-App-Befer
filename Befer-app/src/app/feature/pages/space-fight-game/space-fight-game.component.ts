@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
-import { doubleFireBonus, alien, aimBonus, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
+import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 
 @Component({
   selector: 'app-space-fight-game',

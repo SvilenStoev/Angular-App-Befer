@@ -60,7 +60,7 @@ export const aimBonus = {
 
 export const invisibleBonus = {
     width: 60,
-    height: 60,
+    height: 48,
     nextCreation: 30000,
     creationInterval: 150000,
     timeLast: 12000

@@ -60,6 +60,11 @@
     height: 100%;
 }
 
+.settings-bonuses-img {
+    width: 70%;
+    height: 70%;
+}
+
 .settings-controls-text {
     font-size: 20px;
     margin: 20px 0px 10px 0px;
@@ -99,6 +104,50 @@
     }
 }
 
+@media screen and (max-height: 820px) {
+    div.game-footer {
+        margin: 0px auto;
+    }
+
+    .game-view {
+        font-family: 'Consolas';
+        position: relative;
+        width: 100vw;
+        height: 76vh;
+        overflow: hidden;
+    }
+
+    div.points {
+        margin: 0px;
+    }
+
+    .settings-bonuses-img {
+        width: 70%;
+        height: 70%;
+    }
+
+    article.settings {
+        margin: 10px auto;
+        height: 100%;
+    }
+
+    .settings-bonuses-el {
+        font-size: 16px;
+    }
+
+    .settings-controls-text {
+        font-size: 16px;
+    }
+
+    .settings-title {
+        font-size: 22px;
+    }
+
+    .start-screen p {
+        font-size: 20px;
+    }
+}
+
 div.spaceship img {
     width: 100%;
     height: 100%;
@@ -123,20 +172,49 @@ div.double-fire-bonus img {
     visibility: hidden;
     font-family: 'Consolas';
     color: white;
-    margin: 20px 0px;
+    margin: 5px 0px 15px 0px;
     text-align: center;
     font-size: 20px;
     letter-spacing: 2px;
 }
 
 .game-footer {
+    position: relative;
+    min-height: 55px;
     visibility: hidden;
     font-family: 'Consolas';
     color: white;
-    margin: 20px 0px;
+    margin: 14px 0px 8px 0px;
     text-align: center;
     font-size: 20px;
     letter-spacing: 2px;
+}
+
+.game-footer-imgs {
+    display: flex;
+    align-items: center;
+}
+
+.game-footer-imgs div img {
+    width: 100%;
+    height: 100%;
+}
+
+.game-footer-imgs div {
+    opacity: 50%;
+    margin-left: 100px;
+    height: 62px;
+}
+
+.game-footer-level {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.hide::after {
+    display: none;
 }
 
 div.spaceship::after {
@@ -147,8 +225,4 @@ div.spaceship::after {
     top: 42px;
     left: 66px;
     z-index: -2;
-}
-
-div.hide::after {
-    display: none;
 }

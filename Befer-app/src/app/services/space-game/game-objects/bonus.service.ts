@@ -8,7 +8,17 @@ import { SharedService } from '../shared.service';
 })
 export class BonusService {
 
+  doubleBonusFooterEl: any;
+  aimBonusFooterEl: any;
+  invisibleBonusFooterEl: any;
+
   constructor(private sharedService: SharedService) { }
+
+  setBonusFooterElements() {
+    this.doubleBonusFooterEl = document.querySelector('.game-footer-img-double');
+    this.aimBonusFooterEl = document.querySelector('.game-footer-img-aim');
+    this.invisibleBonusFooterEl = document.querySelector('.game-footer-img-invisible');
+  }
 
   //TODO: Check for solution. Timestamp increses even if game is not started yet. 
   //If button "start game" isn't clicked soon after component init the bonuses will be created immediately after game started! 
@@ -74,31 +84,41 @@ export class BonusService {
           bonusEl.remove();
         }
 
+        if (!this.doubleBonusFooterEl) {
+          this.setBonusFooterElements();
+        }
+
         if (this.sharedService.hasCollision(spaceshipEl, bonusEl, 6)) {
           //TODO: Impove the check
           if (bonusEl.classList.contains('aim-bonus')) {
             spaceship.bonuses.aim = true;
+            this.aimBonusFooterEl.style.opacity = '100%';
 
             spaceshipEl.classList.remove('hide');
 
             setTimeout(() => {
               spaceship.bonuses.aim = false;
+              this.aimBonusFooterEl.style.opacity = '50%';
               spaceshipEl.classList.add('hide');
             }, aimBonus.timeLast);
           } else if (bonusEl.classList.contains('invisible-bonus')) {
             spaceshipEl.style.opacity = '40%';
+            this.invisibleBonusFooterEl.style.opacity = '100%';
             spaceship.bonuses.invisible = true;
 
             setTimeout(() => {
               spaceship.bonuses.invisible = false;
               spaceshipEl.style.opacity = '100%';
+              this.invisibleBonusFooterEl.style.opacity = '50%';
             }, invisibleBonus.timeLast);
           }
           else {
             spaceship.bonuses.doubleFire = true;
+            this.doubleBonusFooterEl.style.opacity = '100%';
 
             setTimeout(() => {
               spaceship.bonuses.doubleFire = false;
+              this.doubleBonusFooterEl.style.opacity = '50%';
             }, doubleFireBonus.timeLast);
           }
 
