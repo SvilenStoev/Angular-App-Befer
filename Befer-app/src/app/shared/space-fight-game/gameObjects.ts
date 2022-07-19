@@ -12,6 +12,7 @@ export const spaceship = {
     x: -180,
     y: 300,
     speed: 7,
+    boostSpeed: 0,
     width: 149,
     height: 86,
     entered: false,

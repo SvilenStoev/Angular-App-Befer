@@ -22,7 +22,8 @@ export const state = {
         'ArrowLeft': false,
         'ArrowDown': false,
         'ArrowRight': false,
-        'Space': false
+        'Space': false,
+        'ShiftLeft': false
     },
 };
 
@@ -36,5 +37,6 @@ export const availableKeys = [
     'ArrowLeft',
     'ArrowDown',
     'ArrowRight',
-    'Space'
+    'Space',
+    'ShiftLeft'
 ]

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { alien } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 
@@ -18,6 +18,7 @@ export class SpaceFightGameComponent implements OnInit {
   showSettings: boolean = true;
   points: number = state.points;
   level: number = state.level;
+  spaceshipBoostSpeed: number = 0;
 
   constructor(private gameService: SpaceGameService,
     private sharedService: SharedService) { }
@@ -45,6 +46,7 @@ export class SpaceFightGameComponent implements OnInit {
 
       if (state.points % 10 == 0) {
         this.points = state.points;
+        this.spaceshipBoostSpeed = Number(spaceship.boostSpeed.toFixed());
 
         if (state.points >= state.levelsRange[(state.level + 1) as keyof typeof state.levelsRange]) {
           this.level = ++state.level;

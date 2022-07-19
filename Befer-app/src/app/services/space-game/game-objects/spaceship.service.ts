@@ -31,20 +31,37 @@ export class SpaceshipService {
   }
 
   calcSpaceshipPos(gameScreenWidth: number, gameScreenHeight: number): void {
+    let speed = spaceship.speed;
+    const isPointsP = state.points % 10 == 0;
+    const isShiftCLicked = state.keys.ShiftLeft;
+
+    //Calculate spaceship boost speed
+    if (!isShiftCLicked && isPointsP && spaceship.boostSpeed < 100) {
+      spaceship.boostSpeed += 0.33;
+    }
+
+    if (isShiftCLicked && spaceship.boostSpeed > 0.5) {
+      speed *= 1.5;
+
+      if (isPointsP) {
+        spaceship.boostSpeed -= 1.33;
+      }
+    }
+    
     if ((state.keys.KeyW || state.keys.ArrowUp) && spaceship.y > 0) {
-      spaceship.y -= spaceship.speed;
+      spaceship.y -= speed;
     }
 
     if ((state.keys.KeyS || state.keys.ArrowDown) && spaceship.y + spaceship.height + 10 < gameScreenHeight) {
-      spaceship.y += spaceship.speed;
+      spaceship.y += speed;
     }
 
     if ((state.keys.KeyA || state.keys.ArrowLeft) && spaceship.x > 0) {
-      spaceship.x -= spaceship.speed;
+      spaceship.x -= speed;
     }
 
     if ((state.keys.KeyD || state.keys.ArrowRight) && spaceship.x + spaceship.width + 50 < gameScreenWidth) {
-      spaceship.x += spaceship.speed;
+      spaceship.x += speed;
     }
   }
 
