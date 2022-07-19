@@ -92,33 +92,34 @@ export class BonusService {
           //TODO: Impove the check
           if (bonusEl.classList.contains('aim-bonus')) {
             spaceship.bonuses.aim = true;
-            this.aimBonusFooterEl.style.opacity = '100%';
+            this.aimBonusFooterEl.classList.add('footer-img-active');
 
             spaceshipEl.classList.remove('hide');
 
             setTimeout(() => {
               spaceship.bonuses.aim = false;
-              this.aimBonusFooterEl.style.opacity = '50%';
+              this.aimBonusFooterEl.classList.remove('footer-img-active');
               spaceshipEl.classList.add('hide');
             }, aimBonus.timeLast);
           } else if (bonusEl.classList.contains('invisible-bonus')) {
             spaceshipEl.style.opacity = '40%';
-            this.invisibleBonusFooterEl.style.opacity = '100%';
+            this.invisibleBonusFooterEl.classList.add('footer-img-active');
+
             spaceship.bonuses.invisible = true;
 
             setTimeout(() => {
               spaceship.bonuses.invisible = false;
               spaceshipEl.style.opacity = '100%';
-              this.invisibleBonusFooterEl.style.opacity = '50%';
+              this.invisibleBonusFooterEl.classList.remove('footer-img-active');
             }, invisibleBonus.timeLast);
           }
           else {
             spaceship.bonuses.doubleFire = true;
-            this.doubleBonusFooterEl.style.opacity = '100%';
+            this.doubleBonusFooterEl.classList.add('footer-img-active');
 
             setTimeout(() => {
               spaceship.bonuses.doubleFire = false;
-              this.doubleBonusFooterEl.style.opacity = '50%';
+              this.doubleBonusFooterEl.classList.remove('footer-img-active');
             }, doubleFireBonus.timeLast);
           }
 

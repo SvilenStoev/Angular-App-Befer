@@ -202,8 +202,19 @@ div.double-fire-bonus img {
 
 .game-footer-imgs div {
     opacity: 50%;
-    margin-left: 100px;
+    margin-left: 40px;
     height: 62px;
+}
+
+.game-footer-imgs div.footer-img-active {
+    opacity: 100%;
+    box-shadow: 0px 0px 20px 17px blue;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.game-footer-text {
+    margin-left: 60px;
 }
 
 .game-footer-level {
