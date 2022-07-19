@@ -4,6 +4,7 @@ import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 import { doubleFireBonus, alien, aimBonus, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
+import { SharedService } from 'src/app/services/space-game/shared.service';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -18,7 +19,8 @@ export class SpaceFightGameComponent implements OnInit {
   points: number = state.points;
   level: number = state.level;
 
-  constructor(private gameService: SpaceGameService) { }
+  constructor(private gameService: SpaceGameService,
+    private sharedService: SharedService) { }
 
   ngOnInit(): void {
 
@@ -29,7 +31,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showSettings = false;
     this.gameService.initialStartUp();
 
-    await this.gameService.sleep(1200);
+    await this.sharedService.sleep(1200);
 
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
@@ -48,7 +50,7 @@ export class SpaceFightGameComponent implements OnInit {
           this.level = ++state.level;
           this.modifyGameDifficulty();
           notifySuccess(`Congratulation! Level ${state.level} reached!`);
-          await this.gameService.sleep(2500);
+          await this.sharedService.sleep(2500);
         }
       }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { collisionUrl, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+import { WeaponService } from './game-objects/weapon.service';
 
 @Injectable({
   providedIn: 'root'

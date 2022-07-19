@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { SharedService } from './shared.service';
+import { SharedService } from '../shared.service';
 import { state } from 'src/app/shared/space-fight-game/gameState';
 import { alien, alienUrl, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 
