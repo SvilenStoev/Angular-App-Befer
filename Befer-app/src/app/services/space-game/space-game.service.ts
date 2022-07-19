@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState';
-import { spaceship, spaceshipUrl, alien, alienUrl, bombUrl, bomb, doubleFireBonus, doubleFireUrl, collisionUrl, aimBonusUrl, aimBonus, invisibleBonusUrl, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
+import { spaceship, alien, bombUrl, bomb, doubleFireBonus, doubleFireUrl, aimBonusUrl, aimBonus, invisibleBonusUrl, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
+import { AlienService } from './alien.service';
+import { SharedService } from './shared.service';
+import { SpaceshipService } from './spaceship.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,10 @@ export class SpaceGameService {
   gameScreenEl: any = {};
   switchShotGun: boolean = false;
 
-  constructor() { }
+  constructor(
+    private alienService: AlienService,
+    private spaceshipService: SpaceshipService,
+    private sharedService: SharedService) { }
 
   //Initial configuration
   initialStartUp(): void {
@@ -20,8 +26,9 @@ export class SpaceGameService {
     document.addEventListener('keyup', this.onKeyUp);
 
     this.gameScreenEl = document.querySelector('.game-view');
-    this.createSpaceship();
-    this.spaceshipEntering();
+    this.sharedService.gameScreenEl = this.gameScreenEl;
+    this.spaceshipEl = this.spaceshipService.createSpaceship();
+    this.spaceshipService.spaceshipEntering();
   }
 
   //Track user keyboard input
@@ -41,69 +48,44 @@ export class SpaceGameService {
     }
   }
 
-  //1. Spaceship
-  createSpaceship(): void {
-    this.spaceshipEl = this.createEl(['spaceship', 'hide'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height);
-  }
-
-  //Modify spaceship possition
-  async spaceshipEntering() {
-    while (spaceship.x < 150) {
-      spaceship.x += spaceship.speed;
-      this.moveSpaceship();
-
-      await this.sleep(15);
-    }
-  }
-
-  calcSpaceshipPos(): void {
-    if ((state.keys.KeyW || state.keys.ArrowUp) && spaceship.y > 0) {
-      spaceship.y -= spaceship.speed;
+  //Create game objects, modify position and check for collision 
+  modifyGameObjects(timestamp: number): void {
+    //1. Aliens
+    //Create an alien
+    if (alien.nextCreation < timestamp) {
+      this.alienService.craeteAlien(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
+      alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
     }
 
-    if ((state.keys.KeyS || state.keys.ArrowDown) && spaceship.y + spaceship.height + 10 < this.gameScreenEl.offsetHeight) {
-      spaceship.y += spaceship.speed;
+    //Modify aliens position and check for collision
+    this.alienService.moveAllAliens(this.spaceshipEl);
+
+    //2. Spaceship
+    //Modify spaceship position and check for collision
+    this.spaceshipService.calcSpaceshipPos(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
+    this.spaceshipService.moveSpaceship();
+
+    //3. Weapon and bombs
+    //Fire bombs
+    if (state.keys.Space) {
+      this.fireBombs(timestamp);
     }
 
-    if ((state.keys.KeyA || state.keys.ArrowLeft) && spaceship.x > 0) {
-      spaceship.x -= spaceship.speed;
+    //Modify bombs position and check for collision
+    this.moveAllBombs();
+
+    //4. Bonuses
+    //Create random bonuses
+    this.createBonuses(timestamp);
+
+    //Move bonuses only if there is bonuses on the screen (because they will be rare)
+    if (state.hasBonuses) {
+      if (document.getElementsByClassName('bonus').length > 0) {
+        this.moveAllBonuses();
+      } else {
+        state.hasBonuses = false;
+      }
     }
-
-    if ((state.keys.KeyD || state.keys.ArrowRight) && spaceship.x + spaceship.width + 50 < this.gameScreenEl.offsetWidth) {
-      spaceship.x += spaceship.speed;
-    }
-  }
-
-  moveSpaceship(): void {
-    this.spaceshipEl.style.top = spaceship.y + 'px';
-    this.spaceshipEl.style.left = spaceship.x + 'px';
-  }
-
-  //2. Alien
-  craeteAlien(): void {
-    const alienX = this.gameScreenEl.offsetWidth;
-    const alienY = (this.gameScreenEl.offsetHeight - alien.height) * Math.random();
-
-    this.createEl(['alien'], alienX, alienY, 'Alien', alienUrl, alien.width, alien.height);
-  }
-
-  //Move alien
-  moveAllAliens(): void {
-    Array.from(document.getElementsByClassName('alien'))
-      .forEach(alienEl => {
-        let currentPosition = parseInt((alienEl as HTMLDivElement).style.left);
-
-        if (!spaceship.bonuses.invisible && this.hasCollision(this.spaceshipEl, alienEl, 12)) {
-          state.gameOver = true;
-          this.displayCollisionImg();
-        }
-
-        if (currentPosition > -80) {
-          (alienEl as HTMLDivElement).style.left = currentPosition - alien.speed + 'px';
-        } else {
-          alienEl.remove();
-        }
-      });
   }
 
   //3. Bombs
@@ -165,19 +147,6 @@ export class SpaceGameService {
     return hasCollision;
   }
 
-  displayCollisionImg() {
-    const collEl = document.createElement('div');
-    const img = document.createElement('img');
-    img.src = collisionUrl;
-    collEl.appendChild(img);
-
-    collEl.style.position = 'absolute';
-    collEl.style.left = spaceship.x + 39 + 'px';
-    collEl.style.top = spaceship.y - 16 + 'px';
-
-    this.gameScreenEl.appendChild(collEl);
-  }
-
   //Other
   createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number): any {
     let divEl = document.createElement('div');
@@ -208,6 +177,33 @@ export class SpaceGameService {
     return new Promise(
       resolve => setTimeout(resolve, ms)
     );
+  }
+
+  createBonuses(timestamp: number): void {
+    //Create an double-fire-bonus
+    //TODO: Check for solution. Timestamp increses even if game is not started yet. If button start game isn't clicked soon after component init th bonuses will be created immediately after game started! 
+    if (doubleFireBonus.nextCreation < timestamp) {
+      this.createDoubleFireBonus();
+
+      state.hasBonuses = true;
+      doubleFireBonus.nextCreation = timestamp + (doubleFireBonus.creationInterval * Math.random()) + 10000;
+    }
+
+    //Create an aim-bonus
+    if (aimBonus.nextCreation < timestamp) {
+      this.createAimBonus();
+
+      state.hasBonuses = true;
+      aimBonus.nextCreation = timestamp + (aimBonus.creationInterval * Math.random()) + 20000;
+    }
+
+    //Create an invisible-bonus
+    if (invisibleBonus.nextCreation < timestamp) {
+      this.createInsivibleBonus();
+
+      state.hasBonuses = true;
+      invisibleBonus.nextCreation = timestamp + (invisibleBonus.creationInterval * Math.random()) + 30000;
+    }
   }
 
   //4. Modify bonuses

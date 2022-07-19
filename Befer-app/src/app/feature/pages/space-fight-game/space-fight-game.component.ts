@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { SpaceGameService } from 'src/app/services/components/space-game.service';
+import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 import { doubleFireBonus, alien, aimBonus, invisibleBonus } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Component({
@@ -35,36 +35,8 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   async gameLoop(timestamp: number) {
-    //Create an alien
-    if (alien.nextCreation < timestamp) {
-      this.gameService.craeteAlien();
-      alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
-    }
-
-    this.gameService.moveAllAliens();
-
-    //Modify spaceship position
-    this.gameService.calcSpaceshipPos();
-    this.gameService.moveSpaceship();
-
-    //Fire bombs
-    if (state.keys.Space) {
-      this.gameService.fireBombs(timestamp);
-    }
-
-    //Move bombs
-    this.gameService.moveAllBombs();
-
-    this.createBonuses(timestamp);
-
-    //Move bonuses only if there is bonuses on the screen (because they will be rare).
-    if (state.hasBonuses) {
-      if (document.getElementsByClassName('bonus').length > 0) {
-        this.gameService.moveAllBonuses();
-      } else {
-        state.hasBonuses = false;
-      }
-    }
+    //Create game objects, modify position and check for collision 
+    this.gameService.modifyGameObjects(timestamp);
 
     if (!state.gameOver) {
       state.points++;
@@ -107,33 +79,6 @@ export class SpaceFightGameComponent implements OnInit {
 
   modifyGameDifficulty(): void {
     alien.speed++;
-    alien.creationInterval -= 600;
-  }
-
-  createBonuses(timestamp: number): void {
-    //Create an double-fire-bonus
-    //TODO: Check for solution. Timestamp increses even if game is not started yet. If button start game isn't clicked soon after component init th bonuses will be created immediately after game started! 
-    if (doubleFireBonus.nextCreation < timestamp) {
-      this.gameService.createDoubleFireBonus();
-
-      state.hasBonuses = true;
-      doubleFireBonus.nextCreation = timestamp + (doubleFireBonus.creationInterval * Math.random()) + 10000;
-    }
-
-    //Create an aim-bonus
-    if (aimBonus.nextCreation < timestamp) {
-      this.gameService.createAimBonus();
-
-      state.hasBonuses = true;
-      aimBonus.nextCreation = timestamp + (aimBonus.creationInterval * Math.random()) + 20000;
-    }
-
-    //Create an invisible-bonus
-    if (invisibleBonus.nextCreation < timestamp) {
-      this.gameService.createInsivibleBonus();
-
-      state.hasBonuses = true;
-      invisibleBonus.nextCreation = timestamp + (invisibleBonus.creationInterval * Math.random()) + 30000;
-    }
+    alien.creationInterval -= 500;
   }
 }

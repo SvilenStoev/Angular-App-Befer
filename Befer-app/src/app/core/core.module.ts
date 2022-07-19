@@ -12,13 +12,16 @@ import { FooterComponent } from './footer/footer.component';
 import { PostService } from '../services/components/post.service';
 import { ReplaceArgsPipe } from '../shared/pipes/replace-args.pipe';
 import { StorageService } from '../services/common/storage.service';
+import { AlienService } from '../services/space-game/alien.service';
 import { TransferService } from '../services/common/transfer.service';
 import { LanguageService } from '../services/common/language.service';
+import { SharedService } from '../services/space-game/shared.service';
 import { TabTitleService } from '../services/common/tab-title.service';
 import { CommentService } from '../services/components/comment.service';
+import { SpaceshipService } from '../services/space-game/spaceship.service';
+import { SpaceGameService } from '../services/space-game/space-game.service';
 import { ErrorInterceptor } from '../services/interceptors/error.interceptor';
 import { RequestInterceptor } from '../services/interceptors/request.interceptor';
-import { SpaceGameService } from '../services/components/space-game.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ export class CoreModule {
         TransferService,
         CommentService,
         SpaceGameService,
+        AlienService,
+        SpaceshipService,
+        SharedService,
         LanguageService,
         TabTitleService,
         ReplaceArgsPipe,
