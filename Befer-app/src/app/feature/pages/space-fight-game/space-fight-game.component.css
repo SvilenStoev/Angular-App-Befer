@@ -6,6 +6,32 @@
     overflow: hidden;
 }
 
+.area-warning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.area-warning-img {
+    margin-left: 100px;
+}
+
+.area-warning-img img {
+    border-radius: 50%;
+    margin: 20px;
+    box-shadow: 1px 1px 16px 11px blue;
+}
+
+.area-warning-text {
+    color: white;
+    font-size: 22px;
+    padding: 30px;
+    max-width: 600px;
+    letter-spacing: 2px;
+    line-height: 33px;
+    text-shadow: 3px 3px 3px red;
+}
+
 .start-screen {
     background-color: #FFC72C;
     display: inline-block;
@@ -29,6 +55,48 @@
     transform: translate(-50%, -50%);
     font-size: 24px;
     text-shadow: 1px 1px 4px blue;
+}
+
+.menu {
+    display: flex;
+    background-color: #232422;
+    opacity: 90%;
+    width: 600px;
+    margin: 94px auto;
+    padding: 28px 0px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px 20px darkblue;
+    color: white;
+    z-index: 2;
+    align-items: center;
+    flex-direction: column;
+}
+
+.menu-button {
+    background: blue;
+    box-shadow: 0px 0px 13px 15px blue;
+    padding: 5px 20px;
+    border-radius: 50%;
+    margin: 25px;
+    cursor: pointer;
+}
+
+.menu-button-restart {
+    background: darkred;
+    box-shadow: 0px 0px 13px 15px darkred;
+    padding: 5px 20px;
+    border-radius: 50%;
+    margin: 25px;
+    cursor: pointer;
+}
+
+.menu-button-resume {
+    background: darkgreen;
+    box-shadow: 0px 0px 13px 15px darkgreen;
+    padding: 5px 20px;
+    border-radius: 50%;
+    margin: 25px;
+    cursor: pointer;
 }
 
 .settings {

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { alien, spaceship, bossAlienUrl, bossAlien } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 
@@ -14,8 +14,13 @@ import { SpaceGameService } from 'src/app/services/space-game/space-game.service
 })
 export class SpaceFightGameComponent implements OnInit {
 
+  //Views
   gameStarted: boolean = false;
   showSettings: boolean = true;
+  showMenu: boolean = false;
+  showAreaWarning: boolean = false;
+  showStartButton: boolean = true;
+
   points: number = state.points;
   level: number = state.level;
   spaceshipBoostSpeed: number = 0;
@@ -27,12 +32,24 @@ export class SpaceFightGameComponent implements OnInit {
 
   }
 
+  async warningAndStartGame() {
+    this.showAreaWarning = true;
+    this.showStartButton = false;
+    this.showSettings = false;
+
+    await this.sharedService.sleep(4000);
+
+    this.showAreaWarning = false;
+
+    this.startGame();
+  }
+
   async startGame() {
     this.gameStarted = true;
-    this.showSettings = false;
+
     this.gameService.initialStartUp();
 
-    await this.sharedService.sleep(1200);
+    await this.sharedService.sleep(1000);
 
     window.requestAnimationFrame(this.gameLoop.bind(this));
   }
@@ -54,6 +71,7 @@ export class SpaceFightGameComponent implements OnInit {
           if (this.level == 7) {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
             await this.sharedService.sleep(1500);
+            state.isBossMode = true;
 
             //Initializing boss game mode
             this.gameService.initialStartUpBossMode();
@@ -69,12 +87,8 @@ export class SpaceFightGameComponent implements OnInit {
         }
       }
 
-      //Pause game
-      if (!state.isPaused) {
-        window.requestAnimationFrame(this.gameLoop.bind(this));
-      } else {
-        this.pauseGame();
-      }
+      //Pause & menu
+      this.checkForPauseOrMenu();
     } else {
       console.log('game over!', state.points);
     }
@@ -91,20 +105,46 @@ export class SpaceFightGameComponent implements OnInit {
         this.spaceshipBoostSpeed = Number(spaceship.boostSpeed.toFixed());
       }
 
-      //Pause game
-      if (!state.isPaused) {
-        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
-      } else {
-        this.pauseGame();
-      }
+      //Pause & menu
+      this.checkForPauseOrMenu();
     } else {
       console.log('game over!', state.points);
     }
   }
 
+  checkForPauseOrMenu() {
+    if (!state.isPaused && !state.openMenu) {
+      if (state.isBossMode) {
+        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+      } else {
+        window.requestAnimationFrame(this.gameLoop.bind(this));
+      }
+    } else if (state.isPaused) {
+      this.pauseGame();
+    } else {
+      this.showMenu = true;
+    }
+  }
+
+  restartGame() {
+    this.showMenu = false;
+    this.points = 0;
+    this.level = 1;
+
+    this.gameService.onRestart();
+    this.startGame();
+  }
+
   pauseGame(): void {
     this.showSettings = true;
     document.addEventListener('keypress', this.onResume.bind(this));
+  }
+
+  onMenuResume() {
+    state.openMenu = false;
+    this.showMenu = false;
+    
+    this.checkForPauseOrMenu();
   }
 
   //TODO: refactor

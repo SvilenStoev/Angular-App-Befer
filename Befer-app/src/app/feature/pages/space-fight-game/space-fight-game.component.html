@@ -2,7 +2,13 @@
     <p>Points: <span class="points-current">{{points}}</span></p>
 </div>
 <div class="game-view">
-    <article *ngIf="!gameStarted" class="start-screen" (click)="startGame()">
+    <article *ngIf="showAreaWarning" class="area-warning">
+        <div class="area-warning-img"><img src="../../../../assets/images/area-warning.jpg" alt=""></div>
+        <div class="area-warning-text">
+            <p>Give a star to the project or defeat all my aliens!</p>
+        </div>
+    </article>
+    <article *ngIf="showStartButton" class="start-screen" (click)="warningAndStartGame()">
         <p>Start New Space Fight</p>
     </article>
     <article *ngIf="showSettings" class="settings">
@@ -37,6 +43,23 @@
                     <div><img src="../../../../assets/images/bonus-invisible.png" alt="Invisible" class="settings-bonuses-img"></div>
                 </div>
             </article>
+        </div>
+    </article>
+    <article *ngIf="showMenu" class="menu">
+        <div class="menu-button">
+            <h2 class="menu-button-text">Controls</h2>
+        </div>
+        <div class="menu-button">
+            <h2 class="menu-button-text">Shop</h2>
+        </div>
+        <div class="menu-button">
+            <h2 class="menu-button-text">Scores</h2>
+        </div>
+        <div class="menu-button-resume" (click)="onMenuResume()">
+            <h2 class="menu-button-text">Resume Game</h2>
+        </div>
+        <div class="menu-button-restart" (click)="restartGame()">
+            <h2 class="menu-button-text">Restart Game</h2>
         </div>
     </article>
 </div>

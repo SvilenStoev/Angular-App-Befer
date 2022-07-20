@@ -4,7 +4,7 @@ import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState'
 import { SharedService } from './shared.service';
 import { AlienService } from './game-objects/alien.service';
 import { SpaceshipService } from './game-objects/spaceship.service';
-import { alien } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { WeaponService } from './game-objects/weapon.service';
 import { BonusService } from './game-objects/bonus.service';
 import { BossService } from './game-objects/boss.service';
@@ -56,6 +56,10 @@ export class SpaceGameService {
 
       if (e.code == 'KeyP') {
         state.isPaused = true;
+      }
+
+      if (e.code == 'KeyM') {
+        state.openMenu = true;
       }
     }
   }
@@ -131,5 +135,23 @@ export class SpaceGameService {
     //Modify Boss
     this.bossService.calcBossPosition(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
     this.bossService.moveBoss();
+  }
+
+  onRestart() {
+    spaceship.x = -180;
+    spaceship.y = 300;
+    state.points = 0;
+    state.level = 1;
+    state.openMenu = false;
+
+    this.spaceshipEl.remove();
+
+    if (this.bossEl) {
+      this.bossEl.remove();
+    }
+
+    Array.from(document.getElementsByClassName('bonus')).forEach(b => b.remove());
+    Array.from(document.getElementsByClassName('alien')).forEach(a => a.remove());
+    Array.from(document.getElementsByClassName('bomb')).forEach(b => b.remove());
   }
 }
