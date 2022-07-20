@@ -8,6 +8,10 @@ export const doubleFireUrl = '../../../../assets/images/bonus-double-fire.png';
 export const aimBonusUrl = '../../../../assets/images/bonus-aim.png';
 export const invisibleBonusUrl = '../../../../assets/images/bonus-invisible.png';
 
+//boss
+export const bossAlienUrl = '../../../../assets/images/boss-alien.png';
+
+
 export const spaceship = {
     x: -180,
     y: 300,
@@ -31,6 +35,15 @@ export const alien = {
     nextCreation: 0,
     creationInterval: 2500,
     healthPoints: 200,
+}
+
+export const bossAlien = {
+    x: 1200,
+    y: 200,
+    width: 342,
+    height: 288,
+    speed: 5,
+    healthPoints: 100000,
 }
 
 export const bomb = {

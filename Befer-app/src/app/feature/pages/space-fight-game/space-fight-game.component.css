@@ -98,56 +98,6 @@
     margin: 0px 0px 0px 20px;
 }
 
-@media screen and (max-width: 900px) {
-    .settings {
-        width: 100%;
-    }
-}
-
-@media screen and (max-height: 820px) {
-    div.game-footer {
-        margin: 0px auto;
-    }
-
-    .game-view {
-        font-family: 'Consolas';
-        position: relative;
-        width: 100vw;
-        height: 76vh;
-        overflow: hidden;
-    }
-
-    div.points {
-        margin: 0px;
-    }
-
-    .settings-bonuses-img {
-        width: 70%;
-        height: 70%;
-    }
-
-    article.settings {
-        margin: 10px auto;
-        height: 100%;
-    }
-
-    .settings-bonuses-el {
-        font-size: 16px;
-    }
-
-    .settings-controls-text {
-        font-size: 16px;
-    }
-
-    .settings-title {
-        font-size: 22px;
-    }
-
-    .start-screen p {
-        font-size: 20px;
-    }
-}
-
 div.spaceship img {
     width: 100%;
     height: 100%;
@@ -225,7 +175,6 @@ div.double-fire-bonus img {
     border-radius: 50%;
 }
 
-
 .game-footer-text {
     margin-left: 60px;
 }
@@ -251,3 +200,64 @@ div.spaceship::after {
     z-index: -2;
 }
 
+@media screen and (max-width: 1650px) {
+    .game-footer-text,
+    .game-footer-imgs div {
+        margin-left: 10px;
+    }
+
+    .game-footer-imgs div.game-footer-img-boost-speed {
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .settings {
+        width: 100%;
+    }
+}
+
+@media screen and (max-height: 820px) {
+    div.game-footer {
+        margin: 0px auto;
+    }
+
+    .game-view {
+        font-family: 'Consolas';
+        position: relative;
+        width: 100vw;
+        height: 76vh;
+        overflow: hidden;
+    }
+
+    div.points {
+        margin: 0px;
+    }
+
+    .settings-bonuses-img {
+        width: 70%;
+        height: 70%;
+    }
+
+    article.settings {
+        margin: 10px auto;
+        height: 100%;
+    }
+
+    .settings-bonuses-el {
+        font-size: 16px;
+    }
+
+    .settings-controls-text {
+        font-size: 16px;
+    }
+
+    .settings-title {
+        font-size: 22px;
+    }
+
+    .start-screen p {
+        font-size: 20px;
+    }
+}

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien, spaceship, bossAlienUrl, bossAlien } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 
@@ -50,21 +50,55 @@ export class SpaceFightGameComponent implements OnInit {
 
         if (state.points >= state.levelsRange[(state.level + 1) as keyof typeof state.levelsRange]) {
           this.level = ++state.level;
-          this.modifyGameDifficulty();
-          notifySuccess(`Congratulation! Level ${state.level} reached!`);
+
+          if (this.level == 7) {
+            notifySuccess(`Congratulation! You have killed almost all aliens!`);
+            await this.sharedService.sleep(2500);
+
+            this.sharedService.createEl(['boss'], bossAlien.x, bossAlien.y, 'BossImg', bossAlienUrl, bossAlien.width, bossAlien.height);
+
+            window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+            return;
+          } else {
+            notifySuccess(`Congratulation! Level ${state.level} reached!`);
+            this.modifyGameDifficulty();
+          }
+
           await this.sharedService.sleep(2500);
         }
       }
 
       //Pause game
-      if (!state.isPaused) {
-        window.requestAnimationFrame(this.gameLoop.bind(this));
-      } else {
-        this.showSettings = true;
-        document.addEventListener('keypress', this.onResume.bind(this));
-      }
+      this.checkPauseGame();
     } else {
       console.log('game over!', state.points);
+    }
+  }
+
+  gameLoopBoss(timestamp: number) {
+    this.gameService.modifyGameObjectsBossGame(timestamp);
+
+    if (!state.gameOver) {
+      state.points++;
+
+      if (state.points % 10 == 0) {
+        this.points = state.points;
+        this.spaceshipBoostSpeed = Number(spaceship.boostSpeed.toFixed());
+      }
+
+      window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+      
+    } else {
+      console.log('game over!', state.points);
+    }
+  }
+
+  checkPauseGame(): void {
+    if (!state.isPaused) {
+      window.requestAnimationFrame(this.gameLoop.bind(this));
+    } else {
+      this.showSettings = true;
+      document.addEventListener('keypress', this.onResume.bind(this));
     }
   }
 
@@ -73,7 +107,7 @@ export class SpaceFightGameComponent implements OnInit {
     if (state.isPaused && e.code == 'KeyR') {
       state.isPaused = false;
       this.showSettings = false;
-      
+
       //TODO: This doesn't remove the event listener!?!
       document.removeEventListener('keypress', this.onResume);
 

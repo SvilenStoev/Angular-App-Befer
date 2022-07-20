@@ -1,12 +1,12 @@
 export const state = {
-    level: 1,
+    level: 5,
     levelsRange: {
         2: 3500,
         3: 8000,
         4: 14000,
         5: 17000,
-        6: 20000,
-        7: 24000,
+        6: 1500,
+        7: 3000,
     },
     points: 0,
     isPaused: false,

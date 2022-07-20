@@ -60,10 +60,10 @@ export class SpaceGameService {
       alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
     }
 
-    //Modify aliens position and check for collision
+    //Modify aliens position and check for collision with spaceship
     this.alienService.moveAllAliens(this.spaceshipEl);
 
-    //Modify spaceship position and check for collision
+    //Modify spaceship
     this.spaceshipService.calcSpaceshipPos(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
     this.spaceshipService.moveSpaceship();
 
@@ -72,13 +72,13 @@ export class SpaceGameService {
       this.weaponService.fireBombs(timestamp);
     }
 
-    //Modify bombs position and check for collision
+    //Modify bombs position and check for collision with aliens
     this.weaponService.moveAllBombs(this.gameScreenEl.offsetWidth);
 
     //Create random bonuses
     this.bonusService.createBonuses(timestamp, this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
 
-    //Move bonuses only if there is bonuses on the screen (because they will be rare)
+    //Move bonuses only if there is bonuses on the screen (because they will be rare) and check for collision with spaceship
     if (state.hasBonuses) {
       if (document.getElementsByClassName('bonus').length > 0) {
         this.bonusService.moveAllBonuses(this.spaceshipEl);
@@ -86,5 +86,32 @@ export class SpaceGameService {
         state.hasBonuses = false;
       }
     }
+  }
+
+   //Create game objects, modify position and check for collision in Boss Game Mode
+   modifyGameObjectsBossGame(timestamp: number): void {
+      //Modify spaceship
+      this.spaceshipService.calcSpaceshipPos(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
+      this.spaceshipService.moveSpaceship();
+  
+      //Fire bombs
+      if (state.keys.Space) {
+        this.weaponService.fireBombs(timestamp);
+      }
+  
+      //Modify bombs position and check for collision with boss
+      this.weaponService.moveAllBombs(this.gameScreenEl.offsetWidth);
+  
+      //Create random bonuses
+      this.bonusService.createBonuses(timestamp, this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
+  
+      //Move bonuses only if there is bonuses on the screen (because they will be rare) and check for collision with spaceship
+      if (state.hasBonuses) {
+        if (document.getElementsByClassName('bonus').length > 0) {
+          this.bonusService.moveAllBonuses(this.spaceshipEl);
+        } else {
+          state.hasBonuses = false;
+        }
+      }
   }
 }

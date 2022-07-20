@@ -40,11 +40,11 @@ export class SpaceshipService {
       spaceship.boostSpeed += 0.33;
     }
 
-    if (isShiftCLicked && spaceship.boostSpeed > 0.5) {
+    if (isShiftCLicked && spaceship.boostSpeed > 1.2) {
       speed *= 1.5;
 
       if (isPointsP) {
-        spaceship.boostSpeed -= 1.33;
+        spaceship.boostSpeed -= 2;
       }
     }
     
