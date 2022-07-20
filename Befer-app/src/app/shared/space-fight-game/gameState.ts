@@ -6,7 +6,7 @@ export const state = {
         4: 14000,
         5: 17000,
         6: 1500,
-        7: 2000,
+        7: 1000,
     },
     points: 0,
     isPaused: false,

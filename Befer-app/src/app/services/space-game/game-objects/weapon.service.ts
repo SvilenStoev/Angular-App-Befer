@@ -35,7 +35,7 @@ export class WeaponService {
 
     this.switchShotGun = !this.switchShotGun;
 
-    this.sharedService.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, bomb.width, bomb.height);
+    this.sharedService.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, bomb.width, bomb.height, '-2');
   }
 
   //Move bombs

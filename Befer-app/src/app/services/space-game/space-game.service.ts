@@ -127,5 +127,9 @@ export class SpaceGameService {
         state.hasBonuses = false;
       }
     }
+
+    //Modify Boss
+    this.bossService.calcBossPosition(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
+    this.bossService.moveBoss();
   }
 }

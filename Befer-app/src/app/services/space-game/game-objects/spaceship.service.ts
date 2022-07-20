@@ -15,7 +15,7 @@ export class SpaceshipService {
     private sharedService: SharedService) { }
 
   createSpaceship(): HTMLDivElement {
-    this.spaceshipEl = this.sharedService.createEl(['spaceship', 'hide'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height);
+    this.spaceshipEl = this.sharedService.createEl(['spaceship', 'hide'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height, '-2');
     return this.spaceshipEl;
   }
 
@@ -65,7 +65,7 @@ export class SpaceshipService {
   }
 
   moveSpaceship(): void {
-    this.spaceshipEl.style.top = spaceship.y + 'px';
     this.spaceshipEl.style.left = spaceship.x + 'px';
+    this.spaceshipEl.style.top = spaceship.y + 'px';
   }
 }

@@ -15,7 +15,7 @@ export class AlienService {
     const alienX = gameScreenWidth;
     const alienY = (gameScreenHeight - alien.height) * Math.random();
 
-    this.sharedService.createEl(['alien'], alienX, alienY, 'Alien', alienUrl, alien.width, alien.height);
+    this.sharedService.createEl(['alien'], alienX, alienY, 'Alien', alienUrl, alien.width, alien.height, '-2');
   }
 
   //Move alien and check for collision

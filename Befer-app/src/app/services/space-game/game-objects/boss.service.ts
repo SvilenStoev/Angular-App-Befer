@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { bossAlien, bossAlienUrl, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+import { state } from 'src/app/shared/space-fight-game/gameState';
 import { SharedService } from '../shared.service';
 
 @Injectable({
@@ -13,17 +14,28 @@ export class BossService {
 
   createBoss(gameScreenWidth: number): HTMLDivElement {
     bossAlien.x = gameScreenWidth;
-    this.bossEl = this.sharedService.createEl(['boss'], bossAlien.x, bossAlien.y, 'BossImg', bossAlienUrl, bossAlien.width, bossAlien.height);
+    this.bossEl = this.sharedService.createEl(['boss'], bossAlien.x, bossAlien.y, 'BossImg', bossAlienUrl, bossAlien.width, bossAlien.height, '-1');
     return this.bossEl;
   }
 
-  //Modify spaceship possition
+  //Modify boss possition
   async bossEntering() {
     while (bossAlien.x > 1200) {
       bossAlien.x -= bossAlien.speed;
       this.moveBoss();
 
       await this.sharedService.sleep(20);
+    }
+  }
+
+  calcBossPosition(gameScreenWidth: number, gameScreenHeight: number): void {
+    const moveUp = bossAlien.y > 0 && bossAlien.y + 70 > spaceship.y;
+    const moveDown = bossAlien.y + bossAlien.height < gameScreenHeight && bossAlien.y + 90 < spaceship.y;
+    
+    if (moveUp) {
+      bossAlien.y -= 2;
+    } else if (moveDown) {
+      bossAlien.y += 2;
     }
   }
 

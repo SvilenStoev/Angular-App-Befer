@@ -55,6 +55,7 @@ export class SpaceFightGameComponent implements OnInit {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
             await this.sharedService.sleep(1500);
 
+            //Initializing boss game mode
             this.gameService.initialStartUpBossMode();
 
             window.requestAnimationFrame(this.gameLoopBoss.bind(this));

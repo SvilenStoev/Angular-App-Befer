@@ -54,7 +54,7 @@ export class BonusService {
     const fireBonusY = (gameScreenHeight - doubleFireBonus.height) * Math.random();
     const classesArr = ['double-fire-bonus', 'bonus'];
 
-    this.sharedService.createEl(classesArr, fireBonusX, fireBonusY, 'Double-fire-bonus', doubleFireUrl, doubleFireBonus.width, doubleFireBonus.height);
+    this.sharedService.createEl(classesArr, fireBonusX, fireBonusY, 'Double-fire-bonus', doubleFireUrl, doubleFireBonus.width, doubleFireBonus.height, '-3');
   }
 
   createAimBonus(gameScreenWidth: number, gameScreenHeight: number) {
@@ -62,7 +62,7 @@ export class BonusService {
     const aimBonusY = (gameScreenHeight - doubleFireBonus.height) * Math.random();
     const classesArr = ['aim-bonus', 'bonus'];
 
-    this.sharedService.createEl(classesArr, aimBonusX, aimBonusY, 'Aim-bonus', aimBonusUrl, aimBonus.width, aimBonus.height);
+    this.sharedService.createEl(classesArr, aimBonusX, aimBonusY, 'Aim-bonus', aimBonusUrl, aimBonus.width, aimBonus.height, '-3');
   }
 
   createInsivibleBonus(gameScreenWidth: number, gameScreenHeight: number) {
@@ -70,7 +70,7 @@ export class BonusService {
     const invisibleBonusY = (gameScreenHeight - doubleFireBonus.height) * Math.random();
     const classesArr = ['invisible-bonus', 'bonus'];
 
-    this.sharedService.createEl(classesArr, invisibleBonusX, invisibleBonusY, 'Invisible-bonus', invisibleBonusUrl, invisibleBonus.width, invisibleBonus.height);
+    this.sharedService.createEl(classesArr, invisibleBonusX, invisibleBonusY, 'Invisible-bonus', invisibleBonusUrl, invisibleBonus.width, invisibleBonus.height, '-3');
   }
 
   moveAllBonuses(spaceshipEl: any) {

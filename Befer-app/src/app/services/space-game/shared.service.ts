@@ -10,7 +10,7 @@ export class SharedService {
 
   constructor() { }
 
-  createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number): HTMLDivElement {
+  createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number, zIndex: string): HTMLDivElement {
     let divEl = document.createElement('div');
 
     classes.forEach(c => {
@@ -22,7 +22,7 @@ export class SharedService {
     divEl.style.position = 'absolute';
     divEl.style.left = x + 'px';
     divEl.style.top = y + 'px';
-    divEl.style.zIndex = '-1';
+    divEl.style.zIndex = zIndex;
 
     let imgEl = document.createElement('img');
     imgEl.alt = imgAlt;
