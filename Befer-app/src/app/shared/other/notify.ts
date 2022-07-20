@@ -8,24 +8,17 @@ div.appendChild(list);
 document.body.prepend(div);
 
 export function notifySuccess(message: string) {
-    const liItem = document.createElement('li');
-    liItem.classList.add('notifications');
-    liItem.classList.add('success');
-    liItem.textContent = message;
-
-    const divEl = document.createElement('div');
-    divEl.textContent = '\u2716';
-    liItem.appendChild(divEl);
-
-    list.appendChild(liItem);
-
-    setTimeout(() => liItem.remove(), 4000);
+    createEl('success', message);
 }
 
 export function notifyErr(message: string) {
+    createEl('error', message);
+}
+
+function createEl(msgType: string, message: string) {
     const liItem = document.createElement('li');
     liItem.classList.add('notifications');
-    liItem.classList.add('error');
+    liItem.classList.add(msgType);
     liItem.textContent = message;
 
     const divEl = document.createElement('div');

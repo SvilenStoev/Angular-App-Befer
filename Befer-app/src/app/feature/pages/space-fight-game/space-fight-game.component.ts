@@ -46,16 +46,16 @@ export class SpaceFightGameComponent implements OnInit {
 
       if (state.points % 10 == 0) {
         this.points = state.points;
-        this.spaceshipBoostSpeed = Number(spaceship.boostSpeed.toFixed());
+        this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
 
         if (state.points >= state.levelsRange[(state.level + 1) as keyof typeof state.levelsRange]) {
           this.level = ++state.level;
 
           if (this.level == 7) {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
-            await this.sharedService.sleep(2500);
+            await this.sharedService.sleep(1500);
 
-            this.sharedService.createEl(['boss'], bossAlien.x, bossAlien.y, 'BossImg', bossAlienUrl, bossAlien.width, bossAlien.height);
+            this.gameService.initialStartUpBossMode();
 
             window.requestAnimationFrame(this.gameLoopBoss.bind(this));
             return;
@@ -64,19 +64,23 @@ export class SpaceFightGameComponent implements OnInit {
             this.modifyGameDifficulty();
           }
 
-          await this.sharedService.sleep(2500);
+          await this.sharedService.sleep(1500);
         }
       }
 
       //Pause game
-      this.checkPauseGame();
+      if (!state.isPaused) {
+        window.requestAnimationFrame(this.gameLoop.bind(this));
+      } else {
+        this.pauseGame();
+      }
     } else {
       console.log('game over!', state.points);
     }
   }
 
   gameLoopBoss(timestamp: number) {
-    this.gameService.modifyGameObjectsBossGame(timestamp);
+    this.gameService.modifyGameObjectsBossMode(timestamp);
 
     if (!state.gameOver) {
       state.points++;
@@ -86,20 +90,20 @@ export class SpaceFightGameComponent implements OnInit {
         this.spaceshipBoostSpeed = Number(spaceship.boostSpeed.toFixed());
       }
 
-      window.requestAnimationFrame(this.gameLoopBoss.bind(this));
-      
+      //Pause game
+      if (!state.isPaused) {
+        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+      } else {
+        this.pauseGame();
+      }
     } else {
       console.log('game over!', state.points);
     }
   }
 
-  checkPauseGame(): void {
-    if (!state.isPaused) {
-      window.requestAnimationFrame(this.gameLoop.bind(this));
-    } else {
-      this.showSettings = true;
-      document.addEventListener('keypress', this.onResume.bind(this));
-    }
+  pauseGame(): void {
+    this.showSettings = true;
+    document.addEventListener('keypress', this.onResume.bind(this));
   }
 
   //TODO: refactor

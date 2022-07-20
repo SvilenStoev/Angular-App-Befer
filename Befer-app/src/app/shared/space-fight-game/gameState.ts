@@ -1,12 +1,12 @@
 export const state = {
-    level: 5,
+    level: 6,
     levelsRange: {
         2: 3500,
         3: 8000,
         4: 14000,
         5: 17000,
         6: 1500,
-        7: 3000,
+        7: 2000,
     },
     points: 0,
     isPaused: false,
@@ -18,12 +18,13 @@ export const state = {
         'KeyD': false,
         'KeyA': false,
         'KeyP': false,
+        'KeyM': false,
         'ArrowUp': false,
         'ArrowLeft': false,
         'ArrowDown': false,
         'ArrowRight': false,
-        'Space': false,
-        'ShiftLeft': false
+        'ShiftLeft': false,
+        'Space': false
     },
 };
 
@@ -33,10 +34,11 @@ export const availableKeys = [
     'KeyD',
     'KeyA',
     'KeyP',
+    'KeyM',
     'ArrowUp',
     'ArrowLeft',
     'ArrowDown',
     'ArrowRight',
-    'Space',
-    'ShiftLeft'
+    'ShiftLeft',
+    'Space'
 ]

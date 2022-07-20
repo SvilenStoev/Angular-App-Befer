@@ -9,13 +9,12 @@ import { spaceship, spaceshipUrl } from 'src/app/shared/space-fight-game/gameObj
 })
 export class SpaceshipService {
 
-  spaceshipEl: any = {};
+  spaceshipEl: HTMLDivElement;
 
   constructor(
     private sharedService: SharedService) { }
 
-  //1. Spaceship
-  createSpaceship(): any {
+  createSpaceship(): HTMLDivElement {
     this.spaceshipEl = this.sharedService.createEl(['spaceship', 'hide'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height);
     return this.spaceshipEl;
   }
@@ -40,11 +39,11 @@ export class SpaceshipService {
       spaceship.boostSpeed += 0.33;
     }
 
-    if (isShiftCLicked && spaceship.boostSpeed > 1.2) {
+    if (isShiftCLicked && spaceship.boostSpeed > 0.49) {
       speed *= 1.5;
 
       if (isPointsP) {
-        spaceship.boostSpeed -= 2;
+        spaceship.boostSpeed -= 1.9;
       }
     }
     

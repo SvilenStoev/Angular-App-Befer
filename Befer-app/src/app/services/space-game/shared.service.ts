@@ -10,7 +10,7 @@ export class SharedService {
 
   constructor() { }
 
-  createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number): any {
+  createEl(classes: string[], x: number, y: number, imgAlt: string, imgUrl: string, width: number, height: number): HTMLDivElement {
     let divEl = document.createElement('div');
 
     classes.forEach(c => {
