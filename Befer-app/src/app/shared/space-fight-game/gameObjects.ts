@@ -1,6 +1,7 @@
 export const spaceshipUrl = '../../../../assets/images/spaceship.png';
 export const alienUrl = '../../../../assets/images/alien.png';
 export const bombUrl = '../../../../assets/images/bomb.png';
+export const bossBombUrl = '../../../../assets/images/boss-bomb.png';
 export const collisionUrl = '../../../../assets/images/collision.png';
 
 //bonuses
@@ -56,6 +57,15 @@ export const bomb = {
     fireInterval: 500,
     nextFire: 0,
 }
+
+export const bossBomb = {
+    width: 85,
+    height: 22,
+    speed: 9,
+    fireInterval: 900,
+    nextFire: 0,
+}
+
 
 export const doubleFireBonus = {
     x: 100,

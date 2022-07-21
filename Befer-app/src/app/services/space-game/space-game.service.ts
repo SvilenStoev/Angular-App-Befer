@@ -8,6 +8,7 @@ import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { WeaponService } from './game-objects/weapon.service';
 import { BonusService } from './game-objects/bonus.service';
 import { BossService } from './game-objects/boss.service';
+import { WeaponBossService } from './game-objects/weapon-boss.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class SpaceGameService {
     private spaceshipService: SpaceshipService,
     private bossService: BossService,
     private weaponService: WeaponService,
+    private weaponBossService: WeaponBossService,
     private bonusService: BonusService,
     private sharedService: SharedService) { }
 
@@ -118,7 +120,13 @@ export class SpaceGameService {
     }
 
     //Modify bombs position and check for collision with boss
-    this.weaponService.moveAllBombs(this.gameScreenEl.offsetWidth);
+    this.weaponService.moveAllBombs(this.gameScreenEl.offsetWidth, this.bossEl);
+
+    //Boss fires bombs
+    this.weaponBossService.fireBombs(timestamp);
+
+    //Modify bombs position and check for collision with boss
+    this.weaponBossService.moveAllBombs(this.gameScreenEl.offsetWidth, this.spaceshipEl);
 
     //Create random bonuses
     this.bonusService.createBonuses(timestamp, this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);

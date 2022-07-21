@@ -40,7 +40,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showStartButton = false;
     this.showSettings = false;
 
-    // await this.sharedService.sleep(4000);
+    //await this.sharedService.sleep(5000);
 
     this.showAreaWarning = false;
 

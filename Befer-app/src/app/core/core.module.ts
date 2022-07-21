@@ -25,6 +25,7 @@ import { RequestInterceptor } from '../services/interceptors/request.interceptor
 import { WeaponService } from '../services/space-game/game-objects/weapon.service';
 import { SpaceshipService } from '../services/space-game/game-objects/spaceship.service';
 import { BossService } from '../services/space-game/game-objects/boss.service';
+import { WeaponBossService } from '../services/space-game/game-objects/weapon-boss.service';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ export class CoreModule {
         SpaceshipService,
         BossService,
         WeaponService,
+        WeaponBossService,
         BonusService,
         SharedService,
         //Other

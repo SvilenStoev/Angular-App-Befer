@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { SharedService } from '../shared.service';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { alien, bomb, bombUrl, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien, bomb, bombUrl, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -39,19 +39,26 @@ export class WeaponService {
   }
 
   //Move bombs
-  moveAllBombs(gameScreenWidth: number) {
+  moveAllBombs(gameScreenWidth: number, bossEl: any = {}) {
     Array.from(document.getElementsByClassName('bomb'))
       .forEach(bombEl => {
         let currentPosition = parseInt((bombEl as HTMLDivElement).style.left);
 
-        Array.from(document.getElementsByClassName('alien'))
-          .forEach(alienEl => {
-            if (this.sharedService.hasCollision(bombEl, alienEl, 2)) {
-              bombEl.remove();
-              alienEl.remove();
-              state.points += alien.healthPoints;
-            }
-          });
+        if (bossEl == {}) {
+          Array.from(document.getElementsByClassName('alien'))
+            .forEach(alienEl => {
+              if (this.sharedService.hasCollision(bombEl, alienEl, 2)) {
+                bombEl.remove();
+                alienEl.remove();
+                state.points += alien.healthPoints;
+              }
+            });
+        } else {
+          if (this.sharedService.hasCollision(bombEl, bossEl, 4)) {
+            bombEl.remove();
+            bossAlien.healthPoints -= 200;
+          }
+        }
 
         if (currentPosition < gameScreenWidth) {
           (bombEl as HTMLDivElement).style.left = currentPosition + bomb.speed + 'px';
@@ -60,5 +67,4 @@ export class WeaponService {
         }
       });
   }
-
 }

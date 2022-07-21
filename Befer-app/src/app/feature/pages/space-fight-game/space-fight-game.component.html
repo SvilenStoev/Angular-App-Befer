@@ -5,7 +5,8 @@
     <article *ngIf="showAreaWarning" class="area-warning">
         <div class="area-warning-img"><img src="../../../../assets/images/area-warning.jpg" alt=""></div>
         <div class="area-warning-text">
-            <p>Give a star to the project or defeat all my aliens!</p>
+            <p>Give a star to the project!</p>
+            <p>Or my aliens will defeat you!</p>
         </div>
     </article>
     <article *ngIf="showStartButton" class="start-screen" (click)="warningAndStartGame()">
