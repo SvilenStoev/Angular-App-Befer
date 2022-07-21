@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
-import { state } from 'src/app/shared/space-fight-game/gameState';
+import { state, userScores } from 'src/app/shared/space-fight-game/gameState';
 import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
@@ -25,9 +25,11 @@ export class SpaceFightGameComponent implements OnInit {
 
   points: number = state.points;
   level: number = state.level;
+  aliensKilled: number = spaceship.aliensKilled;
   spaceshipBoostSpeed: number = 0;
   bossHealth: number = bossAlien.healthPoints;
   spaceshipHealth: number = spaceship.healthPoints;
+  timeRemaining: number = 0;
 
   constructor(private gameService: SpaceGameService,
     private sharedService: SharedService) { }
@@ -41,7 +43,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showStartButton = false;
     this.showSettings = false;
 
-    await this.sharedService.sleep(5000);
+    //await this.sharedService.sleep(5000);
 
     this.showAreaWarning = false;
 
@@ -64,6 +66,7 @@ export class SpaceFightGameComponent implements OnInit {
 
     if (!state.gameOver) {
       state.points++;
+      this.aliensKilled = spaceship.aliensKilled;
 
       if (state.points % 10 == 0) {
         this.points = state.points;
@@ -74,7 +77,7 @@ export class SpaceFightGameComponent implements OnInit {
 
           if (this.level == 7) {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
-            await this.sharedService.sleep(1400);
+            await this.sharedService.sleep(1000);
 
             state.isBossMode = true;
             this.showBossEntering = true;
@@ -87,6 +90,9 @@ export class SpaceFightGameComponent implements OnInit {
             //Initializing boss game mode
             this.gameService.initialStartUpBossMode();
 
+            const timeEl = document.querySelector('#remaining-time');
+            this.startTimerForBossMode(600, timeEl);
+
             window.requestAnimationFrame(this.gameLoopBoss.bind(this));
             return;
           } else {
@@ -94,7 +100,7 @@ export class SpaceFightGameComponent implements OnInit {
             this.modifyGameDifficulty();
           }
 
-          await this.sharedService.sleep(1200);
+          await this.sharedService.sleep(1100);
         }
       }
 
@@ -103,7 +109,8 @@ export class SpaceFightGameComponent implements OnInit {
     } else {
       state.openMenu = true;
       this.checkForPauseOrMenu();
-      notifyErr(`Game Over! ${state.points} points reached.`);
+      this.calculateTotalPoints();
+      notifyErr(`Game Over! ${userScores.totalPoints} points reached.`);
     }
   }
 
@@ -125,12 +132,15 @@ export class SpaceFightGameComponent implements OnInit {
       this.checkForPauseOrMenu();
     } else {
       state.openMenu = true;
+
       this.checkForPauseOrMenu();
 
       if (state.gameWon) {
+        this.calculateTotalPoints();
         notifySuccess(`Great... You have killed the Dev...`);
       } else {
-        notifyErr(`Game Over! ${state.points} points reached.`);
+        this.calculateTotalPoints();
+        notifyErr(`Game Over! ${userScores.totalPoints} points reached.`);
       }
     }
   }
@@ -206,6 +216,43 @@ export class SpaceFightGameComponent implements OnInit {
         }
       }
     }
+  }
+
+  calculateTotalPoints(): void {
+    const totalPoints = state.points;
+    const pointsFromRemBoost = this.spaceshipBoostSpeed * 10000 / 100;
+    const pointsFromAliensKilled = this.aliensKilled * 100;
+    const pointsFromTime = Math.floor(userScores.timeRemaining * 5000 / 60);
+
+    userScores.totalPoints = totalPoints + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime;
+    console.log(totalPoints, pointsFromRemBoost, pointsFromAliensKilled, pointsFromTime);
+  }
+
+  startTimerForBossMode(duration: number, timeEl: any) {
+    const start = Date.now();
+
+    function timer() {
+      const diff = duration - (((Date.now() - start) / 1000) | 0);
+
+      userScores.timeRemaining = diff;
+
+      let minutes = (diff / 60) | 0;
+      let seconds = (diff % 60) | 0;
+
+      let minStr = (minutes < 10 ? '0' + minutes : minutes).toString();
+      let secStr = (seconds < 10 ? '0' + seconds : seconds).toString();
+
+      timeEl.textContent = minStr + ':' + secStr;
+
+      if (minutes <= 0 && seconds <= 0) {
+        state.gameOver = true;
+        clearInterval(refreshIntervalId);
+        return;
+      }
+    };
+
+    timer();
+    let refreshIntervalId = setInterval(timer, 1000);
   }
 
   modifyGameDifficulty(): void {

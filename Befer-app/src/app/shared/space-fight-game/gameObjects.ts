@@ -21,6 +21,8 @@ export const spaceship = {
     boostSpeed: 0,
     width: 149,
     height: 86,
+    initAliensKilled: 0,
+    aliensKilled: 0,
     initHealthPoints: 5000,
     healthPoints: 5000,
     bonuses: {

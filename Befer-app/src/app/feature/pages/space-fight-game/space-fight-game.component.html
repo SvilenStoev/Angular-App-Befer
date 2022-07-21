@@ -1,5 +1,7 @@
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="points">
     <p>Points: <span class="points-current">{{points}}</span></p>
+    <p *ngIf="showHealthBars">Time: <span id="remaining-time">10:00</span> min</p>
+    <p *ngIf="!showHealthBars">Aliens Killed: <span class="alients-killed">{{aliensKilled}}</span></p>
 </div>
 <div class="game-view">
     <article *ngIf="showAreaWarning" class="area-warning">

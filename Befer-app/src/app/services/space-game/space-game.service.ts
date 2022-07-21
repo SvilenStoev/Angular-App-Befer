@@ -152,6 +152,7 @@ export class SpaceGameService {
   onRestart() {
     spaceship.x = spaceship.initX;
     spaceship.y = spaceship.initY;
+    spaceship.aliensKilled = spaceship.initAliensKilled;
     spaceship.boostSpeed = 0;
 
     for (const key in initState) {

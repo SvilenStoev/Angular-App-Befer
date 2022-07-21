@@ -220,6 +220,8 @@ div.double-fire-bonus img {
 }
 
 .points {
+    display: flex;
+    justify-content: space-evenly;
     visibility: hidden;
     font-family: 'Consolas';
     color: white;

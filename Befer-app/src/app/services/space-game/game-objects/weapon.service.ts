@@ -58,6 +58,7 @@ export class WeaponService {
                 bombEl.remove();
                 alienEl.remove();
                 state.points += alien.healthPoints;
+                spaceship.aliensKilled++;
               }
             });
         } else {
