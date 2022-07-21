@@ -45,7 +45,7 @@ export const bossAlien = {
     y: 200,
     width: 342,
     height: 288,
-    speed: 6,
+    speed: 3,
     initHealthPoints: 100000,
     healthPoints: 100000,
 }
@@ -59,11 +59,13 @@ export const bomb = {
 }
 
 export const bossBomb = {
-    width: 85,
-    height: 22,
+    width: 68,
+    height: 77,
     speed: 9,
-    fireInterval: 900,
+    fireInterval: 600,
     nextFire: 0,
+    trippleFireInterval: 6000,
+    nextTrippleFire: 0,
 }
 
 

@@ -8,13 +8,13 @@
 }
 
 /* Before starting game */
-.area-warning {
+.area-warning, .area-boss-entering {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.area-warning-img {
+.area-warning-img, .area-boss-entering {
     margin-left: 100px;
 }
 
@@ -22,6 +22,11 @@
     border-radius: 50%;
     margin: 20px;
     box-shadow: 1px 1px 16px 11px blue;
+}
+
+.area-boss-entering img {
+    margin: 20px;
+    box-shadow: 1px 1px 12px 10px blue;
 }
 
 .area-warning-text {

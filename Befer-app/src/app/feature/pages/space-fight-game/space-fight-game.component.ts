@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { notifySuccess } from 'src/app/shared/other/notify';
+import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
 import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
@@ -21,6 +21,7 @@ export class SpaceFightGameComponent implements OnInit {
   showAreaWarning: boolean = false;
   showStartButton: boolean = true;
   showHealthBars: boolean = false;
+  showBossEntering: boolean = false;
 
   points: number = state.points;
   level: number = state.level;
@@ -40,7 +41,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showStartButton = false;
     this.showSettings = false;
 
-    //await this.sharedService.sleep(5000);
+    await this.sharedService.sleep(5000);
 
     this.showAreaWarning = false;
 
@@ -73,9 +74,15 @@ export class SpaceFightGameComponent implements OnInit {
 
           if (this.level == 7) {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
-            await this.sharedService.sleep(1200);
+            await this.sharedService.sleep(1400);
+
             state.isBossMode = true;
+            this.showBossEntering = true;
             this.showHealthBars = state.isBossMode;
+
+            await this.sharedService.sleep(4000);
+
+            this.showBossEntering = false;
 
             //Initializing boss game mode
             this.gameService.initialStartUpBossMode();
@@ -94,11 +101,13 @@ export class SpaceFightGameComponent implements OnInit {
       //Pause & menu
       this.checkForPauseOrMenu();
     } else {
-      console.log('game over!', state.points);
+      state.openMenu = true;
+      this.checkForPauseOrMenu();
+      notifyErr(`Game Over! ${state.points} points reached.`);
     }
   }
 
-  gameLoopBoss(timestamp: number) {
+  async gameLoopBoss(timestamp: number) {
     this.gameService.modifyGameObjectsBossMode(timestamp);
 
     if (!state.gameOver) {
@@ -115,7 +124,14 @@ export class SpaceFightGameComponent implements OnInit {
       //Pause & menu
       this.checkForPauseOrMenu();
     } else {
-      console.log('game over!', state.points);
+      state.openMenu = true;
+      this.checkForPauseOrMenu();
+
+      if (state.gameWon) {
+        notifySuccess(`Great... You have killed the Dev...`);
+      } else {
+        notifyErr(`Game Over! ${state.points} points reached.`);
+      }
     }
   }
 
@@ -133,7 +149,13 @@ export class SpaceFightGameComponent implements OnInit {
     }
   }
 
-  restartGame() {
+  async restartGame() {
+    if (state.gameOver) {
+      Array.from(document.querySelectorAll('.collision-img-game-over')).forEach(c => {
+        c.remove();
+      });
+    }
+
     this.showMenu = false;
     this.showHealthBars = false;
     this.points = 0;
@@ -141,6 +163,9 @@ export class SpaceFightGameComponent implements OnInit {
     this.spaceshipBoostSpeed = 0;
     this.bossHealth = bossAlien.initHealthPoints;
     this.spaceshipHealth = spaceship.initHealthPoints;
+
+    //If game over and restart game sometimes it take too long querySelector to find the collision img and don't remove it before gameOver setting to false! 
+    this.sharedService.sleep(300);
 
     this.gameService.onRestart();
     this.startGame();
@@ -153,6 +178,10 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   onMenuResume() {
+    if (state.gameOver) {
+      return;
+    }
+
     state.openMenu = false;
     this.showMenu = false;
 
@@ -165,13 +194,16 @@ export class SpaceFightGameComponent implements OnInit {
       state.isPaused = false;
       this.showSettings = false;
 
-      //TODO: This doesn't remove the event listener!?!
+      //TODO: This doesn't remove the event listener!?!??
       document.removeEventListener('keypress', this.onResume);
 
-      if (state.isBossMode) {
-        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
-      } else {
-        window.requestAnimationFrame(this.gameLoop.bind(this));
+      //Check for menu also, because event listener doesn't remove..
+      if (!state.gameOver && !state.showMenu) {
+        if (state.isBossMode) {
+          window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+        } else {
+          window.requestAnimationFrame(this.gameLoop.bind(this));
+        }
       }
     }
   }

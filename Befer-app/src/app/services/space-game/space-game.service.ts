@@ -36,6 +36,7 @@ export class SpaceGameService {
     this.gameScreenEl = document.querySelector('.game-view');
     this.sharedService.gameScreenEl = this.gameScreenEl;
     this.gameScreenEl.style.border = '2px dashed white';
+
     this.spaceshipEl = this.spaceshipService.createSpaceship();
     this.spaceshipService.spaceshipEntering();
   }
@@ -46,6 +47,9 @@ export class SpaceGameService {
     Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
       alienEl.remove();
     });
+
+    this.weaponBossService.initialStartUp();
+    this.weaponService.initialStartUp();
 
     this.bossEl = this.bossService.createBoss(this.gameScreenEl.offsetWidth);
     this.bossService.bossEntering();
@@ -160,8 +164,10 @@ export class SpaceGameService {
       this.bossEl.remove();
     }
 
+    //Remove all possible game objects that could be remain on the screen after game over and restart.
     Array.from(document.getElementsByClassName('bonus')).forEach(b => b.remove());
     Array.from(document.getElementsByClassName('alien')).forEach(a => a.remove());
     Array.from(document.getElementsByClassName('bomb')).forEach(b => b.remove());
+    Array.from(document.getElementsByClassName('bossBomb')).forEach(b => b.remove());
   }
 }

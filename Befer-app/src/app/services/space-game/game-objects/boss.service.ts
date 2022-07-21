@@ -33,9 +33,9 @@ export class BossService {
     const moveDown = bossAlien.y + bossAlien.height < gameScreenHeight && bossAlien.y + 90 < spaceship.y;
     
     if (moveUp) {
-      bossAlien.y -= 2;
+      bossAlien.y -= bossAlien.speed;
     } else if (moveDown) {
-      bossAlien.y += 2;
+      bossAlien.y += bossAlien.speed;
     }
   }
 

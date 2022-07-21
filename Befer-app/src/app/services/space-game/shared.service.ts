@@ -49,6 +49,9 @@ export class SharedService {
     const collEl = document.createElement('div');
     const img = document.createElement('img');
     img.src = collisionUrl;
+    collEl.classList.add('collision-img-game-over');
+    collEl.style.zIndex = '-1';
+
     collEl.appendChild(img);
 
     collEl.style.position = 'absolute';

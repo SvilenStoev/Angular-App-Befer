@@ -9,6 +9,12 @@
             <p>Or my aliens will defeat you!</p>
         </div>
     </article>
+    <article *ngIf="showBossEntering" class="area-boss-entering">
+        <div class="area-boss-entering-img"><img src="../../../../assets/images/boss-entering.jpg" alt=""></div>
+        <div class="area-warning-text">
+            <p>I am comming for you...</p>
+        </div>
+    </article>
     <article *ngIf="showStartButton" class="start-screen" (click)="warningAndStartGame()">
         <p>Start New Space Fight</p>
     </article>
