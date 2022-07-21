@@ -16,7 +16,7 @@ export const state: any = {
         4: 7000,
         5: 10000,
         6: 14000,
-        7: 2000,
+        7: 100,
     },
     points: initState.points,
     openMenu: initState.openMenu,

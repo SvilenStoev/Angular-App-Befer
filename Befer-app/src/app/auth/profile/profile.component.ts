@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userNameMaxLength: number = userConsts.userNameMaxLength;
 
   currUser: IUser;
-  profilePicture: any = '/assets/images/profileDefault.png';
+  profilePicture: any = '/assets/images/site/profileDefault.png';
   showLoader: boolean = false;
   isEditMode: boolean = false;
 

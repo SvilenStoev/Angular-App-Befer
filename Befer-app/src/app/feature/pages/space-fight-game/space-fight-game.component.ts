@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifySuccess } from 'src/app/shared/other/notify';
 import { state } from 'src/app/shared/space-fight-game/gameState';
-import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 
@@ -20,10 +20,13 @@ export class SpaceFightGameComponent implements OnInit {
   showMenu: boolean = false;
   showAreaWarning: boolean = false;
   showStartButton: boolean = true;
+  showHealthBars: boolean = false;
 
   points: number = state.points;
   level: number = state.level;
   spaceshipBoostSpeed: number = 0;
+  bossHealth: number = bossAlien.healthPoints;
+  spaceshipHealth: number = spaceship.healthPoints;
 
   constructor(private gameService: SpaceGameService,
     private sharedService: SharedService) { }
@@ -37,7 +40,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showStartButton = false;
     this.showSettings = false;
 
-    await this.sharedService.sleep(4000);
+    // await this.sharedService.sleep(4000);
 
     this.showAreaWarning = false;
 
@@ -72,6 +75,7 @@ export class SpaceFightGameComponent implements OnInit {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
             await this.sharedService.sleep(1200);
             state.isBossMode = true;
+            this.showHealthBars = state.isBossMode;
 
             //Initializing boss game mode
             this.gameService.initialStartUpBossMode();
@@ -102,6 +106,9 @@ export class SpaceFightGameComponent implements OnInit {
 
       if (state.points % 10 == 0) {
         this.points = state.points;
+        this.bossHealth = bossAlien.healthPoints;
+        this.spaceshipHealth = spaceship.healthPoints;
+
         this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
       }
 
@@ -128,15 +135,19 @@ export class SpaceFightGameComponent implements OnInit {
 
   restartGame() {
     this.showMenu = false;
+    this.showHealthBars = false;
     this.points = 0;
     this.level = 1;
     this.spaceshipBoostSpeed = 0;
+    this.bossHealth = bossAlien.initHealthPoints;
+    this.spaceshipHealth = spaceship.initHealthPoints;
 
     this.gameService.onRestart();
     this.startGame();
   }
 
   pauseGame(): void {
+    state.isPaused = true;
     this.showSettings = true;
     document.addEventListener('keypress', this.onResume.bind(this));
   }

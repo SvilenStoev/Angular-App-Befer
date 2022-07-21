@@ -1,3 +1,4 @@
+/* Main screen */
 .game-view {
     font-family: 'Consolas';
     position: relative;
@@ -6,6 +7,7 @@
     overflow: hidden;
 }
 
+/* Before starting game */
 .area-warning {
     display: flex;
     align-items: center;
@@ -57,6 +59,7 @@
     text-shadow: 1px 1px 4px blue;
 }
 
+/* Game menu */
 .menu {
     display: flex;
     background-color: #232422;
@@ -75,7 +78,7 @@
 .menu-button {
     background: blue;
     box-shadow: 0px 0px 13px 15px blue;
-    padding: 5px 20px;
+    padding: 10px 25px;
     border-radius: 50%;
     margin: 25px;
     cursor: pointer;
@@ -84,7 +87,7 @@
 .menu-button-restart {
     background: darkred;
     box-shadow: 0px 0px 13px 15px darkred;
-    padding: 5px 20px;
+    padding: 10px 25px;
     border-radius: 50%;
     margin: 25px;
     cursor: pointer;
@@ -93,19 +96,21 @@
 .menu-button-resume {
     background: darkgreen;
     box-shadow: 0px 0px 13px 15px darkgreen;
-    padding: 5px 20px;
+    padding: 10px 25px;
     border-radius: 50%;
     margin: 25px;
     cursor: pointer;
 }
 
+/* Game controls and settings */
 .settings {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     background-color: #232422;
-    opacity: 80%;
+    opacity: 90%;
     width: 900px;
-    margin: 60px auto;
+    margin: 70px auto;
     padding: 28px 0px;
     border-radius: 30px;
     box-shadow: 0px 0px 20px 20px blue;
@@ -148,6 +153,18 @@
     flex-direction: column;
 }
 
+.settings-back {
+    border: 3px solid white;
+    height: 80px;
+    background-color: white;
+    width: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .settings-bonuses-el {
     display: flex;
     flex-direction: row;
@@ -166,9 +183,20 @@
     margin: 0px 0px 0px 20px;
 }
 
+/* Game objects */
 div.spaceship img {
     width: 100%;
     height: 100%;
+}
+
+div.spaceship::after {
+    content: '';
+    position: absolute;
+    width: 2200px;
+    border-bottom: 1px dashed red;
+    top: 42px;
+    left: 66px;
+    z-index: -2;
 }
 
 div.alien img {
@@ -196,24 +224,29 @@ div.double-fire-bonus img {
     letter-spacing: 2px;
 }
 
+/* Game footer */
 .game-footer {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
     position: relative;
-    min-height: 55px;
     visibility: hidden;
+    min-height: 55px;
     font-family: 'Consolas';
     color: white;
     margin: 14px 0px 15px 0px;
-    text-align: center;
     font-size: 20px;
     letter-spacing: 2px;
 }
 
-.game-footer-imgs {
+.game-footer-imgs,
+.game-footer-imgs-health {
     display: flex;
     align-items: center;
 }
 
-.game-footer-imgs div img {
+.game-footer-imgs div img,
+.game-footer-imgs-health div img {
     width: 100%;
     height: 100%;
 }
@@ -222,6 +255,10 @@ div.double-fire-bonus img {
     opacity: 50%;
     margin-left: 40px;
     height: 62px;
+}
+
+.game-footer-imgs-health div {
+    margin-left: 100px;
 }
 
 .game-footer-imgs div.game-footer-img-boost-speed img {
@@ -234,6 +271,16 @@ div.double-fire-bonus img {
     margin-left: 60px;
     border-left: 2px dashed white;
     padding-left: 40px;
+}
+
+.game-footer-img-spaceship-health {
+    width: 270px;
+    height: 48px;
+}
+
+.game-footer-img-boss-health {
+    width: 270px;
+    height: 64px;
 }
 
 .game-footer-imgs div.footer-img-active {
@@ -254,21 +301,17 @@ div.double-fire-bonus img {
     transform: translate(-50%, -50%);
 }
 
+.game-footer-img-boss-health {
+    margin-right: 100px;
+}
+
 div.hide::after {
     display: none;
 }
 
-div.spaceship::after {
-    content: '';
-    position: absolute;
-    width: 2200px;
-    border-bottom: 1px dashed red;
-    top: 42px;
-    left: 66px;
-    z-index: -2;
-}
-
+/* Responsive */
 @media screen and (max-width: 1650px) {
+
     .game-footer-text,
     .game-footer-imgs div {
         margin-left: 10px;

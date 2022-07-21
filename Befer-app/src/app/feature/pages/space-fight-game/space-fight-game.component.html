@@ -44,9 +44,10 @@
                 </div>
             </article>
         </div>
+        <button *ngIf="showMenu" class="settings-back" (click)="onResume({code: 'KeyR'})">Go Back</button>
     </article>
     <article *ngIf="showMenu" class="menu">
-        <div class="menu-button">
+        <div class="menu-button" (click)="pauseGame()">
             <h2 class="menu-button-text">Controls</h2>
         </div>
         <div class="menu-button">
@@ -65,11 +66,15 @@
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
      <div class="game-footer-imgs" *ngIf="gameStarted">
-        <p class="game-footer-text">Active Bonuses:</p>
+        <p class="game-footer-text">Bonuses:</p>
         <div class="game-footer-img-double"><img src="../../../../assets/images/bonus-double-fire.png" alt="Double-Fire"></div>
         <div class="game-footer-img-aim"><img src="../../../../assets/images/bonus-aim.png" alt="Aim"></div>
         <div class="game-footer-img-invisible"><img src="../../../../assets/images/bonus-invisible.png" alt="Invisible"></div>
         <div class="game-footer-img-boost-speed"><img src="../../../../assets/images/boost-speed.png" alt="Boost-Speed"><span>{{spaceshipBoostSpeed}}%</span></div>
      </div>
      <p class="game-footer-level">Level: <span >{{level}}</span></p>
+     <div class="game-footer-imgs-health" *ngIf="gameStarted && showHealthBars">
+        <div class="game-footer-img-spaceship-health"><img src="../../../../assets/images/spaceship-health.png" alt="Boost-Speed"><span>{{spaceshipHealth}}</span></div>
+        <div class="game-footer-img-boss-health"><img src="../../../../assets/images/boss-health.com.png" alt="Boost-Speed"><span>{{bossHealth}}</span></div>
+     </div>
 </div>

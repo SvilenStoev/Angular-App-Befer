@@ -11,8 +11,6 @@ export const invisibleBonusUrl = '../../../../assets/images/bonus-invisible.png'
 //boss
 export const bossAlienUrl = '../../../../assets/images/boss-alien.png';
 
-
-
 export const spaceship = {
     initX: -180,
     initY: 300,
@@ -22,6 +20,8 @@ export const spaceship = {
     boostSpeed: 0,
     width: 149,
     height: 86,
+    initHealthPoints: 5000,
+    healthPoints: 5000,
     bonuses: {
         doubleFire: false,
         aim: false,
@@ -45,6 +45,7 @@ export const bossAlien = {
     width: 342,
     height: 288,
     speed: 6,
+    initHealthPoints: 100000,
     healthPoints: 100000,
 }
 
