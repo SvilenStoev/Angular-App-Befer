@@ -11,7 +11,11 @@ export const invisibleBonusUrl = '../../../../assets/images/bonus-invisible.png'
 //boss
 export const bossAlienUrl = '../../../../assets/images/boss-alien.png';
 
+
+
 export const spaceship = {
+    initX: -180,
+    initY: 300,
     x: -180,
     y: 300,
     speed: 7,

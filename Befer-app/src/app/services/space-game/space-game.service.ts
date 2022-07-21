@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { state, availableKeys } from 'src/app/shared/space-fight-game/gameState';
+import { state, availableKeys, initState } from 'src/app/shared/space-fight-game/gameState';
 import { SharedService } from './shared.service';
 import { AlienService } from './game-objects/alien.service';
 import { SpaceshipService } from './game-objects/spaceship.service';
@@ -138,11 +138,13 @@ export class SpaceGameService {
   }
 
   onRestart() {
-    spaceship.x = -180;
-    spaceship.y = 300;
-    state.points = 0;
-    state.level = 1;
-    state.openMenu = false;
+    spaceship.x = spaceship.initX;
+    spaceship.y = spaceship.initY;
+    spaceship.boostSpeed = 0;
+
+    for (const key in initState) {
+      state[key as keyof typeof state] = initState[key as keyof typeof initState];
+    }
 
     this.spaceshipEl.remove();
 

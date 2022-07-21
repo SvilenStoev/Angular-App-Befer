@@ -1,19 +1,29 @@
-export const state = {
-    level: 1,
+export const initState = {
+    level: 6,
+    points: 0,
+    openMenu: false,
+    isPaused: false,
+    hasBonuses: false,
+    gameOver: false,
+    isBossMode: false,
+}
+
+export const state: any = {
+    level: initState.level,
     levelsRange: {
         2: 2000,
         3: 4000,
         4: 7000,
         5: 10000,
         6: 14000,
-        7: 20000,
+        7: 2000,
     },
-    points: 0,
-    openMenu: false,
-    isPaused: false,
-    hasBonuses: false,
+    points: initState.points,
+    openMenu: initState.openMenu,
+    isPaused: initState.isPaused,
+    hasBonuses: initState.hasBonuses,
+    gameOver: initState.gameOver,
     isBossMode: false,
-    gameOver: false,
     keys: {
         'KeyW': false,
         'KeyS': false,

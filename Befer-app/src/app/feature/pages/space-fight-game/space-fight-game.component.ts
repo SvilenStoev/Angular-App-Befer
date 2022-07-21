@@ -70,7 +70,7 @@ export class SpaceFightGameComponent implements OnInit {
 
           if (this.level == 7) {
             notifySuccess(`Congratulation! You have killed almost all aliens!`);
-            await this.sharedService.sleep(1500);
+            await this.sharedService.sleep(1200);
             state.isBossMode = true;
 
             //Initializing boss game mode
@@ -83,7 +83,7 @@ export class SpaceFightGameComponent implements OnInit {
             this.modifyGameDifficulty();
           }
 
-          await this.sharedService.sleep(1500);
+          await this.sharedService.sleep(1200);
         }
       }
 
@@ -102,7 +102,7 @@ export class SpaceFightGameComponent implements OnInit {
 
       if (state.points % 10 == 0) {
         this.points = state.points;
-        this.spaceshipBoostSpeed = Number(spaceship.boostSpeed.toFixed());
+        this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
       }
 
       //Pause & menu
@@ -130,6 +130,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showMenu = false;
     this.points = 0;
     this.level = 1;
+    this.spaceshipBoostSpeed = 0;
 
     this.gameService.onRestart();
     this.startGame();
@@ -143,7 +144,7 @@ export class SpaceFightGameComponent implements OnInit {
   onMenuResume() {
     state.openMenu = false;
     this.showMenu = false;
-    
+
     this.checkForPauseOrMenu();
   }
 
@@ -156,7 +157,11 @@ export class SpaceFightGameComponent implements OnInit {
       //TODO: This doesn't remove the event listener!?!
       document.removeEventListener('keypress', this.onResume);
 
-      window.requestAnimationFrame(this.gameLoop.bind(this));
+      if (state.isBossMode) {
+        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+      } else {
+        window.requestAnimationFrame(this.gameLoop.bind(this));
+      }
     }
   }
 
