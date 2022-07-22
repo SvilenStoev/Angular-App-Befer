@@ -72,6 +72,8 @@
             <h2 class="menu-button-text">Restart Game</h2>
         </div>
     </article>
+    <article *ngIf="showUserScores" class="userScores"></article>
+
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
      <div class="game-footer-imgs" *ngIf="gameStarted">

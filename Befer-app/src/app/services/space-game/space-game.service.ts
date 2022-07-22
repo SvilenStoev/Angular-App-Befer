@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { state, availableKeys, initState } from 'src/app/shared/space-fight-game/gameState';
+import { state, availableKeys, initState, userScores } from 'src/app/shared/space-fight-game/gameState';
 import { SharedService } from './shared.service';
 import { AlienService } from './game-objects/alien.service';
 import { SpaceshipService } from './game-objects/spaceship.service';
@@ -22,9 +22,7 @@ export class SpaceGameService {
   constructor(
     private alienService: AlienService,
     private spaceshipService: SpaceshipService,
-    private bossService: BossService,
     private weaponService: WeaponService,
-    private weaponBossService: WeaponBossService,
     private bonusService: BonusService,
     private sharedService: SharedService) { }
 
@@ -39,20 +37,6 @@ export class SpaceGameService {
 
     this.spaceshipEl = this.spaceshipService.createSpaceship();
     this.spaceshipService.spaceshipEntering();
-  }
-
-  //Initial game configuration for Boss mode
-  initialStartUpBossMode(): void {
-    this.gameScreenEl.style.border = '3px dashed darkred';
-    Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
-      alienEl.remove();
-    });
-
-    this.weaponBossService.initialStartUp();
-    this.weaponService.initialStartUp();
-
-    this.bossEl = this.bossService.createBoss(this.gameScreenEl.offsetWidth);
-    this.bossService.bossEntering();
   }
 
   //Track user keyboard input
@@ -112,48 +96,27 @@ export class SpaceGameService {
     }
   }
 
-  //Create game objects, modify position and check for collision in Boss Game Mode
-  modifyGameObjectsBossMode(timestamp: number): void {
-    //Modify spaceship
-    this.spaceshipService.calcSpaceshipPos(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
-    this.spaceshipService.moveSpaceship();
+  calculateTotalPoints(): void {
+    userScores.points = state.points;
+    userScores.boostRemaining = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
+    userScores.aliensKilled = spaceship.aliensKilled;
+  
+    const pointsFromRemBoost = userScores.boostRemaining * 10000 / 100;
+    const pointsFromAliensKilled = userScores.aliensKilled * 100;
 
-    //Fire bombs
-    if (state.keys.Space) {
-      this.weaponService.fireBombs(timestamp);
-    }
-
-    //Modify bombs position and check for collision with boss
-    this.weaponService.moveAllBombs(this.gameScreenEl.offsetWidth, this.bossEl);
-
-    //Boss fires bombs
-    this.weaponBossService.fireBombs(timestamp);
-
-    //Modify bombs position and check for collision with boss
-    this.weaponBossService.moveAllBombs(this.gameScreenEl.offsetWidth, this.spaceshipEl);
-
-    //Create random bonuses
-    this.bonusService.createBonuses(timestamp, this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
-
-    //Move bonuses only if there is bonuses on the screen (because they will be rare) and check for collision with spaceship
-    if (state.hasBonuses) {
-      if (document.getElementsByClassName('bonus').length > 0) {
-        this.bonusService.moveAllBonuses(this.spaceshipEl);
-      } else {
-        state.hasBonuses = false;
-      }
-    }
-
-    //Modify Boss
-    this.bossService.calcBossPosition(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
-    this.bossService.moveBoss();
+    userScores.totalPoints = state.points + pointsFromRemBoost + pointsFromAliensKilled;
   }
 
   onRestart() {
     spaceship.x = spaceship.initX;
     spaceship.y = spaceship.initY;
-    spaceship.aliensKilled = spaceship.initAliensKilled;
+    spaceship.aliensKilled = 0;
     spaceship.boostSpeed = 0;
+    spaceship.bonuses.aim = false;
+    spaceship.bonuses.doubleFire = false;
+    spaceship.bonuses.invisible = false;
+
+    this.bonusService.clearActiveBonuses();
 
     for (const key in initState) {
       state[key as keyof typeof state] = initState[key as keyof typeof initState];

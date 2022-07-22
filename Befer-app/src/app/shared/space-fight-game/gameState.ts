@@ -2,6 +2,7 @@ export const userScores = {
     aliensKilled: 0,
     timeRemaining: 0,
     boostRemaining: 0,
+    points: 0,
     totalPoints: 0,
 }
 

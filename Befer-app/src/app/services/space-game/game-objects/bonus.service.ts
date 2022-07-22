@@ -102,10 +102,9 @@ export class BonusService {
               spaceshipEl.classList.add('hide');
             }, aimBonus.timeLast);
           } else if (bonusEl.classList.contains('invisible-bonus')) {
+            spaceship.bonuses.invisible = true;
             spaceshipEl.style.opacity = '40%';
             this.invisibleBonusFooterEl.classList.add('footer-img-active');
-
-            spaceship.bonuses.invisible = true;
 
             setTimeout(() => {
               spaceship.bonuses.invisible = false;
@@ -126,5 +125,11 @@ export class BonusService {
           bonusEl.remove();
         }
       });
+  }
+
+  clearActiveBonuses(): void {
+    this.aimBonusFooterEl.classList.remove('footer-img-active');
+    this.invisibleBonusFooterEl.classList.remove('footer-img-active');
+    this.doubleBonusFooterEl.classList.remove('footer-img-active');
   }
 }
