@@ -75,20 +75,20 @@ export class SpaceFightGameComponent implements OnInit {
         this.points = state.points;
         this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
 
-        this.checkForLevelUpAndSetBossMode();
+        if (await this.checkForLevelUpAndSetBossMode()) {
+          return;
+        }
       }
 
       //Pause & menu
       this.checkForPauseOrMenu();
     } else {
-      state.openMenu = true;
-      this.checkForPauseOrMenu();
-      this.gameService.calculateTotalPoints();
+      this.onGameOver();
       notifyErr(`Game Over! ${userScores.totalPoints} points reached.`);
     }
   }
 
-  async gameLoopBoss(timestamp: number) {
+  gameLoopBoss(timestamp: number) {
     this.bossGameService.modifyGameObjectsBossMode(timestamp);
 
     if (!state.gameOver) {
@@ -105,17 +105,20 @@ export class SpaceFightGameComponent implements OnInit {
       //Pause & menu
       this.checkForPauseOrMenu();
     } else {
-      this.bossGameService.calculateTotalPoints();
-      this.userScores = userScores;
+      this.onGameOver();
 
       if (state.gameWon) {
         notifySuccess(`Great... You have killed the Dev...`);
       } else {
         notifyErr(`Game Over! ${userScores.totalPoints} points reached.`);
       }
-
-      this.showUserScores = true;
     }
+  }
+
+  onGameOver() {
+    this.gameService.calculateTotalPoints();
+    this.userScores = userScores;
+    this.showUserScores = true;
   }
 
   checkForPauseOrMenu() {
@@ -132,7 +135,7 @@ export class SpaceFightGameComponent implements OnInit {
     }
   }
 
-  async checkForLevelUpAndSetBossMode() {
+  async checkForLevelUpAndSetBossMode(): Promise<boolean> {
     if (state.points >= state.levelsRange[(state.level + 1) as keyof typeof state.levelsRange]) {
       this.level = ++state.level;
 
@@ -152,7 +155,7 @@ export class SpaceFightGameComponent implements OnInit {
         this.bossGameService.initialStartUpBossMode();
 
         window.requestAnimationFrame(this.gameLoopBoss.bind(this));
-        return;
+        return true;
       } else {
         notifySuccess(`Congratulation! Level ${state.level} reached!`);
         this.modifyGameDifficulty();
@@ -160,6 +163,8 @@ export class SpaceFightGameComponent implements OnInit {
 
       await this.sharedService.sleep(1100);
     }
+
+    return false;
   }
 
   restartGame() {
@@ -170,6 +175,7 @@ export class SpaceFightGameComponent implements OnInit {
     }
 
     this.showMenu = false;
+    this.showUserScores = false;
     this.showHealthBars = false;
     this.points = 0;
     this.level = 1;
@@ -200,7 +206,12 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   //TODO: refactor
-  onResume(e: any) {
+  onResume(e: any, showMenu: boolean = false) {
+    if (showMenu) {
+      this.showMenu = showMenu;
+      return;
+    }
+
     if (state.isPaused && e.code == 'KeyR') {
       state.isPaused = false;
       this.showSettings = false;

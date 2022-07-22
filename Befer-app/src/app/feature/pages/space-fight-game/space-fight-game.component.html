@@ -72,8 +72,42 @@
             <h2 class="menu-button-text">Restart Game</h2>
         </div>
     </article>
-    <article *ngIf="showUserScores" class="userScores"></article>
-
+    <!-- const pointsFromRemBoost = userScores.boostRemaining * 10000 / 100;
+    const pointsFromAliensKilled = userScores.aliensKilled * 100;
+    const pointsFromTime = Math.floor(userScores.timeRemaining * 5000 / 60); -->
+    <article *ngIf="showUserScores" class="user-scores">
+        <div class="user-scores-username">
+               <span>Username</span>
+               <span>Svilen664</span>
+               <span></span>
+        </div>
+        <div class="user-scores-points">
+            <span>Points</span>
+            <span>{{userScores.points}}</span>
+            <span></span>
+        </div>
+        <div class="user-scores-aliens">
+            <span>Aliens killed</span>
+            <span>{{userScores.aliensKilled}}</span>
+            <span class="pts-info">(x100 pts.)</span>
+        </div>
+        <div class="user-scores-boost">
+            <span>Remaining Boost</span>
+            <span>{{userScores.boostRemaining}}%</span>
+            <span class="pts-info">(x5 000 pts.)</span>
+        </div>
+        <div class="user-scores-time">
+            <span>Time</span>
+            <span>{{userScores.timeRemaining}}</span>
+            <span class="pts-info">(x5 000 pts.)</span>
+        </div>
+        <div class="user-scores-points">
+            <span>Total Points</span>
+            <span>{{userScores.totalPoints}}</span>
+            <span></span>
+        </div>
+        <button *ngIf="showUserScores" class="settings-back" (click)="onResume({code: 'KeyR'}, true)">Menu</button>
+    </article>
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
      <div class="game-footer-imgs" *ngIf="gameStarted">

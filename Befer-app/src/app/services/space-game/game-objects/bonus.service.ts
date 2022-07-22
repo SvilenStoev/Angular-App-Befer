@@ -14,6 +14,7 @@ export class BonusService {
 
   constructor(private sharedService: SharedService) { }
 
+  //TODO: get by ID
   setBonusFooterElements() {
     this.doubleBonusFooterEl = document.querySelector('.game-footer-img-double');
     this.aimBonusFooterEl = document.querySelector('.game-footer-img-aim');
@@ -128,6 +129,8 @@ export class BonusService {
   }
 
   clearActiveBonuses(): void {
+    this.setBonusFooterElements();
+
     this.aimBonusFooterEl.classList.remove('footer-img-active');
     this.invisibleBonusFooterEl.classList.remove('footer-img-active');
     this.doubleBonusFooterEl.classList.remove('footer-img-active');

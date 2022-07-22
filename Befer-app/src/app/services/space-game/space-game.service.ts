@@ -7,15 +7,12 @@ import { SpaceshipService } from './game-objects/spaceship.service';
 import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { WeaponService } from './game-objects/weapon.service';
 import { BonusService } from './game-objects/bonus.service';
-import { BossService } from './game-objects/boss.service';
-import { WeaponBossService } from './game-objects/weapon-boss.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpaceGameService {
 
-  bossEl: HTMLDivElement;
   spaceshipEl: HTMLDivElement;
   gameScreenEl: any;
 
@@ -100,11 +97,12 @@ export class SpaceGameService {
     userScores.points = state.points;
     userScores.boostRemaining = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
     userScores.aliensKilled = spaceship.aliensKilled;
-  
-    const pointsFromRemBoost = userScores.boostRemaining * 10000 / 100;
-    const pointsFromAliensKilled = userScores.aliensKilled * 100;
 
-    userScores.totalPoints = state.points + pointsFromRemBoost + pointsFromAliensKilled;
+    const pointsFromRemBoost = userScores.boostRemaining * 5000 / 100;
+    const pointsFromAliensKilled = userScores.aliensKilled * 100;
+    const pointsFromTime = Math.floor(userScores.timeRemaining * 5000 / 60);
+
+    userScores.totalPoints = state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime;
   }
 
   onRestart() {
@@ -124,11 +122,8 @@ export class SpaceGameService {
 
     this.spaceshipEl.remove();
 
-    if (this.bossEl) {
-      this.bossEl.remove();
-    }
-
     //Remove all possible game objects that could be remain on the screen after game over and restart.
+    Array.from(document.getElementsByClassName('boss')).forEach(b => b.remove());
     Array.from(document.getElementsByClassName('bonus')).forEach(b => b.remove());
     Array.from(document.getElementsByClassName('alien')).forEach(a => a.remove());
     Array.from(document.getElementsByClassName('bomb')).forEach(b => b.remove());

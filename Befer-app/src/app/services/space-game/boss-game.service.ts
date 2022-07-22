@@ -22,12 +22,12 @@ export class BossGameService {
     private spaceshipService: SpaceshipService,
     private weaponBossService: WeaponBossService,
     private weaponService: WeaponService,
-    private bonusService: BonusService,
-    private sharedService: SharedService) { }
+    private bonusService: BonusService) { }
 
   //Initial game configuration for Boss mode
   initialStartUpBossMode(): void {
-    this.gameScreenEl = this.sharedService.gameScreenEl;
+    this.spaceshipEl = (document.querySelector('.spaceship')) as HTMLDivElement;
+    this.gameScreenEl = document.querySelector('.game-view');
     this.gameScreenEl.style.border = '3px dashed darkred';
     Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
       alienEl.remove();
@@ -78,18 +78,6 @@ export class BossGameService {
     //Modify Boss
     this.bossService.calcBossPosition(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
     this.bossService.moveBoss();
-  }
-
-  calculateTotalPoints(): void {
-    userScores.points = state.points;
-    userScores.boostRemaining = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
-    userScores.aliensKilled = spaceship.aliensKilled;
-
-    const pointsFromRemBoost = userScores.boostRemaining * 10000 / 100;
-    const pointsFromAliensKilled = userScores.aliensKilled * 100;
-    const pointsFromTime = Math.floor(userScores.timeRemaining * 5000 / 60);
-
-    userScores.totalPoints = state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime;
   }
 
   startTimerForBossMode(duration: number, timeEl: any) {
