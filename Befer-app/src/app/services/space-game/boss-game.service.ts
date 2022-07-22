@@ -29,9 +29,6 @@ export class BossGameService {
     this.spaceshipEl = (document.querySelector('.spaceship')) as HTMLDivElement;
     this.gameScreenEl = document.querySelector('.game-view');
     this.gameScreenEl.style.border = '3px dashed darkred';
-    Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
-      alienEl.remove();
-    });
 
     this.weaponBossService.initialStartUp();
     this.weaponService.initialStartUp();
@@ -40,7 +37,7 @@ export class BossGameService {
     this.bossService.bossEntering();
 
     const timeEl = document.querySelector('#remaining-time');
-    this.startTimerForBossMode(600, timeEl);
+    this.startTimerForBossMode(360, timeEl);
   }
 
   //Create game objects, modify position and check for collision in Boss Game Mode
@@ -84,6 +81,11 @@ export class BossGameService {
     const start = Date.now();
 
     function timer() {
+      if (state.gameOver) {
+        clearInterval(refreshIntervalId);
+        return;
+      }
+
       const diff = duration - (((Date.now() - start) / 1000) | 0);
 
       userScores.timeRemaining = diff;
@@ -104,6 +106,6 @@ export class BossGameService {
     };
 
     timer();
-    let refreshIntervalId = setInterval(timer, 1000);
+    const refreshIntervalId = setInterval(timer, 1000);
   }
 }

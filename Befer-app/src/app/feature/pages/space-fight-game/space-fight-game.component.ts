@@ -6,6 +6,7 @@ import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gam
 import { SharedService } from 'src/app/services/space-game/shared.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
 import { BossGameService } from 'src/app/services/space-game/boss-game.service';
+import { GameApiService } from 'src/app/services/space-game/api/game-api.service';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -33,11 +34,13 @@ export class SpaceFightGameComponent implements OnInit {
   bossHealth: number = bossAlien.healthPoints;
   spaceshipHealth: number = spaceship.healthPoints;
   userScores: any;
+  lastBestUserPoints: number;
 
   constructor(
     private gameService: SpaceGameService,
     private bossGameService: BossGameService,
-    private sharedService: SharedService) { }
+    private sharedService: SharedService,
+    private gameApiService: GameApiService) { }
 
   ngOnInit(): void { }
 
@@ -46,7 +49,10 @@ export class SpaceFightGameComponent implements OnInit {
     this.showStartButton = false;
     this.showSettings = false;
 
-    //await this.sharedService.sleep(5000);
+    //Get curr user scores from the database
+    this.getCurrUserScores();
+
+    await this.sharedService.sleep(5000);
 
     this.showAreaWarning = false;
 
@@ -75,6 +81,7 @@ export class SpaceFightGameComponent implements OnInit {
         this.points = state.points;
         this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
 
+        //TODO: Refactor this. Return happents in the method
         if (await this.checkForLevelUpAndSetBossMode()) {
           return;
         }
@@ -119,6 +126,24 @@ export class SpaceFightGameComponent implements OnInit {
     this.gameService.calculateTotalPoints();
     this.userScores = userScores;
     this.showUserScores = true;
+
+    if (!this.lastBestUserPoints) {
+      this.gameApiService.createScores$(userScores as any).subscribe({
+        next: () => {
+
+        },
+        complete: () => {
+          console.log('Created scores', userScores);
+        },
+        error: () => {
+          console.log('Error');
+        }
+      });
+    } else {
+      if (userScores.totalPoints >= this.lastBestUserPoints) {
+        
+      }
+    }
   }
 
   checkForPauseOrMenu() {
@@ -141,11 +166,14 @@ export class SpaceFightGameComponent implements OnInit {
 
       if (this.level == 7) {
         notifySuccess(`Congratulation! You have killed almost all aliens!`);
-        await this.sharedService.sleep(1000);
 
         state.isBossMode = true;
         this.showBossEntering = true;
         this.showHealthBars = state.isBossMode;
+
+        Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
+          alienEl.remove();
+        });
 
         await this.sharedService.sleep(5000);
 
@@ -212,6 +240,10 @@ export class SpaceFightGameComponent implements OnInit {
       return;
     }
 
+    if (state.openMenu) {
+      this.showMenu = true;
+    }
+
     if (state.isPaused && e.code == 'KeyR') {
       state.isPaused = false;
       this.showSettings = false;
@@ -220,7 +252,7 @@ export class SpaceFightGameComponent implements OnInit {
       document.removeEventListener('keypress', this.onResume);
 
       //Check for menu also, because event listener doesn't remove..
-      if (!state.gameOver && !state.showMenu) {
+      if (!state.gameOver && !state.openMenu) {
         if (state.isBossMode) {
           window.requestAnimationFrame(this.gameLoopBoss.bind(this));
         } else {
@@ -233,5 +265,21 @@ export class SpaceFightGameComponent implements OnInit {
   modifyGameDifficulty(): void {
     alien.speed++;
     alien.creationInterval -= 500;
+  }
+
+  //API
+  getCurrUserScores() {
+    this.gameApiService.loadMyScores$(5).subscribe({
+      next: (data) => {
+        this.lastBestUserPoints = data.results[0]?.totalPoints;
+        console.log(this.lastBestUserPoints);
+      },
+      complete: () => {
+
+      },
+      error: () => {
+
+      }
+    });
   }
 }

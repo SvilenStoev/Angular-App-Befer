@@ -102,6 +102,8 @@ export class SpaceGameService {
     const pointsFromAliensKilled = userScores.aliensKilled * 100;
     const pointsFromTime = Math.floor(userScores.timeRemaining * 5000 / 60);
 
+    console.log(pointsFromRemBoost, pointsFromAliensKilled, pointsFromTime);
+
     userScores.totalPoints = state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime;
   }
 

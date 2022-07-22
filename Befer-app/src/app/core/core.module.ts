@@ -27,6 +27,7 @@ import { SpaceshipService } from '../services/space-game/game-objects/spaceship.
 import { BossService } from '../services/space-game/game-objects/boss.service';
 import { WeaponBossService } from '../services/space-game/game-objects/weapon-boss.service';
 import { BossGameService } from '../services/space-game/boss-game.service';
+import { GameApiService } from '../services/space-game/api/game-api.service';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ export class CoreModule {
         WeaponBossService,
         BonusService,
         SharedService,
+        GameApiService,
         //Other
         LanguageService,
         TabTitleService,

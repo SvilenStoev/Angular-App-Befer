@@ -1,6 +1,6 @@
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="points">
     <p>Points: <span class="points-current">{{points}}</span></p>
-    <p *ngIf="showHealthBars">Time: <span id="remaining-time">10:00</span> min</p>
+    <p *ngIf="showHealthBars">Time: <span id="remaining-time">06:00</span> min</p>
     <p *ngIf="!showHealthBars">Aliens Killed: <span class="alients-killed">{{aliensKilled}}</span></p>
 </div>
 <div class="game-view">
@@ -102,8 +102,8 @@
             <span class="pts-info">(x5 000 pts.)</span>
         </div>
         <div class="user-scores-points">
-            <span>Total Points</span>
-            <span>{{userScores.totalPoints}}</span>
+            <span><b>Total Points</b></span>
+            <span><b>{{userScores.totalPoints}}</b></span>
             <span></span>
         </div>
         <button *ngIf="showUserScores" class="settings-back" (click)="onResume({code: 'KeyR'}, true)">Menu</button>
