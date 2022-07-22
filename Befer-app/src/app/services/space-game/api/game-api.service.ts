@@ -51,4 +51,11 @@ export class GameApiService {
 
     return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}&include=player`);
   }
+
+  updateScores$(userScores: UserScoresDto, id: string): Observable<any> {
+    return this.api
+      .put<any>(`${this.postColl}/${id}`, userScores)
+      .pipe(
+        map(response => response.body));
+  }
 }

@@ -1,3 +1,4 @@
+import { AuthGuard } from "./core/guards/auth.guard";
 import { RouterModule, Routes } from "@angular/router";
 
 import { HomePageComponent } from "./feature/pages/home-page/home-page.component";
@@ -20,6 +21,7 @@ const routes: Routes = [
     },
     {
         path: 'spacefight',
+        canActivate: [AuthGuard],
         component: SpaceFightGameComponent
     },
     {

@@ -34,7 +34,12 @@ export class SpaceFightGameComponent implements OnInit {
   bossHealth: number = bossAlien.healthPoints;
   spaceshipHealth: number = spaceship.healthPoints;
   userScores: any;
+
+  //API
   lastBestUserPoints: number;
+  lastScoresId: string;
+  currUserUsername: string;
+  currUserFullName: string;
 
   constructor(
     private gameService: SpaceGameService,
@@ -44,6 +49,7 @@ export class SpaceFightGameComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  //This is called only once when game is started. It is not called on restart!
   async warningAndStartGame() {
     this.showAreaWarning = true;
     this.showStartButton = false;
@@ -133,15 +139,26 @@ export class SpaceFightGameComponent implements OnInit {
 
         },
         complete: () => {
-          console.log('Created scores', userScores);
+          console.log('Created scores', userScores.totalPoints);
         },
         error: () => {
           console.log('Error');
         }
       });
     } else {
+      //If have current scores and they are lower than the new ones -> update database.
       if (userScores.totalPoints >= this.lastBestUserPoints) {
-        
+        this.gameApiService.updateScores$(userScores as any, this.lastScoresId).subscribe({
+          next: () => {
+
+          },
+          complete: () => {
+            console.log(`Updated scores! Last: ${this.lastBestUserPoints}, now: ${userScores.totalPoints}`);
+          },
+          error: () => {
+            console.log('Error');
+          }
+        });
       }
     }
   }
@@ -196,6 +213,9 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   restartGame() {
+    //Gets the best scores again!
+    this.getCurrUserScores();
+
     if (state.gameOver) {
       Array.from(document.querySelectorAll('.collision-img-game-over')).forEach(c => {
         c.remove();
@@ -270,9 +290,13 @@ export class SpaceFightGameComponent implements OnInit {
   //API
   getCurrUserScores() {
     this.gameApiService.loadMyScores$(5).subscribe({
-      next: (data) => {
-        this.lastBestUserPoints = data.results[0]?.totalPoints;
-        console.log(this.lastBestUserPoints);
+      next: (res) => {
+        const data = res.results;
+
+        this.lastBestUserPoints = data[0]?.totalPoints;
+        this.currUserUsername = data[0]?.player.username;
+        this.currUserFullName = data[0]?.player.fullName;
+        this.lastScoresId = data[0]?.objectId;
       },
       complete: () => {
 
