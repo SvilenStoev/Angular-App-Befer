@@ -351,6 +351,10 @@ div.hide::after {
     margin: 20px 10px 0px 10px;
 }
 
+.users-scores {
+    margin: 20px auto;
+}
+
 /* Responsive */
 @media screen and (max-width: 1650px) {
 

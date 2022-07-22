@@ -25,6 +25,7 @@ export class SpaceFightGameComponent implements OnInit {
   showHealthBars: boolean = false;
   showBossEntering: boolean = false;
   showUserScores: boolean = false;
+  showUsersScores: boolean = false;
 
   //Stats
   points: number = state.points;
@@ -40,6 +41,7 @@ export class SpaceFightGameComponent implements OnInit {
   lastScoresId: string;
   currUserUsername: string;
   currUserFullName: string;
+  usersScores: any;
 
   constructor(
     private gameService: SpaceGameService,
@@ -239,6 +241,26 @@ export class SpaceFightGameComponent implements OnInit {
   pauseGame(): void {
     state.isPaused = true;
     this.showSettings = true;
+    document.addEventListener('keypress', this.onResume.bind(this));
+  }
+
+  onMenuScores(): void {
+    this.gameApiService.loadAllScores$(5).subscribe({
+      next: (data) => {
+        this.usersScores = data.results;
+        console.log(this.usersScores);
+      },
+      complete: () => {
+
+      },
+      error: () => {
+
+      }
+    });
+
+    this.showUsersScores = true;
+    this.showMenu = false;
+
     document.addEventListener('keypress', this.onResume.bind(this));
   }
 
