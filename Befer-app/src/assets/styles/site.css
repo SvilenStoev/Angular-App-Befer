@@ -61,8 +61,8 @@ nav a:hover, footer a:hover {
 }
 
 footer {
-    position: flex;
-    bottom: 0;
+    position: absolute;
+    bottom: 1;
     width: 100%;
     color: white;
     padding: 0.5em 1em;

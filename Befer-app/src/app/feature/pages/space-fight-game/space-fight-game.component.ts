@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
-import { state, userScores } from 'src/app/shared/space-fight-game/gameState';
-import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 import { SharedService } from 'src/app/services/space-game/shared.service';
-import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
+import { state, userScores } from 'src/app/shared/space-fight-game/gameState';
 import { BossGameService } from 'src/app/services/space-game/boss-game.service';
 import { GameApiService } from 'src/app/services/space-game/api/game-api.service';
+import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
+import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -36,7 +36,7 @@ export class SpaceFightGameComponent implements OnInit {
   spaceshipHealth: number = spaceship.healthPoints;
   userScores: any;
 
-  //API
+  //API related
   lastBestUserPoints: number;
   lastScoresId: string;
   currUserUsername: string;
@@ -148,7 +148,7 @@ export class SpaceFightGameComponent implements OnInit {
         }
       });
     } else {
-      //If have current scores and they are lower than the new ones -> update database.
+      //If there are current scores and they are lower than the new ones -> update database.
       if (userScores.totalPoints >= this.lastBestUserPoints) {
         this.gameApiService.updateScores$(userScores as any, this.lastScoresId).subscribe({
           next: () => {
@@ -248,7 +248,6 @@ export class SpaceFightGameComponent implements OnInit {
     this.gameApiService.loadAllScores$(5).subscribe({
       next: (data) => {
         this.usersScores = data.results;
-        console.log(this.usersScores);
       },
       complete: () => {
 
@@ -275,13 +274,14 @@ export class SpaceFightGameComponent implements OnInit {
     this.checkForPauseOrMenu();
   }
 
-  //TODO: refactor
-  onResume(e: any, showMenu: boolean = false) {
-    if (showMenu) {
-      this.showMenu = showMenu;
-      return;
-    }
+  backToMenu() {
+    this.showMenu = true;
+    this.showUserScores = false;
+    this.showUsersScores = false;
+  }
 
+  //TODO: refactor
+  onResume(e: any) {
     if (state.openMenu) {
       this.showMenu = true;
     }
@@ -324,7 +324,7 @@ export class SpaceFightGameComponent implements OnInit {
 
       },
       error: () => {
-
+        console.log('Some error!');
       }
     });
   }

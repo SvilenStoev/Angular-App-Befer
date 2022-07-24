@@ -59,50 +59,67 @@
         <button *ngIf="showMenu" class="settings-back" (click)="onResume({code: 'KeyR'})">Go Back</button>
     </article>
     <ng-container *ngIf="!!usersScores">
-        <ng-container *ngFor="let scores of usersScores">
-            <article *ngIf="showUsersScores" class="user-scores users-scores">
-                <div class="user-scores-username">
-                    <span>Username</span>
-                    <span>{{scores.player.username}}</span>
-                    <span></span>
-                </div>
-                <div class="user-scores-points">
-                    <span>Points</span>
-                    <span>{{scores.points}}</span>
-                    <span></span>
-                </div>
-                <div class="user-scores-aliens">
-                    <span>Aliens killed</span>
-                    <span>{{scores.aliensKilled}}</span>
-                    <span class="pts-info">(x100 pts.)</span>
-                </div>
-                <div class="user-scores-boost">
-                    <span>Remaining Boost</span>
-                    <span>{{scores.boostRemaining}}%</span>
-                    <span class="pts-info">(x5 000 pts.)</span>
-                </div>
-                <div class="user-scores-time">
-                    <span>Time</span>
-                    <span>{{scores.timeRemaining}}</span>
-                    <span class="pts-info">(x5 000 pts.)</span>
-                </div>
-                <div class="user-scores-points">
-                    <span><b>Total Points</b></span>
-                    <span><b>{{scores.totalPoints}}</b></span>
-                    <span></span>
-                </div>
-            </article>
-        </ng-container>
+        <article *ngIf="showUsersScores" class="users-scores">
+                <article class="users-scores-row">
+                        <div class="user-scores-columns">
+                            <span>Username</span>
+                            <span></span>
+                        </div>
+                        <div class="user-scores-columns">
+                            <span>Points</span>
+                            <span></span>
+                        </div>
+                        <div class="user-scores-columns">
+                            <span>Aliens killed</span>
+                            <span class="pts-info">(x100 pts.)</span>
+                        </div>
+                        <div class="user-scores-columns">
+                            <span>Remaining Boost</span>
+                            <span class="pts-info">(x5 000 pts.)</span>
+                        </div>
+                        <div class="user-scores-columns">
+                            <span>Boss Time</span>
+                            <span class="pts-info">(x5 000 pts.)</span>
+                        </div>
+                        <div class="user-scores-columns">
+                            <span><b>Total Points</b></span>
+                            <span></span>
+                        </div>
+                </article>
+            <ng-container *ngFor="let scores of usersScores">
+                    <article class="users-scores-row">
+                        <div class="user-scores-username">
+                            <span>{{scores.player.username}}</span>
+                        </div>
+                        <div class="user-scores-points">
+                            <span>{{scores.points}}</span>
+                        </div>
+                        <div class="user-scores-aliens">
+                            <span>{{scores.aliensKilled}}</span>
+                        </div>
+                        <div class="user-scores-boost">
+                            <span>{{scores.boostRemaining}}%</span>
+                        </div>
+                        <div class="user-scores-time">
+                            <span>{{scores.timeRemaining}}</span>
+                        </div>
+                        <div class="user-scores-points">
+                            <span><b>{{scores.totalPoints}}</b></span>
+                        </div>
+                    </article>
+                </ng-container>
+             <button *ngIf="showUsersScores" class="settings-back" (click)="backToMenu()">Menu</button>
+        </article>
     </ng-container>
     <article *ngIf="showMenu" class="menu">
         <div class="menu-button" (click)="pauseGame()">
             <h2 class="menu-button-text">Controls</h2>
         </div>
-        <div class="menu-button">
+        <!-- <div class="menu-button">
             <h2 class="menu-button-text">Shop</h2>
-        </div>
-        <div class="menu-button">
-            <h2 class="menu-button-text" (click)="onMenuScores()">Scores</h2>
+        </div> -->
+        <div class="menu-button" (click)="onMenuScores()">
+            <h2 class="menu-button-text">Scores</h2>
         </div>
         <div class="menu-button-resume" (click)="onMenuResume()">
             <h2 class="menu-button-text">Resume Game</h2>
@@ -133,7 +150,7 @@
             <span class="pts-info">(x5 000 pts.)</span>
         </div>
         <div class="user-scores-time">
-            <span>Time</span>
+            <span>Boss Time</span>
             <span>{{userScores.timeRemaining}}</span>
             <span class="pts-info">(x5 000 pts.)</span>
         </div>
@@ -142,7 +159,7 @@
             <span><b>{{userScores.totalPoints}}</b></span>
             <span></span>
         </div>
-        <button *ngIf="showUserScores" class="settings-back" (click)="onResume({code: 'KeyR'}, true)">Menu</button>
+        <button *ngIf="showUserScores" class="settings-back" (click)="backToMenu()">Menu</button>
     </article>
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">

@@ -53,7 +53,7 @@ export class GameApiService {
   }
 
   loadAllScores$(limit: number = 5): Observable<any> {
-    return this.api.get(`${this.postColl}?include=player`);
+    return this.api.get(`${this.postColl}?include=player&limit=${limit}`);
   }
 
   updateScores$(userScores: UserScoresDto, id: string): Observable<any> {
