@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { UserService } from 'src/app/services/auth/user.service';
+import { gameState } from 'src/app/shared/space-fight-game/gameState';
+import { objects } from 'src/app/shared/space-fight-game/gameObjects';
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { SharedService } from 'src/app/services/space-game/shared.service';
-import { state, userScores } from 'src/app/shared/space-fight-game/gameState';
 import { BossGameService } from 'src/app/services/space-game/boss-game.service';
 import { GameApiService } from 'src/app/services/space-game/api/game-api.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
-import { alien, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -26,14 +28,15 @@ export class SpaceFightGameComponent implements OnInit {
   showBossEntering: boolean = false;
   showUserScores: boolean = false;
   showUsersScores: boolean = false;
+  showWonView: boolean = false;
 
   //Stats
-  points: number = state.points;
-  level: number = state.level;
+  points: number = gameState.state.points;
+  level: number = gameState.state.level;
   aliensKilled: number = 0;
   spaceshipBoostSpeed: number = 0;
-  bossHealth: number = bossAlien.healthPoints;
-  spaceshipHealth: number = spaceship.healthPoints;
+  bossHealth: number = objects.bossAlien.healthPoints;
+  spaceshipHealth: number = objects.spaceship.healthPoints;
   userScores: any;
 
   //API related
@@ -47,9 +50,13 @@ export class SpaceFightGameComponent implements OnInit {
     private gameService: SpaceGameService,
     private bossGameService: BossGameService,
     private sharedService: SharedService,
-    private gameApiService: GameApiService) { }
+    private gameApiService: GameApiService,
+    private userService: UserService,
+    private titleService: TabTitleService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.titleService.setTitle('Space fight game');
+  }
 
   //This is called only once when game is started. It is not called on restart!
   async warningAndStartGame() {
@@ -58,7 +65,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.showSettings = false;
 
     //Get curr user scores from the database
-    this.getCurrUserScores();
+    this.getCurrUserAndScores();
 
     await this.sharedService.sleep(5000);
 
@@ -81,16 +88,16 @@ export class SpaceFightGameComponent implements OnInit {
     //Create game objects, modify position and check for collision 
     this.gameService.modifyGameObjects(timestamp);
 
-    if (!state.gameOver) {
-      state.points++;
-      this.aliensKilled = spaceship.aliensKilled;
+    if (!gameState.state.gameOver) {
+      gameState.state.points++;
+      this.aliensKilled = objects.spaceship.aliensKilled;
 
-      if (state.points % 10 == 0) {
-        this.points = state.points;
-        this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
+      if (gameState.state.points % 10 == 0) {
+        this.points = gameState.state.points;
+        this.spaceshipBoostSpeed = objects.spaceship.boostSpeed < 0 ? 0 : Number(objects.spaceship.boostSpeed.toFixed());
 
         //TODO: Refactor this. Return happents in the method
-        if (await this.checkForLevelUpAndSetBossMode()) {
+        if (await this.checkForLevelUpAndSetBossMode(timestamp)) {
           return;
         }
       }
@@ -99,22 +106,22 @@ export class SpaceFightGameComponent implements OnInit {
       this.checkForPauseOrMenu();
     } else {
       this.onGameOver();
-      notifyErr(`Game Over! ${userScores.totalPoints} points reached.`);
+      notifyErr(`Game Over! ${gameState.userScores.totalPoints} points reached.`);
     }
   }
 
   gameLoopBoss(timestamp: number) {
     this.bossGameService.modifyGameObjectsBossMode(timestamp);
 
-    if (!state.gameOver) {
-      state.points++;
+    if (!gameState.state.gameOver) {
+      gameState.state.points++;
 
-      if (state.points % 10 == 0) {
-        this.points = state.points;
-        this.bossHealth = bossAlien.healthPoints;
-        this.spaceshipHealth = spaceship.healthPoints;
+      if (gameState.state.points % 10 == 0) {
+        this.points = gameState.state.points;
+        this.bossHealth = objects.bossAlien.healthPoints;
+        this.spaceshipHealth = objects.spaceship.healthPoints;
 
-        this.spaceshipBoostSpeed = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
+        this.spaceshipBoostSpeed = objects.spaceship.boostSpeed < 0 ? 0 : Number(objects.spaceship.boostSpeed.toFixed());
       }
 
       //Pause & menu
@@ -122,73 +129,56 @@ export class SpaceFightGameComponent implements OnInit {
     } else {
       this.onGameOver();
 
-      if (state.gameWon) {
+      if (gameState.state.gameWon) {
         notifySuccess(`Great... You have killed the Dev...`);
       } else {
-        notifyErr(`Game Over! ${userScores.totalPoints} points reached.`);
+        notifyErr(`Game Over! ${gameState.userScores.totalPoints} points reached.`);
       }
     }
   }
 
-  onGameOver() {
+  async onGameOver() {
     this.gameService.calculateTotalPoints();
-    this.userScores = userScores;
-    this.showUserScores = true;
+    this.userScores = gameState.userScores;
 
-    if (!this.lastBestUserPoints) {
-      this.gameApiService.createScores$(userScores as any).subscribe({
-        next: () => {
+    this.updateDatabaseUserScores();
 
-        },
-        complete: () => {
-          console.log('Created scores', userScores.totalPoints);
-        },
-        error: () => {
-          console.log('Error');
-        }
-      });
+    if (gameState.state.gameWon) {
+      this.showWonView = true;
     } else {
-      //If there are current scores and they are lower than the new ones -> update database.
-      if (userScores.totalPoints >= this.lastBestUserPoints) {
-        this.gameApiService.updateScores$(userScores as any, this.lastScoresId).subscribe({
-          next: () => {
-
-          },
-          complete: () => {
-            console.log(`Updated scores! Last: ${this.lastBestUserPoints}, now: ${userScores.totalPoints}`);
-          },
-          error: () => {
-            console.log('Error');
-          }
-        });
-      }
+      this.showUserScores = true;
     }
+  }
+
+  goToScores() {
+    this.showWonView = false;
+    this.showUserScores = true;
   }
 
   checkForPauseOrMenu() {
-    if (!state.isPaused && !state.openMenu) {
-      if (state.isBossMode) {
+    if (!gameState.state.isPaused && !gameState.state.openMenu) {
+      if (gameState.state.isBossMode) {
         window.requestAnimationFrame(this.gameLoopBoss.bind(this));
       } else {
         window.requestAnimationFrame(this.gameLoop.bind(this));
       }
-    } else if (state.isPaused) {
+    } else if (gameState.state.isPaused) {
       this.pauseGame();
     } else {
       this.showMenu = true;
     }
   }
 
-  async checkForLevelUpAndSetBossMode(): Promise<boolean> {
-    if (state.points >= state.levelsRange[(state.level + 1) as keyof typeof state.levelsRange]) {
-      this.level = ++state.level;
+  async checkForLevelUpAndSetBossMode(timestamp: number): Promise<boolean> {
+    if (gameState.state.points >= gameState.state.levelsRange[(gameState.state.level + 1) as keyof typeof gameState.state.levelsRange]) {
+      this.level = ++gameState.state.level;
 
       if (this.level == 7) {
         notifySuccess(`Congratulation! You have killed almost all aliens!`);
 
-        state.isBossMode = true;
+        gameState.state.isBossMode = true;
         this.showBossEntering = true;
-        this.showHealthBars = state.isBossMode;
+        this.showHealthBars = gameState.state.isBossMode;
 
         Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
           alienEl.remove();
@@ -199,12 +189,12 @@ export class SpaceFightGameComponent implements OnInit {
         this.showBossEntering = false;
 
         //Initializing boss game mode
-        this.bossGameService.initialStartUpBossMode();
+        this.bossGameService.initialStartUpBossMode(timestamp);
 
         window.requestAnimationFrame(this.gameLoopBoss.bind(this));
         return true;
       } else {
-        notifySuccess(`Congratulation! Level ${state.level} reached!`);
+        notifySuccess(`Congratulation! Level ${gameState.state.level} reached!`);
         this.modifyGameDifficulty();
       }
 
@@ -216,9 +206,9 @@ export class SpaceFightGameComponent implements OnInit {
 
   restartGame() {
     //Gets the best scores again!
-    this.getCurrUserScores();
+    this.getCurrUserAndScores();
 
-    if (state.gameOver) {
+    if (gameState.state.gameOver) {
       Array.from(document.querySelectorAll('.collision-img-game-over')).forEach(c => {
         c.remove();
       });
@@ -231,29 +221,27 @@ export class SpaceFightGameComponent implements OnInit {
     this.level = 1;
     this.spaceshipBoostSpeed = 0;
     this.aliensKilled = 0;
-    this.bossHealth = bossAlien.initHealthPoints;
-    this.spaceshipHealth = spaceship.initHealthPoints;
+    this.bossHealth = objects.bossAlien.initHealthPoints;
+    this.spaceshipHealth = objects.spaceship.initHealthPoints;
 
     this.gameService.onRestart();
     this.startGame();
   }
 
   pauseGame(): void {
-    state.isPaused = true;
+    gameState.state.isPaused = true;
     this.showSettings = true;
     document.addEventListener('keypress', this.onResume.bind(this));
   }
 
   onMenuScores(): void {
-    this.gameApiService.loadAllScores$(5).subscribe({
+    this.gameApiService.loadAllScores$(10).subscribe({
       next: (data) => {
-        this.usersScores = data.results;
+        this.usersScores = (data.results as Array<any>).sort((a, b) => b.totalPoints - a.totalPoints);
       },
       complete: () => {
-
       },
       error: () => {
-
       }
     });
 
@@ -264,11 +252,11 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   onMenuResume() {
-    if (state.gameOver) {
+    if (gameState.state.gameOver) {
       return;
     }
 
-    state.openMenu = false;
+    gameState.state.openMenu = false;
     this.showMenu = false;
 
     this.checkForPauseOrMenu();
@@ -282,20 +270,20 @@ export class SpaceFightGameComponent implements OnInit {
 
   //TODO: refactor
   onResume(e: any) {
-    if (state.openMenu) {
+    if (gameState.state.openMenu) {
       this.showMenu = true;
     }
 
-    if (state.isPaused && e.code == 'KeyR') {
-      state.isPaused = false;
+    if (gameState.state.isPaused && e.code == 'KeyR') {
+      gameState.state.isPaused = false;
       this.showSettings = false;
 
       //TODO: This doesn't remove the event listener!?!??
       document.removeEventListener('keypress', this.onResume);
 
       //Check for menu also, because event listener doesn't remove..
-      if (!state.gameOver && !state.openMenu) {
-        if (state.isBossMode) {
+      if (!gameState.state.gameOver && !gameState.state.openMenu) {
+        if (gameState.state.isBossMode) {
           window.requestAnimationFrame(this.gameLoopBoss.bind(this));
         } else {
           window.requestAnimationFrame(this.gameLoop.bind(this));
@@ -305,27 +293,60 @@ export class SpaceFightGameComponent implements OnInit {
   }
 
   modifyGameDifficulty(): void {
-    alien.speed++;
-    alien.creationInterval -= 500;
+    objects.alien.speed++;
+    objects.alien.creationInterval -= 500;
   }
 
   //API
-  getCurrUserScores() {
+  getCurrUserAndScores() {
+    this.userService.getProfile$().subscribe({
+      next: (user) => {
+        this.currUserUsername = user?.username;
+        this.currUserFullName = user?.fullName;
+      }
+    });
+
     this.gameApiService.loadMyScores$(5).subscribe({
       next: (res) => {
         const data = res.results;
 
         this.lastBestUserPoints = data[0]?.totalPoints;
-        this.currUserUsername = data[0]?.player.username;
-        this.currUserFullName = data[0]?.player.fullName;
         this.lastScoresId = data[0]?.objectId;
-      },
-      complete: () => {
-
       },
       error: () => {
         console.log('Some error!');
       }
     });
+  }
+
+  updateDatabaseUserScores() {
+    if (!this.lastBestUserPoints) {
+      this.gameApiService.createScores$(gameState.userScores as any).subscribe({
+        next: () => {
+
+        },
+        complete: () => {
+          console.log('Created scores', gameState.userScores.totalPoints);
+        },
+        error: () => {
+          console.log('Error');
+        }
+      });
+    } else {
+      //If there are current scores and they are lower than the new ones -> update database.
+      if (gameState.userScores.totalPoints >= this.lastBestUserPoints) {
+        this.gameApiService.updateScores$(gameState.userScores as any, this.lastScoresId).subscribe({
+          next: () => {
+
+          },
+          complete: () => {
+            console.log(`Updated scores! Last: ${this.lastBestUserPoints}, now: ${gameState.userScores.totalPoints}`);
+          },
+          error: () => {
+            console.log('Error');
+          }
+        });
+      }
+    }
   }
 }

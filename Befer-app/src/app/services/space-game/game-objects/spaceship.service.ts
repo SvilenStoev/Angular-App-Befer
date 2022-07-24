@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { SharedService } from '../shared.service';
-import { state } from 'src/app/shared/space-fight-game/gameState';
-import { spaceship, spaceshipUrl } from 'src/app/shared/space-fight-game/gameObjects';
+import { gameState } from 'src/app/shared/space-fight-game/gameState';
+import { objects, spaceshipUrl } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +15,14 @@ export class SpaceshipService {
     private sharedService: SharedService) { }
 
   createSpaceship(): HTMLDivElement {
-    this.spaceshipEl = this.sharedService.createEl(['spaceship', 'hide'], spaceship.x, spaceship.y, 'Spaceship', spaceshipUrl, spaceship.width, spaceship.height, '-2');
+    this.spaceshipEl = this.sharedService.createEl(['spaceship', 'hide'], objects.spaceship.x, objects.spaceship.y, 'Spaceship', spaceshipUrl, objects.spaceship.width, objects.spaceship.height, '-2');
     return this.spaceshipEl;
   }
 
   //Modify spaceship possition
   async spaceshipEntering() {
-    while (spaceship.x < 150) {
-      spaceship.x += spaceship.speed;
+    while (objects.spaceship.x < 150) {
+      objects.spaceship.x += objects.spaceship.speed;
       this.moveSpaceship();
 
       await this.sharedService.sleep(15);
@@ -30,42 +30,42 @@ export class SpaceshipService {
   }
 
   calcSpaceshipPos(gameScreenWidth: number, gameScreenHeight: number): void {
-    let speed = spaceship.speed;
-    const isPointsP = state.points % 10 == 0;
-    const isShiftCLicked = state.keys.ShiftLeft;
+    let speed = objects.spaceship.speed;
+    const isPointsP = gameState.state.points % 10 == 0;
+    const isShiftCLicked = gameState.state.keys.ShiftLeft;
 
     //Calculate spaceship boost speed
-    if (!isShiftCLicked && isPointsP && spaceship.boostSpeed < 100) {
-      spaceship.boostSpeed += 0.33;
+    if (!isShiftCLicked && isPointsP && objects.spaceship.boostSpeed < 100) {
+      objects.spaceship.boostSpeed += 0.33;
     }
 
-    if (isShiftCLicked && spaceship.boostSpeed > 0.49) {
+    if (isShiftCLicked && objects.spaceship.boostSpeed > 0.49) {
       speed *= 1.5;
 
       if (isPointsP) {
-        spaceship.boostSpeed -= 1.9;
+        objects.spaceship.boostSpeed -= 1.9;
       }
     }
     
-    if ((state.keys.KeyW || state.keys.ArrowUp) && spaceship.y > 0) {
-      spaceship.y -= speed;
+    if ((gameState.state.keys.KeyW || gameState.state.keys.ArrowUp) && objects.spaceship.y > 0) {
+      objects.spaceship.y -= speed;
     }
 
-    if ((state.keys.KeyS || state.keys.ArrowDown) && spaceship.y + spaceship.height + 10 < gameScreenHeight) {
-      spaceship.y += speed;
+    if ((gameState.state.keys.KeyS || gameState.state.keys.ArrowDown) && objects.spaceship.y + objects.spaceship.height + 10 < gameScreenHeight) {
+      objects.spaceship.y += speed;
     }
 
-    if ((state.keys.KeyA || state.keys.ArrowLeft) && spaceship.x > 0) {
-      spaceship.x -= speed;
+    if ((gameState.state.keys.KeyA || gameState.state.keys.ArrowLeft) && objects.spaceship.x > 0) {
+      objects.spaceship.x -= speed;
     }
 
-    if ((state.keys.KeyD || state.keys.ArrowRight) && spaceship.x + spaceship.width + 50 < gameScreenWidth) {
-      spaceship.x += speed;
+    if ((gameState.state.keys.KeyD || gameState.state.keys.ArrowRight) && objects.spaceship.x + objects.spaceship.width + 50 < gameScreenWidth) {
+      objects.spaceship.x += speed;
     }
   }
 
   moveSpaceship(): void {
-    this.spaceshipEl.style.left = spaceship.x + 'px';
-    this.spaceshipEl.style.top = spaceship.y + 'px';
+    this.spaceshipEl.style.left = objects.spaceship.x + 'px';
+    this.spaceshipEl.style.top = objects.spaceship.y + 'px';
   }
 }

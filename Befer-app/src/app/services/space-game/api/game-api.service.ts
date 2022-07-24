@@ -52,7 +52,7 @@ export class GameApiService {
     return this.api.get(`${this.postColl}/?where=${pointerQuery}${limit ? `&limit=${limit}` : ''}&include=player`);
   }
 
-  loadAllScores$(limit: number = 5): Observable<any> {
+  loadAllScores$(limit: number = 10): Observable<any> {
     return this.api.get(`${this.postColl}?include=player&limit=${limit}`);
   }
 

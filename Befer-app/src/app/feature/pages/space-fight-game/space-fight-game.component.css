@@ -30,13 +30,18 @@
 }
 
 .area-warning-text {
+    position: relative;
     color: white;
     font-size: 22px;
-    padding: 30px;
+    margin-left: 20px;
+    padding: 35px;
     max-width: 600px;
     letter-spacing: 2px;
     line-height: 33px;
     text-shadow: 3px 3px 3px red;
+    background-color: slategray;
+    border-radius: 50%;
+    box-shadow: 0px 0px 8px 16px slategrey;
 }
 
 .start-screen {
@@ -68,7 +73,7 @@
 .menu {
     display: flex;
     background-color: #232422;
-    opacity: 90%;
+    opacity: 95%;
     width: 600px;
     margin: 94px auto;
     padding: 28px 0px;
@@ -113,7 +118,7 @@
     justify-content: space-around;
     align-items: center;
     background-color: #232422;
-    opacity: 90%;
+    opacity: 95%;
     width: 900px;
     margin: 70px auto;
     padding: 28px 0px;
@@ -322,10 +327,10 @@ div.hide::after {
     justify-content: center;
     color: white;
     height: 120px;
-    width: 950px;
+    width: 1080px;
     margin: 260px auto;
     background-color: #232422;
-    opacity: 90%;
+    opacity: 95%;
     border-radius: 30px;
     box-shadow: 0px 0px 20px 20px darkblue;
     z-index: 2;
@@ -360,11 +365,11 @@ div.hide::after {
     flex-direction: column;
     align-items: center;
     color: white;
-    width: 1100px;
+    width: 1200px;
     margin: 80px auto;
     padding-top: 10px;
     background-color: #232422;
-    opacity: 90%;
+    opacity: 95%;
     border-radius: 30px;
     box-shadow: 0px 0px 20px 20px darkblue;
     z-index: 2;
@@ -389,66 +394,54 @@ div.hide::after {
     margin: 18px 0px 0px 10px;
 }
 
-/* Responsive */
-@media screen and (max-width: 1650px) {
-
-    .game-footer-text,
-    .game-footer-imgs div {
-        margin-left: 10px;
-    }
-
-    .game-footer-imgs div.game-footer-img-boost-speed {
-        margin-left: 15px;
-        padding-left: 10px;
-    }
+.area-won-view {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 1200px;
+    margin: 64px auto;
 }
 
-@media screen and (max-width: 900px) {
-    .settings {
-        width: 100%;
-    }
+.area-won-img img {
+    border-radius: 50%;
+    margin: 20px;
+    box-shadow: 1px 1px 16px 11px blue;
 }
 
-@media screen and (max-height: 820px) {
-    div.game-footer {
-        margin: 0px auto;
+.button-go-scores {
+    position: absolute;
+    top: 240px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 60px;
+    box-shadow: 0px 0px 8px 16px white;
+}
+
+/* Pulse heart */
+#pulse-heart-boss, #pulse-heart-spaceship {
+    color: red;
+    animation-name: stretch;
+    animation-duration: 1.0s;
+    animation-timing-function: ease-out;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+}
+
+@keyframes stretch {
+    0% {
+        transform: scale(.5);
+        color: rgb(255, 118, 118);
     }
 
-    .game-view {
-        font-family: 'Consolas';
-        position: relative;
-        width: 100vw;
-        height: 76vh;
-        overflow: hidden;
+    50% {
+        color: red;
     }
 
-    div.points {
-        margin: 0px;
-    }
-
-    .settings-bonuses-img {
-        width: 70%;
-        height: 70%;
-    }
-
-    article.settings {
-        margin: 10px auto;
-        height: 100%;
-    }
-
-    .settings-bonuses-el {
-        font-size: 16px;
-    }
-
-    .settings-controls-text {
-        font-size: 16px;
-    }
-
-    .settings-title {
-        font-size: 22px;
-    }
-
-    .start-screen p {
-        font-size: 20px;
+    100% {
+        transform: scale(1.5);
+        color: darkred;
     }
 }

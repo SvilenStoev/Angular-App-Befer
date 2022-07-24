@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { state, availableKeys, initState, userScores } from 'src/app/shared/space-fight-game/gameState';
 import { SharedService } from './shared.service';
 import { AlienService } from './game-objects/alien.service';
-import { SpaceshipService } from './game-objects/spaceship.service';
-import { alien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
-import { WeaponService } from './game-objects/weapon.service';
 import { BonusService } from './game-objects/bonus.service';
+import { WeaponService } from './game-objects/weapon.service';
+import { SpaceshipService } from './game-objects/spaceship.service';
+import { objects } from 'src/app/shared/space-fight-game/gameObjects';
+import { gameState } from 'src/app/shared/space-fight-game/gameState';
+import { initState } from 'src/app/shared/space-fight-game/initialGameState';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class SpaceGameService {
     private bonusService: BonusService,
     private sharedService: SharedService) { }
 
+
   //Initial game configuration
   initialStartUp(): void {
     document.addEventListener('keydown', this.onKeyDown);
@@ -38,31 +40,31 @@ export class SpaceGameService {
 
   //Track user keyboard input
   onKeyDown(e: any) {
-    if (availableKeys.includes(e.code)) {
-      state.keys[e.code as keyof typeof state.keys] = true;
+    if (gameState.availableKeys.includes(e.code)) {
+      gameState.state.keys[e.code as keyof typeof gameState.state.keys] = true;
 
       if (e.code == 'KeyP') {
-        state.isPaused = true;
+        gameState.state.isPaused = true;
       }
 
       if (e.code == 'KeyM') {
-        state.openMenu = true;
+        gameState.state.openMenu = true;
       }
     }
   }
 
   onKeyUp(e: any) {
-    if (availableKeys.includes(e.code)) {
-      state.keys[e.code as keyof typeof state.keys] = false;
+    if (gameState.availableKeys.includes(e.code)) {
+      gameState.state.keys[e.code as keyof typeof gameState.state.keys] = false;
     }
   }
 
   //Create game objects, modify position and check for collision 
   modifyGameObjects(timestamp: number): void {
     //Create an alien
-    if (alien.nextCreation < timestamp) {
+    if (objects.alien.nextCreation < timestamp) {
       this.alienService.craeteAlien(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
-      alien.nextCreation = timestamp + (alien.creationInterval * Math.random()) + 500;
+      objects.alien.nextCreation = timestamp + (objects.alien.creationInterval * Math.random()) + 500;
     }
 
     //Modify aliens position and check for collision with spaceship
@@ -73,7 +75,7 @@ export class SpaceGameService {
     this.spaceshipService.moveSpaceship();
 
     //Fire bombs
-    if (state.keys.Space) {
+    if (gameState.state.keys.Space) {
       this.weaponService.fireBombs(timestamp);
     }
 
@@ -84,44 +86,66 @@ export class SpaceGameService {
     this.bonusService.createBonuses(timestamp, this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
 
     //Move bonuses only if there is bonuses on the screen (because they will be rare) and check for collision with spaceship
-    if (state.hasBonuses) {
+    if (gameState.state.hasBonuses) {
       if (document.getElementsByClassName('bonus').length > 0) {
         this.bonusService.moveAllBonuses(this.spaceshipEl);
       } else {
-        state.hasBonuses = false;
+        gameState.state.hasBonuses = false;
       }
     }
   }
 
   calculateTotalPoints(): void {
-    userScores.points = state.points;
-    userScores.boostRemaining = spaceship.boostSpeed < 0 ? 0 : Number(spaceship.boostSpeed.toFixed());
-    userScores.aliensKilled = spaceship.aliensKilled;
+    gameState.userScores.points = gameState.state.points;
+    gameState.userScores.boostRemaining = objects.spaceship.boostSpeed < 0 ? 0 : Number(objects.spaceship.boostSpeed.toFixed());
+    gameState.userScores.aliensKilled = objects.spaceship.aliensKilled;
 
-    const pointsFromRemBoost = userScores.boostRemaining * 5000 / 100;
-    const pointsFromAliensKilled = userScores.aliensKilled * 100;
-    const pointsFromTime = Math.floor(userScores.timeRemaining * 5000 / 60);
+    if (gameState.state.gameWon) {
+      gameState.userScores.healthRemaining = objects.spaceship.healthPoints;
+    }
 
-    console.log(pointsFromRemBoost, pointsFromAliensKilled, pointsFromTime);
+    const pointsFromRemBoost = gameState.userScores.boostRemaining * 5000 / 100;
+    const pointsFromAliensKilled = gameState.userScores.aliensKilled * 100;
+    const pointsFromTime = Math.floor(gameState.userScores.timeRemaining * 5000 / 60);
+    const pointsFromRemHealth = gameState.userScores.healthRemaining * 5;
 
-    userScores.totalPoints = state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime;
+    gameState.userScores.totalPoints = gameState.state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime + pointsFromRemHealth;
   }
 
   onRestart() {
-    spaceship.x = spaceship.initX;
-    spaceship.y = spaceship.initY;
-    spaceship.aliensKilled = 0;
-    spaceship.boostSpeed = 0;
-    spaceship.bonuses.aim = false;
-    spaceship.bonuses.doubleFire = false;
-    spaceship.bonuses.invisible = false;
+    objects.spaceship.bonuses.aim = false;
+    objects.spaceship.bonuses.doubleFire = false;
+    objects.spaceship.bonuses.invisible = false;
 
-    this.bonusService.clearActiveBonuses();
-
-    for (const key in initState) {
-      state[key as keyof typeof state] = initState[key as keyof typeof initState];
+    for (const key in initState.state) {
+      gameState.state[key as keyof typeof gameState.state] = initState.state[key as keyof typeof initState.state];
     }
 
+    for (const key in initState.userScores) {
+      gameState.userScores[key as keyof typeof gameState.userScores] = initState.userScores[key as keyof typeof initState.userScores];
+    }
+
+    for (const key in objects.spaceship) {
+      objects.spaceship[key as keyof typeof objects.spaceship] = initState.spaceship[key as keyof typeof initState.spaceship];
+    }
+
+    for (const key in objects.alien) {
+      objects.alien[key as keyof typeof objects.alien] = initState.alien[key as keyof typeof initState.alien];
+    }
+
+    for (const key in objects.bossAlien) {
+      objects.bossAlien[key as keyof typeof objects.bossAlien] = initState.bossAlien[key as keyof typeof initState.bossAlien];
+    }
+
+    for (const key in objects.bomb) {
+      objects.bomb[key as keyof typeof objects.bomb] = initState.bomb[key as keyof typeof initState.bomb];
+    }
+
+    for (const key in objects.bossBomb) {
+      objects.bossBomb[key as keyof typeof objects.bossBomb] = initState.bossBomb[key as keyof typeof initState.bossBomb];
+    }
+
+    this.bonusService.clearActiveBonuses();
     this.spaceshipEl.remove();
 
     //Remove all possible game objects that could be remain on the screen after game over and restart.

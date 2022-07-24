@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { SharedService } from '../shared.service';
-import { state } from 'src/app/shared/space-fight-game/gameState';
-import { alien, bomb, bombUrl, bossAlien, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
-import { SpaceGameService } from '../space-game.service';
+import { gameState } from 'src/app/shared/space-fight-game/gameState';
+import { objects, bombUrl } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +20,11 @@ export class WeaponService {
   }
 
   fireBombs(timestamp: number): void {
-    if (bomb.nextFire < timestamp) {
+    if (objects.bomb.nextFire < timestamp) {
       this.createBomb();
-      bomb.nextFire = timestamp + bomb.fireInterval;
+      objects.bomb.nextFire = timestamp + objects.bomb.fireInterval;
 
-      if (spaceship.bonuses.doubleFire) {
+      if (objects.spaceship.bonuses.doubleFire) {
         this.createBomb();
       }
     }
@@ -33,16 +32,16 @@ export class WeaponService {
 
   //Create and modify bomb
   createBomb(): void {
-    const bombX = spaceship.x + (spaceship.width / 3);
-    let bombY = (spaceship.y + (spaceship.height / 2));
+    const bombX = objects.spaceship.x + (objects.spaceship.width / 3);
+    let bombY = (objects.spaceship.y + (objects.spaceship.height / 2));
 
     if (this.switchShotGun) {
-      bombY -= bomb.height;
+      bombY -= objects.bomb.height;
     }
 
     this.switchShotGun = !this.switchShotGun;
 
-    this.sharedService.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, bomb.width, bomb.height, '-2');
+    this.sharedService.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, objects.bomb.width, objects.bomb.height, '-2');
   }
 
   //Move bombs
@@ -57,36 +56,46 @@ export class WeaponService {
               if (this.sharedService.hasCollision(bombEl, alienEl, 0)) {
                 bombEl.remove();
                 alienEl.remove();
-                state.points += alien.healthPoints;
-                spaceship.aliensKilled++;
+                gameState.state.points += objects.alien.healthPoints;
+                objects.spaceship.aliensKilled++;
               }
             });
         } else {
           if (this.sharedService.hasCollision(bombEl, bossEl, 12)) {
             bombEl.remove();
-            bossAlien.healthPoints -= 500;
-            state.points += 500;
+            objects.bossAlien.healthPoints -= 500;
+            gameState.state.points += 500;
 
-            if (bossAlien.healthPoints <= 0) {
-              state.gameOver = true;
-              state.gameWon = true;
+            if (objects.bossAlien.healthPoints <= 0) {
+              gameState.state.gameOver = true;
+              gameState.state.gameWon = true;
+              bossEl.remove();
             }
 
-            if (bossAlien.healthPoints == 75000) {
+            if (objects.bossAlien.healthPoints == 75000) {
+              this.modifyBossDificulty();
               this.bossHealthEl.src = "../../../../assets/images/boss-health.com1.png";
-            } else if (bossAlien.healthPoints == 50000) {
+            } else if (objects.bossAlien.healthPoints == 50000) {
+              this.modifyBossDificulty();
               this.bossHealthEl.src = "../../../../assets/images/boss-health.com2.png";
-            } else if (bossAlien.healthPoints == 25000) {
+            } else if (objects.bossAlien.healthPoints == 25000) {
+              this.modifyBossDificulty();
               this.bossHealthEl.src = "../../../../assets/images/boss-health.com3.png";
             }
           }
         }
 
         if (currentPosition < gameScreenWidth) {
-          (bombEl as HTMLDivElement).style.left = currentPosition + bomb.speed + 'px';
+          (bombEl as HTMLDivElement).style.left = currentPosition + objects.bomb.speed + 'px';
         } else {
           bombEl.remove();
         }
       });
+  }
+
+  modifyBossDificulty(): void {
+    objects.bossBomb.speed++;
+    objects.bossBomb.fireInterval -= 60;
+    objects.bossBomb.trippleFireInterval -= 500;
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { bossAlien, bossAlienUrl, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
-import { state } from 'src/app/shared/space-fight-game/gameState';
+
 import { SharedService } from '../shared.service';
+import { objects, bossAlienUrl } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +13,15 @@ export class BossService {
   constructor(private sharedService: SharedService) { }
 
   createBoss(gameScreenWidth: number): HTMLDivElement {
-    bossAlien.x = gameScreenWidth;
-    this.bossEl = this.sharedService.createEl(['boss'], bossAlien.x, bossAlien.y, 'BossImg', bossAlienUrl, bossAlien.width, bossAlien.height, '-1');
+    objects.bossAlien.x = gameScreenWidth;
+    this.bossEl = this.sharedService.createEl(['boss'], objects.bossAlien.x, objects.bossAlien.y, 'BossImg', bossAlienUrl, objects.bossAlien.width, objects.bossAlien.height, '-1');
     return this.bossEl;
   }
 
   //Modify boss possition
   async bossEntering() {
-    while (bossAlien.x > 1200) {
-      bossAlien.x -= bossAlien.speed;
+    while (objects.bossAlien.x > 1200) {
+      objects.bossAlien.x -= objects.bossAlien.speed;
       this.moveBoss();
 
       await this.sharedService.sleep(20);
@@ -29,18 +29,18 @@ export class BossService {
   }
 
   calcBossPosition(gameScreenWidth: number, gameScreenHeight: number): void {
-    const moveUp = bossAlien.y > 0 && bossAlien.y + 70 > spaceship.y;
-    const moveDown = bossAlien.y + bossAlien.height < gameScreenHeight && bossAlien.y + 90 < spaceship.y;
+    const moveUp = objects.bossAlien.y > 0 && objects.bossAlien.y + 70 > objects.spaceship.y;
+    const moveDown = objects.bossAlien.y + objects.bossAlien.height < gameScreenHeight && objects.bossAlien.y + 90 < objects.spaceship.y;
     
     if (moveUp) {
-      bossAlien.y -= bossAlien.speed;
+      objects.bossAlien.y -= objects.bossAlien.speed;
     } else if (moveDown) {
-      bossAlien.y += bossAlien.speed;
+      objects.bossAlien.y += objects.bossAlien.speed;
     }
   }
 
   moveBoss(): void {
-    this.bossEl.style.left = bossAlien.x + 'px';
-    this.bossEl.style.top = bossAlien.y + 'px';
+    this.bossEl.style.left = objects.bossAlien.x + 'px';
+    this.bossEl.style.top = objects.bossAlien.y + 'px';
   }
 }

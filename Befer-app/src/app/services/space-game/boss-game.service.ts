@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { spaceship } from 'src/app/shared/space-fight-game/gameObjects';
-import { state, userScores } from 'src/app/shared/space-fight-game/gameState';
-import { BonusService } from './game-objects/bonus.service';
-import { BossService } from './game-objects/boss.service';
-import { SpaceshipService } from './game-objects/spaceship.service';
-import { WeaponBossService } from './game-objects/weapon-boss.service';
-import { WeaponService } from './game-objects/weapon.service';
+
 import { SharedService } from './shared.service';
+import { BossService } from './game-objects/boss.service';
+import { BonusService } from './game-objects/bonus.service';
+import { WeaponService } from './game-objects/weapon.service';
+import { SpaceshipService } from './game-objects/spaceship.service';
+import { gameState } from 'src/app/shared/space-fight-game/gameState';
+import { objects } from 'src/app/shared/space-fight-game/gameObjects';
+import { WeaponBossService } from './game-objects/weapon-boss.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,22 +23,23 @@ export class BossGameService {
     private spaceshipService: SpaceshipService,
     private weaponBossService: WeaponBossService,
     private weaponService: WeaponService,
-    private bonusService: BonusService) { }
+    private bonusService: BonusService,
+    private sharedService: SharedService) { }
 
   //Initial game configuration for Boss mode
-  initialStartUpBossMode(): void {
+  initialStartUpBossMode(timestamp: number): void {
     this.spaceshipEl = (document.querySelector('.spaceship')) as HTMLDivElement;
     this.gameScreenEl = document.querySelector('.game-view');
     this.gameScreenEl.style.border = '3px dashed darkred';
 
-    this.weaponBossService.initialStartUp();
+    this.weaponBossService.initialStartUp(timestamp);
     this.weaponService.initialStartUp();
 
     this.bossEl = this.bossService.createBoss(this.gameScreenEl.offsetWidth);
     this.bossService.bossEntering();
 
     const timeEl = document.querySelector('#remaining-time');
-    this.startTimerForBossMode(360, timeEl);
+    this.startTimerForBossMode(300, timeEl);
   }
 
   //Create game objects, modify position and check for collision in Boss Game Mode
@@ -46,8 +48,13 @@ export class BossGameService {
     this.spaceshipService.calcSpaceshipPos(this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
     this.spaceshipService.moveSpaceship();
 
+    if (!objects.spaceship.bonuses.invisible && this.sharedService.hasCollision(this.spaceshipEl, this.bossEl, 12)) {
+      gameState.state.gameOver = true;
+      this.sharedService.displayCollisionImg();
+    }
+
     //Fire bombs
-    if (state.keys.Space) {
+    if (gameState.state.keys.Space) {
       this.weaponService.fireBombs(timestamp);
     }
 
@@ -64,11 +71,11 @@ export class BossGameService {
     this.bonusService.createBonuses(timestamp, this.gameScreenEl.offsetWidth, this.gameScreenEl.offsetHeight);
 
     //Move bonuses only if there is bonuses on the screen (because they will be rare) and check for collision with spaceship
-    if (state.hasBonuses) {
+    if (gameState.state.hasBonuses) {
       if (document.getElementsByClassName('bonus').length > 0) {
         this.bonusService.moveAllBonuses(this.spaceshipEl);
       } else {
-        state.hasBonuses = false;
+        gameState.state.hasBonuses = false;
       }
     }
 
@@ -81,14 +88,14 @@ export class BossGameService {
     const start = Date.now();
 
     function timer() {
-      if (state.gameOver) {
+      if (gameState.state.gameOver) {
         clearInterval(refreshIntervalId);
         return;
       }
 
       const diff = duration - (((Date.now() - start) / 1000) | 0);
 
-      userScores.timeRemaining = diff;
+      gameState.userScores.timeRemaining = diff;
 
       let minutes = (diff / 60) | 0;
       let seconds = (diff % 60) | 0;
@@ -99,7 +106,7 @@ export class BossGameService {
       timeEl.textContent = minStr + ':' + secStr;
 
       if (minutes <= 0 && seconds <= 0) {
-        state.gameOver = true;
+        gameState.state.gameOver = true;
         clearInterval(refreshIntervalId);
         return;
       }

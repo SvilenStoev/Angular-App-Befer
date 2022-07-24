@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { collisionUrl, spaceship } from 'src/app/shared/space-fight-game/gameObjects';
+
+import { collisionUrl, objects } from 'src/app/shared/space-fight-game/gameObjects';
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +56,8 @@ export class SharedService {
     collEl.appendChild(img);
 
     collEl.style.position = 'absolute';
-    collEl.style.left = spaceship.x + 39 + 'px';
-    collEl.style.top = spaceship.y - 16 + 'px';
+    collEl.style.left = objects.spaceship.x + 39 + 'px';
+    collEl.style.top = objects.spaceship.y - 16 + 'px';
 
     this.gameScreenEl.appendChild(collEl);
   }

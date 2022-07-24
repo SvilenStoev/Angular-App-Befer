@@ -1,18 +1,44 @@
-export const spaceshipUrl = '../../../../assets/images/spaceship.png';
-export const alienUrl = '../../../../assets/images/alien.png';
-export const bombUrl = '../../../../assets/images/bomb.png';
-export const bossBombUrl = '../../../../assets/images/boss-bomb.png';
-export const collisionUrl = '../../../../assets/images/collision.png';
-
-//bonuses
-export const doubleFireUrl = '../../../../assets/images/bonus-double-fire.png';
-export const aimBonusUrl = '../../../../assets/images/bonus-aim.png';
-export const invisibleBonusUrl = '../../../../assets/images/bonus-invisible.png';
-
-//boss
-export const bossAlienUrl = '../../../../assets/images/boss-alien.png';
-
-export const objects = {
+export const initState = {
+    userScores: {
+        aliensKilled: 0,
+        timeRemaining: 0,
+        boostRemaining: 0,
+        points: 0,
+        totalPoints: 0,
+        healthRemaining: 0
+    },
+    state: {
+        level: 1,
+        levelsRange: {
+            2: 3000,
+            3: 6000,
+            4: 10000,
+            5: 15000,
+            6: 22000,
+            7: 30000,
+        },
+        points: 0,
+        openMenu: false,
+        isPaused: false,
+        hasBonuses: false,
+        gameOver: false,
+        gameWon: false,
+        isBossMode: false,
+        keys: {
+            'KeyW': false,
+            'KeyS': false,
+            'KeyD': false,
+            'KeyA': false,
+            'KeyP': false,
+            'KeyM': false,
+            'ArrowUp': false,
+            'ArrowLeft': false,
+            'ArrowDown': false,
+            'ArrowRight': false,
+            'ShiftLeft': false,
+            'Space': false
+        },
+    } as any,
     spaceship: {
         x: -180,
         y: 300,
@@ -27,7 +53,7 @@ export const objects = {
             doubleFire: false,
             aim: false,
             invisible: false,
-        } as any
+        }
     },
     alien: {
         x: 100,
@@ -69,21 +95,21 @@ export const objects = {
         height: 82,
         speed: 3,
         nextCreation: 8000,
-        creationInterval: 80000,
+        creationInterval: 100000,
         timeLast: 10000
     },
     aimBonus: {
         width: 50,
         height: 50,
         nextCreation: 18000,
-        creationInterval: 100000,
+        creationInterval: 120000,
         timeLast: 15000
     },
     invisibleBonus: {
         width: 60,
         height: 48,
         nextCreation: 30000,
-        creationInterval: 120000,
+        creationInterval: 150000,
         timeLast: 12000
     }
 }

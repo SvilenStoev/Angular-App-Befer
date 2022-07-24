@@ -77,6 +77,10 @@
                             <span>Remaining Boost</span>
                             <span class="pts-info">(x5 000 pts.)</span>
                         </div>
+                        <div class="user-scores-health">
+                            <span>Health</span>
+                            <span class="pts-info">(x5 pts.)</span>
+                        </div>
                         <div class="user-scores-columns">
                             <span>Boss Time</span>
                             <span class="pts-info">(x5 000 pts.)</span>
@@ -86,10 +90,10 @@
                             <span></span>
                         </div>
                 </article>
-            <ng-container *ngFor="let scores of usersScores">
+            <ng-container *ngFor="let scores of usersScores; let i = index">
                     <article class="users-scores-row">
                         <div class="user-scores-username">
-                            <span>{{scores.player.username}}</span>
+                            <span>{{i + 1}}.&nbsp;{{scores.player.username}}</span>
                         </div>
                         <div class="user-scores-points">
                             <span>{{scores.points}}</span>
@@ -99,6 +103,9 @@
                         </div>
                         <div class="user-scores-boost">
                             <span>{{scores.boostRemaining}}%</span>
+                        </div>
+                        <div class="user-scores-health">
+                            <span>{{scores.healthRemaining}}</span>
                         </div>
                         <div class="user-scores-time">
                             <span>{{scores.timeRemaining}}</span>
@@ -149,6 +156,11 @@
             <span>{{userScores.boostRemaining}}%</span>
             <span class="pts-info">(x5 000 pts.)</span>
         </div>
+        <div class="user-scores-health">
+            <span>Health</span>
+            <span>{{userScores.healthRemaining}}</span>
+            <span class="pts-info">(x5 pts.)</span>
+        </div>
         <div class="user-scores-time">
             <span>Boss Time</span>
             <span>{{userScores.timeRemaining}}</span>
@@ -160,6 +172,14 @@
             <span></span>
         </div>
         <button *ngIf="showUserScores" class="settings-back" (click)="backToMenu()">Menu</button>
+    </article>
+    <article *ngIf="showWonView" class="area-won-view">
+        <div class="area-won-img"><img src="../../../../assets/images/won-view-img.gif" alt=""></div>
+        <div class="area-warning-text">
+            <p>Good game, {{currUserFullName}}!</p>
+            <p>It seems I have to write more code for harder game...</p>
+            <button class="settings-back button-go-scores" (click)="goToScores()">See your scores</button>
+        </div>
     </article>
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
@@ -176,8 +196,8 @@
     <p class="game-footer-level">Level: <span>{{level}}</span></p>
     <div class="game-footer-imgs-health" *ngIf="gameStarted && showHealthBars">
         <div class="game-footer-img-spaceship-health"><img src="../../../../assets/images/spaceship-health.png"
-                alt="Boost-Speed"><span>{{spaceshipHealth}}</span></div>
+                alt="Boost-Speed"><span><i id="pulse-heart-spaceship" class="fa-solid fa-heart"></i>&nbsp;{{spaceshipHealth}}</span></div>
         <div class="game-footer-img-boss-health"><img src="../../../../assets/images/boss-health.com.png"
-                alt="Boost-Speed"><span>{{bossHealth}}</span></div>
+                alt="Boost-Speed"><span><i id="pulse-heart-boss" class="fa-solid fa-heart"></i>&nbsp;{{bossHealth}}</span></div>
     </div>
 </div>
