@@ -54,7 +54,7 @@ i.fa-thumbs-down {
 
 .pictures-img-before,
 .pictures-img-after {
-    margin: 0px 40px;
+    margin: 0 20px;
     max-height: 25em;
     max-width: 25em;
     min-height: 15em;
@@ -67,7 +67,7 @@ i.fa-thumbs-down {
 div.pictures {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
 
 @media all and (max-width: 500px) {
@@ -82,11 +82,8 @@ div.pictures {
 }
 
 .befer-logo {
-    position: absolute;
-    width: 7%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 85px;
 }
 
 .textCenter>i {

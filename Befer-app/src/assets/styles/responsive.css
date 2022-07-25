@@ -16,6 +16,7 @@
     .publications-container {
         flex-wrap: wrap;
         overflow-x: initial;
+        justify-content: space-around;
     }
     html {
         font-size: 12px;

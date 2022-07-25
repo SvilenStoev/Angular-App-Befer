@@ -11,6 +11,7 @@ export interface ILanguage {
     login?: {},
     register?: {},
     comments?: {},
+    spaceFightGame?: {},
     notFoundPage?: {},
     validations?: {},
     shared?: {}

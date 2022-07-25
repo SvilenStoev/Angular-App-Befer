@@ -53,7 +53,7 @@ export class WeaponBossService {
       .forEach(bombEl => {
         let currentPosition = parseInt((bombEl as HTMLDivElement).style.left);
 
-        if (!objects.spaceship.bonuses.invisible && this.sharedService.hasCollision(bombEl, spaceshipEl, 4)) {
+        if (!objects.spaceship.bonuses.invisible && this.sharedService.hasCollision(bombEl, spaceshipEl, 15)) {
           bombEl.remove();
           objects.spaceship.healthPoints -= 250;
 

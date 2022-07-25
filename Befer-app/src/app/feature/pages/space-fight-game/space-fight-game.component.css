@@ -411,12 +411,16 @@ div.hide::after {
 
 .button-go-scores {
     position: absolute;
-    top: 240px;
+    top: 260px;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 150px;
     height: 60px;
     box-shadow: 0px 0px 8px 16px white;
+}
+
+.area-won-view-text {
+    text-align: center;
 }
 
 /* Pulse heart */

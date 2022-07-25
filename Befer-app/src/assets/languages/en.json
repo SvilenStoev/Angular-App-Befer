@@ -157,6 +157,68 @@
       "deletedSuccess": "The comment was deleted successfully!"
     }
   },
+  "spaceFightGame": {
+    "title": "Space fight game",
+    "time": "Time:",
+    "aliensKilled": "Aliens Killed:",
+    "min": "min",
+    "level": "Level",
+    "areaWarning": {
+      "p1": "Give a star to the project in GitHub!",
+      "p2": "Or my aliens will defeat you!"
+    },
+    "areaBossEntering": {
+      "p1": "I am comming for you..."
+    },
+    "startScreen": {
+      "p1": "Start New Space Fight"
+    },
+    "settings": {
+      "controls": "Game Controls",
+      "movements": "Movements:",
+      "fire": "Weapon Fire:",
+      "boost": "Use Spaceship Boost:",
+      "otherKeys": "Other Keys",
+      "press": "Press",
+      "pauseGame": "to pause the game",
+      "resumeGame": "to resume the game",
+      "gameMenu": "for game menu",
+      "bonuses": "Bonuses",
+      "fireBonus": "Fire with both weapons",
+      "aimBonus": "Activate spaceship aim",
+      "invisibleBonus": "Invisible to aliens",
+      "goBack": "Go Back"
+    },
+    "userScores": {
+      "username": "Username",
+      "points": "Points",
+      "aliensKilled": "Aliens killed",
+      "remBoost": "Remaining Boost",
+      "health": "Health",
+      "bossTime": "Boss Time",
+      "totalPoints": "Total Points",
+      "pts": "pts.",
+      "menu": "Menu"
+    },
+    "menu": {
+      "controls": "Controls",
+      "scores": "Scores",
+      "resumeGame": "Resume Game",
+      "restartGame": "Restart Game"
+    },
+    "areaWonView": {
+      "p1": "Good game,",
+      "p2": "It seems I should write more code for harder game...",
+      "seeScores": "See your scores"
+    },
+    "messages": {
+      "gameOver": "Game Over! {0} points reached.",
+      "gameOverWon": "Great... You have killed the Dev...",
+      "levelUp": "Congratulation! Level {0} reached!",
+      "level7": "Congratulation! You have killed almost all aliens!",
+      "gameOverResume": "The current game is over! You can restart it only."
+    }
+  },
   "notFoundPage": {
     "title": "Not Found",
     "sorry": "Sorry!",

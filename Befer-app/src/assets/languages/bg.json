@@ -157,6 +157,68 @@
       "deletedSuccess": "Коментарът беше изтрит успешно!"
     }
   },
+  "spaceFightGame": {
+    "title": "Междузвездни войни",
+    "time": "Време:",
+    "aliensKilled": "НЛО жертви:",
+    "min": "мин",
+    "level": "Ниво",
+    "areaWarning": {
+      "p1": "Оцени проекта със звезда в GitHub!",
+      "p2": "Или победи моите извънземни!"
+    },
+    "areaBossEntering": {
+      "p1": "Опитай с мен..."
+    },
+    "startScreen": {
+      "p1": "Нова игра"
+    },
+    "settings": {
+      "controls": "Контроли",
+      "movements": "Движение:",
+      "fire": "Стрелба:",
+      "boost": "Светлинна скорост:",
+      "otherKeys": "Други бутони",
+      "press": "Натисни",
+      "pauseGame": "за пауза",
+      "resumeGame": "за подновяване",
+      "gameMenu": "за меню",
+      "bonuses": "Бонуси",
+      "fireBonus": "Стрелба с две оръжия",
+      "aimBonus": "Активиране на мерник",
+      "invisibleBonus": "Невидим за извънземни",
+      "goBack": "Назад"
+    },
+    "userScores": {
+      "username": "Username",
+      "points": "Точки",
+      "aliensKilled": "НЛО жертви",
+      "remBoost": "Светлинна скорост",
+      "health": "Живот",
+      "bossTime": "Оставащо време",
+      "totalPoints": "Общо точки",
+      "pts": "т.",
+      "menu": "Меню"
+    },
+    "menu": {
+      "controls": "Контроли",
+      "scores": "Класация",
+      "resumeGame": "Възобнови игра",
+      "restartGame": "Рестартирай игра"
+    },
+    "areaWonView": {
+      "p1": "Добра игра,",
+      "p2": "Може би трябва да напиша повече код за по-сложна игра...",
+      "seeScores": "Виж твоите точки"
+    },
+    "messages": {
+      "gameOver": "Game Over! {0} точки.",
+      "gameOverWon": "Браво... Ликвидира програмиста...",
+      "levelUp": "Поздравления! Достигнато ниво {0}!",
+      "level7": "Поздравления! Ликвидира почти всички извънземни!",
+      "gameOverResume": "Играта приключи! Може да я рестартираш."
+    }
+  },
   "notFoundPage": {
     "title": "Not Found",
     "sorry": "Съжаляваме!",

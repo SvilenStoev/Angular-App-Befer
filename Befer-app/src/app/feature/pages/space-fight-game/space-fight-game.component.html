@@ -1,92 +1,92 @@
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="points">
-    <p>Points: <span class="points-current">{{points}}</span></p>
-    <p *ngIf="showHealthBars">Time: <span id="remaining-time">06:00</span> min</p>
-    <p *ngIf="!showHealthBars">Aliens Killed: <span class="alients-killed">{{aliensKilled}}</span></p>
+    <p>{{menu.userScores.points}}: <span class="points-current">{{points}}</span></p>
+    <p *ngIf="showHealthBars">{{menu.time}} <span id="remaining-time">05:00</span> {{menu.min}}</p>
+    <p *ngIf="!showHealthBars">{{menu.aliensKilled}} <span class="alients-killed">{{aliensKilled}}</span></p>
 </div>
 <div class="game-view">
     <article *ngIf="showAreaWarning" class="area-warning">
         <div class="area-warning-img"><img src="../../../../assets/images/area-warning.jpg" alt=""></div>
         <div class="area-warning-text">
-            <p>Give a star to the project!</p>
-            <p>Or my aliens will defeat you!</p>
+            <p>{{menu.areaWarning.p1}}</p>
+            <p>{{menu.areaWarning.p2}}</p>
         </div>
     </article>
     <article *ngIf="showBossEntering" class="area-boss-entering">
         <div class="area-boss-entering-img"><img src="../../../../assets/images/boss-entering.jpg" alt=""></div>
         <div class="area-warning-text">
-            <p>I am comming for you...</p>
+            <p>{{menu.areaBossEntering.p1}}</p>
         </div>
     </article>
     <article *ngIf="showStartButton" class="start-screen" (click)="warningAndStartGame()">
-        <p>Start New Space Fight</p>
+        <p>{{menu.startScreen.p1}}</p>
     </article>
     <article *ngIf="showSettings" class="settings">
         <article class="settings-controls">
-            <h2 class="settings-title">Game Controls</h2>
-            <p class="settings-controls-text">Movements:</p>
+            <h2 class="settings-title">{{menu.settings.controls}}</h2>
+            <p class="settings-controls-text">{{menu.settings.movements}}</p>
             <div><img src="../../../../assets/images/movements.png" alt="Movements Controls" class="controls-img"></div>
-            <p class="settings-controls-text">Weapon Fire:</p>
+            <p class="settings-controls-text">{{menu.settings.fire}}</p>
             <div><img src="../../../../assets/images/space.png" alt="Space" class="controls-img"></div>
-            <p class="settings-controls-text">Use Spaceship Boost:</p>
+            <p class="settings-controls-text">{{menu.settings.boost}}</p>
             <div><img src="../../../../assets/images/shift.png" alt="Shift" class="controls-img"></div>
         </article>
         <div class="settings-right">
             <article class="settings-other">
-                <h2 class="settings-title">Other Keys</h2>
-                <p class="settings-controls-text">Press <b>"P"</b> to pause the game</p>
-                <p class="settings-controls-text">Press <b>"R"</b> to resume the game</p>
-                <p class="settings-controls-text">Press <b>"M"</b> for game menu</p>
+                <h2 class="settings-title">{{menu.settings.otherKeys}}</h2>
+                <p class="settings-controls-text">{{menu.settings.press}} <b>"P"</b> {{menu.settings.pauseGame}}</p>
+                <p class="settings-controls-text">{{menu.settings.press}} <b>"R"</b> {{menu.settings.resumeGame}}</p>
+                <p class="settings-controls-text">{{menu.settings.press}} <b>"M"</b> {{menu.settings.gameMenu}}</p>
             </article>
             <article class="settings-bonuses">
-                <h2 class="settings-title">Bonuses</h2>
+                <h2 class="settings-title">{{menu.settings.bonuses}}</h2>
                 <div class="settings-bonuses-el">
-                    <p class="settings-bonuses-text">Fire with both weapons</p>
+                    <p class="settings-bonuses-text">{{menu.settings.fireBonus}}</p>
                     <div><img src="../../../../assets/images/bonus-double-fire.png" alt="Double-Fire"
                             class="settings-bonuses-img"></div>
                 </div>
                 <div class="settings-bonuses-el">
-                    <p class="settings-bonuses-text">Activate spaceship aim</p>
+                    <p class="settings-bonuses-text">{{menu.settings.aimBonus}}</p>
                     <div><img src="../../../../assets/images/bonus-aim.png" alt="Aim" class="settings-bonuses-img">
                     </div>
                 </div>
                 <div class="settings-bonuses-el">
-                    <p class="settings-bonuses-text">Invisible to aliens</p>
+                    <p class="settings-bonuses-text">{{menu.settings.invisibleBonus}}</p>
                     <div><img src="../../../../assets/images/bonus-invisible.png" alt="Invisible"
                             class="settings-bonuses-img"></div>
                 </div>
             </article>
         </div>
-        <button *ngIf="showMenu" class="settings-back" (click)="onResume({code: 'KeyR'})">Go Back</button>
+        <button *ngIf="showMenu" class="settings-back" (click)="onResume({code: 'KeyR'})">{{menu.settings.goBack}}</button>
     </article>
     <ng-container *ngIf="!!usersScores">
         <article *ngIf="showUsersScores" class="users-scores">
                 <article class="users-scores-row">
                         <div class="user-scores-columns">
-                            <span>Username</span>
+                            <span>{{menu.userScores.username}}</span>
                             <span></span>
                         </div>
                         <div class="user-scores-columns">
-                            <span>Points</span>
+                            <span>{{menu.userScores.points}}</span>
                             <span></span>
                         </div>
                         <div class="user-scores-columns">
-                            <span>Aliens killed</span>
-                            <span class="pts-info">(x100 pts.)</span>
+                            <span>{{menu.userScores.aliensKilled}}</span>
+                            <span class="pts-info">(x100 {{menu.userScores.pts}})</span>
                         </div>
                         <div class="user-scores-columns">
-                            <span>Remaining Boost</span>
-                            <span class="pts-info">(x5 000 pts.)</span>
+                            <span>{{menu.userScores.remBoost}}</span>
+                            <span class="pts-info">(x5 000 {{menu.userScores.pts}})</span>
                         </div>
                         <div class="user-scores-health">
-                            <span>Health</span>
-                            <span class="pts-info">(x5 pts.)</span>
+                            <span>{{menu.userScores.health}}</span>
+                            <span class="pts-info">(x5 {{menu.userScores.pts}})</span>
                         </div>
                         <div class="user-scores-columns">
-                            <span>Boss Time</span>
-                            <span class="pts-info">(x5 000 pts.)</span>
+                            <span>{{menu.userScores.bossTime}}</span>
+                            <span class="pts-info">(x5 000 {{menu.userScores.pts}})</span>
                         </div>
                         <div class="user-scores-columns">
-                            <span><b>Total Points</b></span>
+                            <span><b>{{menu.userScores.totalPoints}}</b></span>
                             <span></span>
                         </div>
                 </article>
@@ -115,76 +115,76 @@
                         </div>
                     </article>
                 </ng-container>
-             <button *ngIf="showUsersScores" class="settings-back" (click)="backToMenu()">Menu</button>
+             <button *ngIf="showUsersScores" class="settings-back" (click)="backToMenu()">{{menu.userScores.menu}}</button>
         </article>
     </ng-container>
     <article *ngIf="showMenu" class="menu">
         <div class="menu-button" (click)="pauseGame()">
-            <h2 class="menu-button-text">Controls</h2>
+            <h2 class="menu-button-text">{{menu.menu.controls}}</h2>
         </div>
         <!-- <div class="menu-button">
             <h2 class="menu-button-text">Shop</h2>
         </div> -->
         <div class="menu-button" (click)="onMenuScores()">
-            <h2 class="menu-button-text">Scores</h2>
+            <h2 class="menu-button-text">{{menu.menu.scores}}</h2>
         </div>
         <div class="menu-button-resume" (click)="onMenuResume()">
-            <h2 class="menu-button-text">Resume Game</h2>
+            <h2 class="menu-button-text">{{menu.menu.resumeGame}}</h2>
         </div>
         <div class="menu-button-restart" (click)="restartGame()">
-            <h2 class="menu-button-text">Restart Game</h2>
+            <h2 class="menu-button-text">{{menu.menu.restartGame}}</h2>
         </div>
     </article>
     <article *ngIf="showUserScores" class="user-scores">
         <div class="user-scores-username">
-            <span>Username</span>
+            <span>{{menu.userScores.username}}</span>
             <span>{{currUserUsername}}</span>
             <span></span>
         </div>
         <div class="user-scores-points">
-            <span>Points</span>
+            <span>{{menu.userScores.points}}</span>
             <span>{{userScores.points}}</span>
             <span></span>
         </div>
         <div class="user-scores-aliens">
-            <span>Aliens killed</span>
+            <span>{{menu.userScores.aliensKilled}}</span>
             <span>{{userScores.aliensKilled}}</span>
-            <span class="pts-info">(x100 pts.)</span>
+            <span class="pts-info">(x100 {{menu.userScores.pts}})</span>
         </div>
         <div class="user-scores-boost">
-            <span>Remaining Boost</span>
+            <span>{{menu.userScores.remBoost}}</span>
             <span>{{userScores.boostRemaining}}%</span>
-            <span class="pts-info">(x5 000 pts.)</span>
+            <span class="pts-info">(x5 000 {{menu.userScores.pts}})</span>
         </div>
         <div class="user-scores-health">
-            <span>Health</span>
+            <span>{{menu.userScores.health}}</span>
             <span>{{userScores.healthRemaining}}</span>
-            <span class="pts-info">(x5 pts.)</span>
+            <span class="pts-info">(x5 {{menu.userScores.pts}})</span>
         </div>
         <div class="user-scores-time">
-            <span>Boss Time</span>
+            <span>{{menu.userScores.bossTime}}</span>
             <span>{{userScores.timeRemaining}}</span>
-            <span class="pts-info">(x5 000 pts.)</span>
+            <span class="pts-info">(x5 000 {{menu.userScores.pts}})</span>
         </div>
         <div class="user-scores-points">
-            <span><b>Total Points</b></span>
+            <span><b>{{menu.userScores.totalPoints}}</b></span>
             <span><b>{{userScores.totalPoints}}</b></span>
             <span></span>
         </div>
-        <button *ngIf="showUserScores" class="settings-back" (click)="backToMenu()">Menu</button>
+        <button *ngIf="showUserScores" class="settings-back" (click)="backToMenu()">{{menu.userScores.menu}}</button>
     </article>
     <article *ngIf="showWonView" class="area-won-view">
         <div class="area-won-img"><img src="../../../../assets/images/won-view-img.gif" alt=""></div>
         <div class="area-warning-text">
-            <p>Good game, {{currUserFullName}}!</p>
-            <p>It seems I have to write more code for harder game...</p>
-            <button class="settings-back button-go-scores" (click)="goToScores()">See your scores</button>
+            <p class="area-won-view-text">{{menu.areaWonView.p1}} {{currUserFullName}}!</p>
+            <p class="area-won-view-text">{{menu.areaWonView.p2}}</p>
+            <button class="settings-back button-go-scores" (click)="goToScores()">{{menu.areaWonView.seeScores}}</button>
         </div>
     </article>
 </div>
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="game-footer">
     <div class="game-footer-imgs" *ngIf="gameStarted">
-        <p class="game-footer-text">Bonuses:</p>
+        <p class="game-footer-text">{{menu.settings.bonuses}}:</p>
         <div class="game-footer-img-double"><img src="../../../../assets/images/bonus-double-fire.png"
                 alt="Double-Fire"></div>
         <div class="game-footer-img-aim"><img src="../../../../assets/images/bonus-aim.png" alt="Aim"></div>
@@ -193,7 +193,7 @@
         <div class="game-footer-img-boost-speed"><img src="../../../../assets/images/boost-speed.png"
                 alt="Boost-Speed"><span>{{spaceshipBoostSpeed}}%</span></div>
     </div>
-    <p class="game-footer-level">Level: <span>{{level}}</span></p>
+    <p class="game-footer-level">{{menu.level}}: <span>{{level}}</span></p>
     <div class="game-footer-imgs-health" *ngIf="gameStarted && showHealthBars">
         <div class="game-footer-img-spaceship-health"><img src="../../../../assets/images/spaceship-health.png"
                 alt="Boost-Speed"><span><i id="pulse-heart-spaceship" class="fa-solid fa-heart"></i>&nbsp;{{spaceshipHealth}}</span></div>

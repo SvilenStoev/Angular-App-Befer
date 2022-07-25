@@ -1,14 +1,17 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { UserService } from 'src/app/services/auth/user.service';
 import { gameState } from 'src/app/shared/space-fight-game/gameState';
 import { objects } from 'src/app/shared/space-fight-game/gameObjects';
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
+import { ReplaceArgsPipe } from 'src/app/shared/pipes/replace-args.pipe';
+import { LanguageService } from 'src/app/services/common/language.service';
 import { SharedService } from 'src/app/services/space-game/shared.service';
+import { TabTitleService } from 'src/app/services/common/tab-title.service';
 import { BossGameService } from 'src/app/services/space-game/boss-game.service';
 import { GameApiService } from 'src/app/services/space-game/api/game-api.service';
 import { SpaceGameService } from 'src/app/services/space-game/space-game.service';
-import { TabTitleService } from 'src/app/services/common/tab-title.service';
 
 @Component({
   selector: 'app-space-fight-game',
@@ -46,16 +49,31 @@ export class SpaceFightGameComponent implements OnInit {
   currUserFullName: string;
   usersScores: any;
 
+  //Language
+  menu: any = this.langService.get().spaceFightGame;
+  subscription: Subscription;
+
   constructor(
     private gameService: SpaceGameService,
     private bossGameService: BossGameService,
     private sharedService: SharedService,
     private gameApiService: GameApiService,
     private userService: UserService,
-    private titleService: TabTitleService) { }
+    private titleService: TabTitleService,
+    private langService: LanguageService,
+    private replaceArgs: ReplaceArgsPipe) { }
 
-  ngOnInit(): void { 
-    this.titleService.setTitle('Space fight game');
+  setTitle(): void {
+    this.titleService.setTitle(this.menu.title);
+  }
+
+  ngOnInit(): void {
+    this.setTitle();
+
+    this.subscription = this.langService.langEvent$.subscribe(langJson => {
+      this.menu = langJson.spaceFightGame;
+      this.setTitle();
+    });
   }
 
   //This is called only once when game is started. It is not called on restart!
@@ -106,7 +124,7 @@ export class SpaceFightGameComponent implements OnInit {
       this.checkForPauseOrMenu();
     } else {
       this.onGameOver();
-      notifyErr(`Game Over! ${gameState.userScores.totalPoints} points reached.`);
+      notifyErr(this.replaceArgs.transform(this.menu.messages.gameOver, gameState.userScores.totalPoints));
     }
   }
 
@@ -130,9 +148,9 @@ export class SpaceFightGameComponent implements OnInit {
       this.onGameOver();
 
       if (gameState.state.gameWon) {
-        notifySuccess(`Great... You have killed the Dev...`);
+        notifySuccess(this.menu.messages.gameOverWon);
       } else {
-        notifyErr(`Game Over! ${gameState.userScores.totalPoints} points reached.`);
+        notifyErr(this.replaceArgs.transform(this.menu.messages.gameOver, gameState.userScores.totalPoints));
       }
     }
   }
@@ -174,7 +192,7 @@ export class SpaceFightGameComponent implements OnInit {
       this.level = ++gameState.state.level;
 
       if (this.level == 7) {
-        notifySuccess(`Congratulation! You have killed almost all aliens!`);
+        notifySuccess(this.menu.messages.level7);
 
         gameState.state.isBossMode = true;
         this.showBossEntering = true;
@@ -194,7 +212,7 @@ export class SpaceFightGameComponent implements OnInit {
         window.requestAnimationFrame(this.gameLoopBoss.bind(this));
         return true;
       } else {
-        notifySuccess(`Congratulation! Level ${gameState.state.level} reached!`);
+        notifySuccess(this.replaceArgs.transform(this.menu.messages.levelUp, gameState.state.level));
         this.modifyGameDifficulty();
       }
 
@@ -253,6 +271,7 @@ export class SpaceFightGameComponent implements OnInit {
 
   onMenuResume() {
     if (gameState.state.gameOver) {
+      notifyErr(this.menu.messages.gameOverResume);
       return;
     }
 
