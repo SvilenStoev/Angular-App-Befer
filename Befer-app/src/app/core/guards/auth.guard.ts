@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
 import { notifyErr } from 'src/app/shared/other/notify';
 import { UserService } from 'src/app/services/auth/user.service';
@@ -16,13 +16,12 @@ export class AuthGuard implements CanActivate {
 
   msgs: any = this.langService.get().shared;
 
-  canActivate(): boolean | UrlTree {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
     if (this.userService.isLogged) {
       return true;
     }
 
     notifyErr(this.msgs.authGuardLoggedIn);
-
-    return this.router.createUrlTree(['/user/login']);
+    return this.router.createUrlTree(['/user/login'], { queryParams: { returnUrl: state.url }});
   }
 }

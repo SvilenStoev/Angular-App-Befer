@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   shared: any = this.langService.get().shared;
   validations: any = this.langService.get().validations;
   subscription: Subscription;
+  returnUrl: string;
 
   loginFormGroup: FormGroup = this.formBuilder.group({
     'username': new FormControl(null, [Validators.required, Validators.minLength(this.userNameMinLength), Validators.maxLength(this.userNameMaxLength), whitespaceValidator]),
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private titleService: TabTitleService,
     private langService: LanguageService) { }
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     this.setTitle();
 
     this.subscription = this.langService.langEvent$.subscribe(langJson => {
@@ -87,7 +90,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.userService.login$(data).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl(this.returnUrl);
         notifySuccess(this.menu.messages.loggedInSuccess);
       },
       complete: () => {
