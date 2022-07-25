@@ -6,7 +6,7 @@
 **Firebase -** https://befer-app.web.app/
 
 ## :trollface: Test user
-You can try all features without registration using test user. The user has 3 public and 1 private posts for now.
+You can try all features without registration using my test user. The test user has 3 public and 1 private posts for now.
 
 **Username:** Befer_Fan_96
 
@@ -49,6 +49,19 @@ Only users, which are not author of a single post can like the post. After that 
 ## :earth_americas: Internationalization | :bulgaria: :us:
 
 Befer website supports translation in English and Bulgarian languages.
+
+## :warning: Hidden project inside!
+### :video_game: Space Fight Game
+
+Check my mini project inside Befer website. The project is a game, where you can chill, during defeating aliens, achieving higher levels, compete for points with other Befer users and just have fun. In the last level you have the oportunity to fight with my Alien caricature. If you don't like the project - avenge me. :blush: 
+
+Don't forget to see your score and rank at the end! :trophy:
+
+**How to play?** 
+- You can access the game from "page not found". So get the URL wrong. :smiley:
+- Or directly from this URL: https://befer-app.web.app/spacefight
+
+> :warning: **Note**: You have to be logged in to play the game. Your scores are important for me and the ranking list.
 
 ## :hammer: Built With
 - [Angular](https://github.com/angular)
