@@ -21,6 +21,7 @@ export const objects = {
         width: 149,
         height: 86,
         aliensKilled: 0,
+        aliensMissed: 0,
         initHealthPoints: 5000,
         healthPoints: 5000,
         bonuses: {

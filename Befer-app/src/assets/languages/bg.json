@@ -161,6 +161,7 @@
     "title": "Междузвездни войни",
     "time": "Време:",
     "aliensKilled": "НЛО жертви:",
+    "aliensMissed": "НЛО оцелели:",
     "min": "мин",
     "level": "Ниво",
     "areaWarning": {
@@ -193,6 +194,7 @@
       "username": "Username",
       "points": "Точки",
       "aliensKilled": "НЛО жертви",
+      "aliensMissed": "НЛО оцелели",
       "remBoost": "Светлинна скорост",
       "health": "Живот",
       "bossTime": "Оставащо време",

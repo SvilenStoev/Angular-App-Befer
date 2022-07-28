@@ -33,6 +33,7 @@ export class AlienService {
           (alienEl as HTMLDivElement).style.left = currentPosition - objects.alien.speed + 'px';
         } else {
           alienEl.remove();
+          objects.spaceship.aliensMissed++;
         }
       });
   }

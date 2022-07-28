@@ -1,6 +1,7 @@
 export const initState = {
     userScores: {
         aliensKilled: 0,
+        aliensMissed: 0,
         timeRemaining: 0,
         boostRemaining: 0,
         points: 0,
@@ -11,11 +12,11 @@ export const initState = {
         level: 1,
         levelsRange: {
             2: 3000,
-            3: 6000,
-            4: 10000,
-            5: 15000,
-            6: 22000,
-            7: 30000,
+            3: 7000,
+            4: 12000,
+            5: 18000,
+            6: 25000,
+            7: 33000,
         },
         points: 0,
         openMenu: false,
@@ -36,7 +37,8 @@ export const initState = {
             'ArrowDown': false,
             'ArrowRight': false,
             'ShiftLeft': false,
-            'Space': false
+            'Space': false,
+            'NumpadEnter': false
         },
     } as any,
     spaceship: {
@@ -47,6 +49,7 @@ export const initState = {
         width: 149,
         height: 86,
         aliensKilled: 0,
+        aliensMissed: 0,
         initHealthPoints: 5000,
         healthPoints: 5000,
         bonuses: {

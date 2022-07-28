@@ -161,6 +161,7 @@
     "title": "Space fight game",
     "time": "Time:",
     "aliensKilled": "Aliens Killed:",
+    "aliensMissed": "Aliens Missed:",
     "min": "min",
     "level": "Level",
     "areaWarning": {
@@ -193,6 +194,7 @@
       "username": "Username",
       "points": "Points",
       "aliensKilled": "Aliens killed",
+      "aliensMissed": "Aliens missed",
       "remBoost": "Remaining Boost",
       "health": "Health",
       "bossTime": "Boss Time",

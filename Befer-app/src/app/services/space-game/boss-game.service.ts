@@ -54,7 +54,7 @@ export class BossGameService {
     }
 
     //Fire bombs
-    if (gameState.state.keys.Space) {
+    if (gameState.state.keys.Space || gameState.state.keys.NumpadEnter) {
       this.weaponService.fireBombs(timestamp);
     }
 

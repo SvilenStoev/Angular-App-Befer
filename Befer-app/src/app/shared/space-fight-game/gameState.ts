@@ -1,6 +1,7 @@
 export const gameState = {
     userScores: {
         aliensKilled: 0,
+        aliensMissed: 0,
         timeRemaining: 0,
         boostRemaining: 0,
         points: 0,
@@ -36,7 +37,8 @@ export const gameState = {
             'ArrowDown': false,
             'ArrowRight': false,
             'ShiftLeft': false,
-            'Space': false
+            'Space': false,
+            'NumpadEnter': false
         },
     } as any,
     availableKeys: [
@@ -51,6 +53,8 @@ export const gameState = {
         'ArrowDown',
         'ArrowRight',
         'ShiftLeft',
-        'Space'
+        'Space',
+        'NumpadEnter'
+
     ]
 }

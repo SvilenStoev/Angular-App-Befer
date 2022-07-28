@@ -42,7 +42,7 @@ export class SpaceGameService {
   onKeyDown(e: any) {
     if (gameState.availableKeys.includes(e.code)) {
       gameState.state.keys[e.code as keyof typeof gameState.state.keys] = true;
-
+      
       if (e.code == 'KeyP') {
         gameState.state.isPaused = true;
       }
@@ -75,7 +75,7 @@ export class SpaceGameService {
     this.spaceshipService.moveSpaceship();
 
     //Fire bombs
-    if (gameState.state.keys.Space) {
+    if (gameState.state.keys.Space || gameState.state.keys.NumpadEnter) {
       this.weaponService.fireBombs(timestamp);
     }
 
@@ -99,6 +99,7 @@ export class SpaceGameService {
     gameState.userScores.points = gameState.state.points;
     gameState.userScores.boostRemaining = objects.spaceship.boostSpeed < 0 ? 0 : Number(objects.spaceship.boostSpeed.toFixed());
     gameState.userScores.aliensKilled = objects.spaceship.aliensKilled;
+    gameState.userScores.aliensMissed = objects.spaceship.aliensMissed;
 
     if (gameState.state.gameWon) {
       gameState.userScores.healthRemaining = objects.spaceship.healthPoints;
@@ -106,10 +107,11 @@ export class SpaceGameService {
 
     const pointsFromRemBoost = gameState.userScores.boostRemaining * 5000 / 100;
     const pointsFromAliensKilled = gameState.userScores.aliensKilled * 100;
+    const pointsFromAliensMissed = -(gameState.userScores.aliensMissed * 500);
     const pointsFromTime = Math.floor(gameState.userScores.timeRemaining * 5000 / 60);
     const pointsFromRemHealth = gameState.userScores.healthRemaining * 5;
 
-    gameState.userScores.totalPoints = gameState.state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromTime + pointsFromRemHealth;
+    gameState.userScores.totalPoints = gameState.state.points + pointsFromRemBoost + pointsFromAliensKilled + pointsFromAliensMissed + pointsFromTime + pointsFromRemHealth;
   }
 
   onRestart() {

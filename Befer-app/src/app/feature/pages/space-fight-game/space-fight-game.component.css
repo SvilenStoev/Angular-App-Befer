@@ -8,13 +8,15 @@
 }
 
 /* Before starting game */
-.area-warning, .area-boss-entering {
+.area-warning,
+.area-boss-entering {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.area-warning-img, .area-boss-entering {
+.area-warning-img,
+.area-boss-entering {
     margin-left: 100px;
 }
 
@@ -226,7 +228,7 @@ div.double-fire-bonus img {
 
 .points {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     visibility: hidden;
     font-family: 'Consolas';
     color: white;
@@ -234,6 +236,10 @@ div.double-fire-bonus img {
     text-align: center;
     font-size: 20px;
     letter-spacing: 2px;
+}
+
+div.points > p:nth-child(2) {
+    margin: 0px 130px 0px 130px;
 }
 
 /* Game footer */
@@ -327,7 +333,7 @@ div.hide::after {
     justify-content: center;
     color: white;
     height: 120px;
-    width: 1080px;
+    width: 1200px;
     margin: 260px auto;
     background-color: #232422;
     opacity: 95%;
@@ -348,15 +354,16 @@ div.hide::after {
     flex-direction: column;
     align-items: center;
     margin: 10px 0px;
-    width: 145px;
+    width: 150px;
 }
 
-.user-scores span.pts-info, .users-scores-row span.pts-info {
+.user-scores span.pts-info,
+.users-scores-row span.pts-info {
     font-style: italic;
     font-size: 13px;
 }
 
-.user-scores div > span:nth-child(1) {
+.user-scores div>span:nth-child(1) {
     margin-bottom: 10px;
 }
 
@@ -365,7 +372,7 @@ div.hide::after {
     flex-direction: column;
     align-items: center;
     color: white;
-    width: 1200px;
+    width: 1300px;
     margin: 80px auto;
     padding-top: 10px;
     background-color: #232422;
@@ -424,7 +431,8 @@ div.hide::after {
 }
 
 /* Pulse heart */
-#pulse-heart-boss, #pulse-heart-spaceship {
+#pulse-heart-boss,
+#pulse-heart-spaceship {
     color: red;
     animation-name: stretch;
     animation-duration: 1.0s;

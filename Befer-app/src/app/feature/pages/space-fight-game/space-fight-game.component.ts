@@ -37,6 +37,7 @@ export class SpaceFightGameComponent implements OnInit {
   points: number = gameState.state.points;
   level: number = gameState.state.level;
   aliensKilled: number = 0;
+  aliensMissed: number = 0;
   spaceshipBoostSpeed: number = 0;
   bossHealth: number = objects.bossAlien.healthPoints;
   spaceshipHealth: number = objects.spaceship.healthPoints;
@@ -84,9 +85,7 @@ export class SpaceFightGameComponent implements OnInit {
 
     //Get curr user scores from the database
     this.getCurrUserAndScores();
-
     await this.sharedService.sleep(5000);
-
     this.showAreaWarning = false;
 
     this.startGame();
@@ -94,9 +93,7 @@ export class SpaceFightGameComponent implements OnInit {
 
   async startGame() {
     this.gameStarted = true;
-
     this.gameService.initialStartUp();
-
     await this.sharedService.sleep(1000);
 
     window.requestAnimationFrame(this.gameLoop.bind(this));
@@ -109,6 +106,7 @@ export class SpaceFightGameComponent implements OnInit {
     if (!gameState.state.gameOver) {
       gameState.state.points++;
       this.aliensKilled = objects.spaceship.aliensKilled;
+      this.aliensMissed = objects.spaceship.aliensMissed;
 
       if (gameState.state.points % 10 == 0) {
         this.points = gameState.state.points;
@@ -239,6 +237,7 @@ export class SpaceFightGameComponent implements OnInit {
     this.level = 1;
     this.spaceshipBoostSpeed = 0;
     this.aliensKilled = 0;
+    this.aliensMissed = 0;
     this.bossHealth = objects.bossAlien.initHealthPoints;
     this.spaceshipHealth = objects.spaceship.initHealthPoints;
 

@@ -1,4 +1,5 @@
 <div [style.visibility]="gameStarted ? 'visible' : 'hidden'" class="points">
+    <p>{{menu.aliensMissed}} <span class="alients-missed">{{aliensMissed}}</span></p>
     <p>{{menu.userScores.points}}: <span class="points-current">{{points}}</span></p>
     <p *ngIf="showHealthBars">{{menu.time}} <span id="remaining-time">05:00</span> {{menu.min}}</p>
     <p *ngIf="!showHealthBars">{{menu.aliensKilled}} <span class="alients-killed">{{aliensKilled}}</span></p>
@@ -74,6 +75,10 @@
                             <span class="pts-info">(x100 {{menu.userScores.pts}})</span>
                         </div>
                         <div class="user-scores-columns">
+                            <span>{{menu.userScores.aliensMissed}}</span>
+                            <span class="pts-info">(-x500 {{menu.userScores.pts}})</span>
+                        </div>
+                        <div class="user-scores-columns">
                             <span>{{menu.userScores.remBoost}}</span>
                             <span class="pts-info">(x5 000 {{menu.userScores.pts}})</span>
                         </div>
@@ -100,6 +105,9 @@
                         </div>
                         <div class="user-scores-aliens">
                             <span>{{scores.aliensKilled}}</span>
+                        </div>
+                        <div class="user-scores-aliens">
+                            <span>{{scores.aliensMissed}}</span>
                         </div>
                         <div class="user-scores-boost">
                             <span>{{scores.boostRemaining}}%</span>
@@ -150,6 +158,11 @@
             <span>{{menu.userScores.aliensKilled}}</span>
             <span>{{userScores.aliensKilled}}</span>
             <span class="pts-info">(x100 {{menu.userScores.pts}})</span>
+        </div>
+        <div class="user-scores-aliens">
+            <span>{{menu.userScores.aliensMissed}}</span>
+            <span>{{userScores.aliensMissed}}</span>
+            <span class="pts-info">(-x500 {{menu.userScores.pts}})</span>
         </div>
         <div class="user-scores-boost">
             <span>{{menu.userScores.remBoost}}</span>
