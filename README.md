@@ -53,7 +53,7 @@ Befer website supports translation in English and Bulgarian languages.
 ## :warning: Hidden project inside!
 ### :video_game: Space Fight Game
 
-Check my mini project inside Befer website. The project is a game, where you can chill, during defeating aliens, achieving higher levels, compete for points with other Befer users and just have fun. In the last level you have the oportunity to fight with my Alien caricature. If you don't like the project - avenge me. :blush: 
+Check my mini project inside Befer website. The project is a game, where you can chill, during defeating aliens, achieving higher levels, compete for points with other Befer users and just have fun. In the last level you have the opportunity to fight with my Alien caricature. If you don't like the project - avenge me. :blush: 
 
 Don't forget to see your score and rank at the end! :trophy:
 
@@ -62,6 +62,8 @@ Don't forget to see your score and rank at the end! :trophy:
 - Or directly from this URL: https://befer-app.web.app/spacefight
 
 > :warning: **Note**: You have to be logged in to play the game. Your scores are important for me and the ranking list.
+
+> :warning: **Note**: For best game play experience play on screen with resolution 1920x1080!
 
 ## :hammer: Built With
 - [Angular](https://github.com/angular)
