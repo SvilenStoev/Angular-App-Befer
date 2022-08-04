@@ -3,7 +3,7 @@
     font-family: 'Consolas';
     position: relative;
     width: 100vw;
-    height: 73vh;
+    height: 71vh;
     overflow: hidden;
 }
 
@@ -238,7 +238,7 @@ div.double-fire-bonus img {
     letter-spacing: 2px;
 }
 
-div.points > p:nth-child(2) {
+div.points>p:nth-child(2) {
     margin: 0px 130px 0px 130px;
 }
 
@@ -441,6 +441,20 @@ div.hide::after {
     animation-iteration-count: infinite;
     animation-play-state: running;
 }
+
+/* .bossBomb {
+    animation: rotation 5s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(359deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+} */
 
 @keyframes stretch {
     0% {
