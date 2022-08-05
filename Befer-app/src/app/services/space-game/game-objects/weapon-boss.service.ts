@@ -50,11 +50,11 @@ export class WeaponBossService {
   //Move bombs
   moveAllBombs(gameScreenWidth: number, spaceshipEl: any = {}) {
     Array.from(document.getElementsByClassName('bossBomb'))
-      .forEach(bombEl => {
-        let currentPosition = parseInt((bombEl as HTMLDivElement).style.left);
+      .forEach(bossBombEl => {
+        let currentPosition = parseInt((bossBombEl as HTMLDivElement).style.left);
 
-        if (!objects.spaceship.bonuses.invisible && this.sharedService.hasCollision(bombEl, spaceshipEl, 15)) {
-          bombEl.remove();
+        if (!objects.spaceship.bonuses.invisible && this.sharedService.hasCollision(bossBombEl, spaceshipEl, 15)) {
+          bossBombEl.remove();
           objects.spaceship.healthPoints -= 250;
 
           if (objects.spaceship.healthPoints == (objects.spaceship.initHealthPoints / 4 * 3)) {
@@ -72,9 +72,9 @@ export class WeaponBossService {
         }
 
         if (currentPosition > -80) {
-          (bombEl as HTMLDivElement).style.left = currentPosition - objects.bossBomb.speed + 'px';
+          (bossBombEl as HTMLDivElement).style.left = currentPosition - objects.bossBomb.speed + 'px';
         } else {
-          bombEl.remove();
+          bossBombEl.remove();
         }
       });
   }

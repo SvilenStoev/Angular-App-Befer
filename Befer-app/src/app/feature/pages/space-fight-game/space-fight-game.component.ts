@@ -113,11 +113,11 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
   async gameLoop(timestamp: number) {
     //Create game objects, modify position and check for collision 
     this.gameService.modifyGameObjects(timestamp);
+    this.aliensKilled = objects.spaceship.aliensKilled;
+    this.aliensMissed = objects.spaceship.aliensMissed;
 
     if (!gameState.state.gameOver) {
       gameState.state.points++;
-      this.aliensKilled = objects.spaceship.aliensKilled;
-      this.aliensMissed = objects.spaceship.aliensMissed;
 
       if (gameState.state.points % 10 == 0) {
         this.points = gameState.state.points;
@@ -139,15 +139,14 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
 
   gameLoopBoss(timestamp: number) {
     this.bossGameService.modifyGameObjectsBossMode(timestamp);
+    this.bossHealth = objects.bossAlien.healthPoints;
+    this.spaceshipHealth = objects.spaceship.healthPoints;
 
     if (!gameState.state.gameOver) {
       gameState.state.points++;
 
       if (gameState.state.points % 10 == 0) {
         this.points = gameState.state.points;
-        this.bossHealth = objects.bossAlien.healthPoints;
-        this.spaceshipHealth = objects.spaceship.healthPoints;
-
         this.spaceshipBoostSpeed = objects.spaceship.boostSpeed < 0 ? 0 : Number(objects.spaceship.boostSpeed.toFixed());
       }
 
@@ -210,6 +209,8 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
         Array.from(document.getElementsByClassName('alien')).forEach(alienEl => {
           alienEl.remove();
         });
+
+        (document.querySelector('footer') as HTMLElement).style.display = 'none';
 
         await this.sharedService.sleep(5000);
 
