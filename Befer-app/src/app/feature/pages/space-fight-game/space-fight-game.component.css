@@ -3,16 +3,22 @@
     font-family: 'Consolas';
     position: relative;
     width: 100vw;
-    height: 71vh;
+    height: 73vh;
     overflow: hidden;
 }
 
 /* Before starting game */
 .area-warning,
-.area-boss-entering {
+.area-boss-entering,
+.area-small-screen-warning {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.area-small-screen-warning {
+    height: 100%;
+    text-align: center;
 }
 
 .area-warning-img,
@@ -252,7 +258,7 @@ div.points>p:nth-child(2) {
     min-height: 55px;
     font-family: 'Consolas';
     color: white;
-    margin: 14px 0px 15px 0px;
+    margin: 14px 0px 7px 0px;
     font-size: 20px;
     letter-spacing: 2px;
 }
@@ -281,6 +287,7 @@ div.points>p:nth-child(2) {
 
 .game-footer-imgs div.game-footer-img-boost-speed img {
     width: 80%;
+    height: 80%;
 }
 
 .game-footer-imgs div.game-footer-img-boost-speed {

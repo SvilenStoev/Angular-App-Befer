@@ -25,6 +25,7 @@ export class SpaceFightGameComponent implements OnInit {
   gameStarted: boolean = false;
   showSettings: boolean = true;
   showStartButton: boolean = true;
+  showSmallScreenWarning: boolean = false;
   showMenu: boolean = false;
   showAreaWarning: boolean = false;
   showHealthBars: boolean = false;
@@ -79,16 +80,22 @@ export class SpaceFightGameComponent implements OnInit {
 
   //This is called only once when game is started. It is not called on restart!
   async warningAndStartGame() {
-    this.showAreaWarning = true;
     this.showStartButton = false;
     this.showSettings = false;
 
-    //Get curr user scores from the database
-    this.getCurrUserAndScores();
-    await this.sharedService.sleep(5000);
-    this.showAreaWarning = false;
+    if (this.gameService.isUsingSmallDisplay()) {
+      //Warning if user try to play on screen smaller than 1300px width, or 800px height.
+      this.showSmallScreenWarning = true;
+    } else {
+      this.showAreaWarning = true;
 
-    this.startGame();
+      //Get curr user scores from the database
+      this.getCurrUserAndScores();
+      await this.sharedService.sleep(5000);
+      this.showAreaWarning = false;
+
+      this.startGame();
+    }
   }
 
   async startGame() {

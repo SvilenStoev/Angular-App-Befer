@@ -24,13 +24,19 @@ export class SpaceGameService {
     private bonusService: BonusService,
     private sharedService: SharedService) { }
 
+  isUsingSmallDisplay(): boolean {
+    this.gameScreenEl = document.querySelector('.game-view');
+
+    console.log(`width: ${this.gameScreenEl.offsetWidth}, height: ${this.gameScreenEl.offsetHeight}`);
+
+    return this.gameScreenEl.offsetWidth <= 1300 || this.gameScreenEl.offsetHeight <= 500;
+  }
 
   //Initial game configuration
   initialStartUp(): void {
     document.addEventListener('keydown', this.onKeyDown);
     document.addEventListener('keyup', this.onKeyUp);
 
-    this.gameScreenEl = document.querySelector('.game-view');
     this.sharedService.gameScreenEl = this.gameScreenEl;
     this.gameScreenEl.style.border = '2px dashed white';
 

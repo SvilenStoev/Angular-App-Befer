@@ -12,6 +12,12 @@
             <p>{{menu.areaWarning.p2}}</p>
         </div>
     </article>
+    <article *ngIf="showSmallScreenWarning" class="area-small-screen-warning">
+        <div class="area-warning-text">
+            <p>{{menu.areaScreenWarning.p1}}</p>
+            <p>{{menu.areaScreenWarning.p2}}</p>
+        </div>
+    </article>
     <article *ngIf="showBossEntering" class="area-boss-entering">
         <div class="area-boss-entering-img"><img src="../../../../assets/images/boss-entering.jpg" alt=""></div>
         <div class="area-warning-text">

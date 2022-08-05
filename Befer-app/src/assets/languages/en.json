@@ -168,6 +168,10 @@
       "p1": "Give a star to the project in GitHub!",
       "p2": "Or my aliens will defeat you!"
     },
+    "areaScreenWarning": {
+      "p1": "Your screen is too small to play the game!",
+      "p2": "Try playing on computer with screen larger than 1300px width and 800px height."
+    },
     "areaBossEntering": {
       "p1": "I am comming for you..."
     },
