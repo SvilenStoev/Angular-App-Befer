@@ -139,14 +139,14 @@
     }
 }
 
-@media screen and (max-height: 820px) {
+@media screen and (max-height: 800px) {
     div.game-footer {
         margin: 0px auto;
     }
 
     div.game-view {
         width: 100vw;
-        height: 71vh;
+        height: 70vh;
     }
 
     div.points {
@@ -160,7 +160,7 @@
 
     article.settings {
         margin: 10px auto;
-        height: 82%;
+        height: 95%;
     }
 
     .settings-bonuses-el {

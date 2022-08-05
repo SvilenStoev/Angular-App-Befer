@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { UserService } from 'src/app/services/auth/user.service';
 import { gameState } from 'src/app/shared/space-fight-game/gameState';
@@ -19,12 +19,12 @@ import { SpaceGameService } from 'src/app/services/space-game/space-game.service
   styleUrls: ['./space-fight-game.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class SpaceFightGameComponent implements OnInit {
+export class SpaceFightGameComponent implements OnInit, OnDestroy {
 
   //Game Views
   gameStarted: boolean = false;
-  showSettings: boolean = true;
-  showStartButton: boolean = true;
+  showSettings: boolean = false;
+  showStartButton: boolean = false;
   showSmallScreenWarning: boolean = false;
   showMenu: boolean = false;
   showAreaWarning: boolean = false;
@@ -76,6 +76,15 @@ export class SpaceFightGameComponent implements OnInit {
       this.menu = langJson.spaceFightGame;
       this.setTitle();
     });
+
+    //Warning if user try to play on screen smaller than 1300px width, or 800px height.
+    if (screen.width < 1300 || screen.height < 800) {
+      console.log(`Screen width: ${screen.width}, Screen height: ${screen.height}`);
+      this.showSmallScreenWarning = true;
+    } else {
+      this.showSettings = true;
+      this.showStartButton = true;
+    }
   }
 
   //This is called only once when game is started. It is not called on restart!
@@ -83,19 +92,14 @@ export class SpaceFightGameComponent implements OnInit {
     this.showStartButton = false;
     this.showSettings = false;
 
-    if (this.gameService.isUsingSmallDisplay()) {
-      //Warning if user try to play on screen smaller than 1300px width, or 800px height.
-      this.showSmallScreenWarning = true;
-    } else {
-      this.showAreaWarning = true;
+    this.showAreaWarning = true;
 
-      //Get curr user scores from the database
-      this.getCurrUserAndScores();
-      await this.sharedService.sleep(5000);
-      this.showAreaWarning = false;
+    //Get curr user scores from the database
+    this.getCurrUserAndScores();
+    await this.sharedService.sleep(5000);
+    this.showAreaWarning = false;
 
-      this.startGame();
-    }
+    this.startGame();
   }
 
   async startGame() {
@@ -373,5 +377,9 @@ export class SpaceFightGameComponent implements OnInit {
         });
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
