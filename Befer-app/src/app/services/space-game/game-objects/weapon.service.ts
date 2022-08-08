@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { SharedService } from '../shared.service';
 import { gameState } from 'src/app/shared/space-fight-game/gameState';
 import { objects, bombUrl } from 'src/app/shared/space-fight-game/gameObjects';
+import { AlienService } from './alien.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,11 @@ export class WeaponService {
 
   switchShotGun: boolean = false;
   bossHealthEl: any;
+  bombs: HTMLDivElement[] = [];
 
   constructor(
-    private sharedService: SharedService) { }
+    private sharedService: SharedService,
+    private alienService: AlienService) { }
 
   initialStartUp() {
     this.bossHealthEl = document.querySelector('.game-footer-img-boss-health img') as HTMLImageElement;
@@ -41,28 +44,30 @@ export class WeaponService {
 
     this.switchShotGun = !this.switchShotGun;
 
-    this.sharedService.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, objects.bomb.width, objects.bomb.height, '-2');
+    const bombEl = this.sharedService.createEl(['bomb'], bombX, bombY, 'Bomb', bombUrl, objects.bomb.width, objects.bomb.height, '-2');
+    this.bombs.push(bombEl);
   }
 
   //Move bombs
   moveAllBombs(gameScreenWidth: number, bossEl: any = null) {
-    Array.from(document.getElementsByClassName('bomb'))
+    this.bombs
       .forEach(bombEl => {
-        let currentPosition = parseInt((bombEl as HTMLDivElement).style.left);
+        let currentPosition = parseInt(bombEl.style.left);
 
         if (!bossEl) {
-          Array.from(document.getElementsByClassName('alien'))
+          this.alienService.aliens
             .forEach(alienEl => {
               if (this.sharedService.hasCollision(bombEl, alienEl, 0)) {
-                bombEl.remove();
-                alienEl.remove();
+                this.removeBomb(bombEl);
+                this.alienService.removeAlien(alienEl);
+
                 gameState.state.points += objects.alien.healthPoints;
                 objects.spaceship.aliensKilled++;
               }
             });
         } else {
           if (this.sharedService.hasCollision(bombEl, bossEl, 12)) {
-            bombEl.remove();
+            this.removeBomb(bombEl);
             objects.bossAlien.healthPoints -= 500;
             gameState.state.points += 500;
 
@@ -86,9 +91,9 @@ export class WeaponService {
         }
 
         if (currentPosition < gameScreenWidth) {
-          (bombEl as HTMLDivElement).style.left = currentPosition + objects.bomb.speed + 'px';
+          bombEl.style.left = currentPosition + objects.bomb.speed + 'px';
         } else {
-          bombEl.remove();
+          this.removeBomb(bombEl);
         }
       });
   }
@@ -97,5 +102,15 @@ export class WeaponService {
     objects.bossBomb.speed++;
     objects.bossBomb.fireInterval -= 60;
     objects.bossBomb.trippleFireInterval -= 500;
+  }
+
+  
+  removeBomb(bombEL: HTMLDivElement) {
+    bombEL.remove();
+    const aIndex = this.bombs.indexOf(bombEL);
+
+    if (aIndex > -1) {
+      this.bombs.splice(aIndex, 1);
+    }
   }
 }

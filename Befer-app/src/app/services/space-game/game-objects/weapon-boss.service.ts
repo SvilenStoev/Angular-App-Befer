@@ -11,6 +11,7 @@ export class WeaponBossService {
 
   switchShotGun: boolean = false;
   spaceshipHealthEl: any;
+  bossBombs: HTMLDivElement[] = [];
 
   constructor(private sharedService: SharedService) { }
 
@@ -28,7 +29,7 @@ export class WeaponBossService {
       objects.bossBomb.nextTrippleFire = timestamp + objects.bossBomb.trippleFireInterval * Math.random();
 
       for (let y = objects.bossAlien.y; y < objects.bossAlien.y + 200; y += 90) {
-        this.sharedService.createEl(['bossBomb'], objects.bossAlien.x + 80, y, 'Boss-Bomb', bossBombUrl, objects.bossBomb.width, objects.bossBomb.height, '-2');
+        this.bossBombs.push(this.sharedService.createEl(['bossBomb'], objects.bossAlien.x + 80, y, 'Boss-Bomb', bossBombUrl, objects.bossBomb.width, objects.bossBomb.height, '-2'));
       }
     }
   }
@@ -44,17 +45,18 @@ export class WeaponBossService {
 
     this.switchShotGun = !this.switchShotGun;
 
-    this.sharedService.createEl(['bossBomb'], bombX, bombY, 'Boss-Bomb', bossBombUrl, objects.bossBomb.width, objects.bossBomb.height, '-2');
+    const bossBombEl = this.sharedService.createEl(['bossBomb'], bombX, bombY, 'Boss-Bomb', bossBombUrl, objects.bossBomb.width, objects.bossBomb.height, '-2');
+    this.bossBombs.push(bossBombEl);
   }
 
   //Move bombs
   moveAllBombs(gameScreenWidth: number, spaceshipEl: any = {}) {
-    Array.from(document.getElementsByClassName('bossBomb'))
+    this.bossBombs
       .forEach(bossBombEl => {
-        let currentPosition = parseInt((bossBombEl as HTMLDivElement).style.left);
+        let currentPosition = parseInt(bossBombEl.style.left);
 
         if (!objects.spaceship.bonuses.invisible && this.sharedService.hasCollision(bossBombEl, spaceshipEl, 15)) {
-          bossBombEl.remove();
+          this.removeBomb(bossBombEl);
           objects.spaceship.healthPoints -= 250;
 
           if (objects.spaceship.healthPoints == (objects.spaceship.initHealthPoints / 4 * 3)) {
@@ -72,10 +74,19 @@ export class WeaponBossService {
         }
 
         if (currentPosition > -80) {
-          (bossBombEl as HTMLDivElement).style.left = currentPosition - objects.bossBomb.speed + 'px';
+          bossBombEl.style.left = currentPosition - objects.bossBomb.speed + 'px';
         } else {
-          bossBombEl.remove();
+          this.removeBomb(bossBombEl);
         }
       });
+  }
+
+  removeBomb(bossBombEl: HTMLDivElement) {
+    bossBombEl.remove();
+    const aIndex = this.bossBombs.indexOf(bossBombEl);
+
+    if (aIndex > -1) {
+      this.bossBombs.splice(aIndex, 1);
+    }
   }
 }

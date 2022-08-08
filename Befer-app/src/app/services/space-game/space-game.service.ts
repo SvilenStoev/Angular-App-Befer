@@ -24,7 +24,6 @@ export class SpaceGameService {
     private bonusService: BonusService,
     private sharedService: SharedService) { }
 
-
   //Initial game configuration
   initialStartUp(): void {
     document.addEventListener('keydown', this.onKeyDown);
