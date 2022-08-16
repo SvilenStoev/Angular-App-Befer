@@ -10,12 +10,14 @@
 }
 
 /* (B) CENTER LOADING SPINNER */
-#beferSpinner img {
-  position: absolute;
-  top: 35%;
-  left: 45%;
+#beferSpinner .beferSpinner-img {
+  position: relative;
+  top: 50%;
+  left: 50%;
   visibility: visible;
   opacity: 1;
+  width: 90px;
+  transform: translate(-50%, -50%);
 }
 
 .fa-spin-reverse {

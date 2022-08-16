@@ -5,6 +5,9 @@
     <p *ngIf="!showHealthBars">{{menu.aliensKilled}} <span class="alients-killed">{{aliensKilled}}</span></p>
 </div>
 <div class="game-view">
+    <article *ngIf="showStartButton" class="start-screen" (click)="warningAndStartGame()">
+        <p>{{menu.startScreen.p1}}</p>
+    </article>
     <article *ngIf="showAreaWarning" class="area-warning">
         <div class="area-warning-img"><img src="../../../../assets/images/area-warning.jpg" alt=""></div>
         <div class="area-warning-text">
@@ -23,9 +26,6 @@
         <div class="area-warning-text">
             <p>{{menu.areaBossEntering.p1}}</p>
         </div>
-    </article>
-    <article *ngIf="showStartButton" class="start-screen" (click)="warningAndStartGame()">
-        <p>{{menu.startScreen.p1}}</p>
     </article>
     <article *ngIf="showSettings" class="settings">
         <article class="settings-controls">
