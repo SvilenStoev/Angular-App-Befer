@@ -33,6 +33,10 @@
       "name": "Моите постове",
       "url": "/posts/mine"
     },
+    "spaceGame": {
+      "name": "Междузвездни войни",
+      "url": "/spacefight"
+    },
     "createPost": {
       "name": "Създай пост",
       "url": "/posts/create"

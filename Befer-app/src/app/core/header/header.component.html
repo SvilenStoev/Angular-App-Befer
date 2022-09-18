@@ -1,6 +1,9 @@
 <nav>
     <a routerLink=""><img src="{{menu.logo.url}}" alt="{{menu.logo.name}}" height="50"></a>
     <ul>
+        <ng-container *ngIf="isLogged" >
+            <li><a routerLink="{{menu.spaceGame.url}}">| {{menu.spaceGame.name}} |</a></li>
+        </ng-container>
         <li><a routerLink="">{{menu.home.name}}</a></li>
         <li><a routerLink="{{menu.allPosts.url}}">{{menu.allPosts.name}}</a></li>
         <ng-container *ngIf="isLogged">

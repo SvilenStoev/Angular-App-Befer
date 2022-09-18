@@ -33,6 +33,10 @@
       "name": "My Posts",
       "url": "/posts/mine"
     },
+    "spaceGame": {
+      "name": "Space Game",
+      "url": "/spacefight"
+    },
     "createPost": {
       "name": "Create Post",
       "url": "/posts/create"
