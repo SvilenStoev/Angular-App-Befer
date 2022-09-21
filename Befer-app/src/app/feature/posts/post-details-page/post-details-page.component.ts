@@ -1,22 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Subscription } from 'rxjs';
 import { IPost } from 'src/app/interfaces';
-import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/services/auth/user.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { PostService } from 'src/app//services/components/post.service';
 import { TransferService } from 'src/app/services/common/transfer.service';
 import { TabTitleService } from 'src/app/services/common/tab-title.service';
 import { LanguageService } from 'src/app/services/common/language.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-details-page',
   templateUrl: './post-details-page.component.html',
   styleUrls: ['./post-details-page.component.css']
 })
-export class PostDetailsPageComponent implements OnInit,OnDestroy {
+export class PostDetailsPageComponent implements OnInit, OnDestroy {
 
   post: IPost;
   showLoader: boolean = false;

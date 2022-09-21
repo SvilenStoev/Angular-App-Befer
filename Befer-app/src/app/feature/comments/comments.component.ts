@@ -4,16 +4,16 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 
 import { IComment } from 'src/app/interfaces';
 import { UserService } from 'src/app/services/auth/user.service';
-import { CommentService } from 'src/app/services/components/comment.service';
 import { notifyErr, notifySuccess } from 'src/app/shared/other/notify';
 import { LanguageService } from 'src/app/services/common/language.service';
+import { CommentService } from 'src/app/services/components/comment.service';
 
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent implements OnInit  {
 
   now = new Date();
   limitComments: number = 5;
@@ -29,7 +29,7 @@ export class CommentsComponent implements OnInit {
 
   @Input() postId: string;
   @ViewChild('saveCommentForm') saveCommentForm: NgForm;
-  @Output() commentsCount = new EventEmitter<any>();
+  @Output() commentsCount = new EventEmitter<number>();
 
   comments: IComment[];
 
