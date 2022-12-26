@@ -35,25 +35,27 @@ export class HeaderComponent {
 
     this.isLoggingOut = true;
     this.showLoader = true;
+    
+    this.userService
+      .logout$()
+      .subscribe({
+          complete: () => {
+            this.isLoggingOut = false;
+            this.showLoader = false;
 
-    this.userService.logout$().subscribe({
-      complete: () => {
-        this.isLoggingOut = false;
-        this.showLoader = false;
+            this.storage.clearUserData();
+            this.router.navigate(['/home']);
+            notifySuccess(this.menu.messages.loggedOutSuccess);
+          },
+          error: (err) => {
+            this.isLoggingOut = false;
+            this.showLoader = false;
 
-        this.storage.clearUserData();
-        this.router.navigate(['/home']);
-        notifySuccess(this.menu.messages.loggedOutSuccess);
-      },
-      error: (err) => {
-        this.isLoggingOut = false;
-        this.showLoader = false;
+            notifySuccess(this.menu.messages.somethingWrong);
 
-        notifySuccess(this.menu.messages.somethingWrong);
-
-        notifyErr(err.message);
-      }
-    });
+            notifyErr(err.message);
+          }
+        });
   }
 
   changeLang(language: string): void {

@@ -266,7 +266,7 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
   onMenuScores(): void {
     this.gameApiService.loadAllScores$(10).subscribe({
       next: (data) => {
-        this.usersScores = (data.results as Array<any>).sort((a, b) => b.totalPoints - a.totalPoints);
+        this.usersScores = (data.results as Array<any>).sort((a, b) => b.totalPoints - a.totalPoints).slice(0, 10);
       },
       complete: () => {
       },
