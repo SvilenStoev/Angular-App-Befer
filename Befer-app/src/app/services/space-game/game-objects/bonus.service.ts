@@ -91,7 +91,7 @@ export class BonusService {
         }
 
         if (this.sharedService.hasCollision(spaceshipEl, bonusEl, 6)) {
-          //TODO: Impove the check
+          //TODO: Improve the check
           if (bonusEl.classList.contains('aim-bonus')) {
             objects.spaceship.bonuses.aim = true;
             this.aimBonusFooterEl.classList.add('footer-img-active');

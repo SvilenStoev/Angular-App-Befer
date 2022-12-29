@@ -25,11 +25,12 @@ export class WeaponService {
   fireBombs(timestamp: number): void {
     if (objects.bomb.nextFire < timestamp) {
       this.createBomb();
-      objects.bomb.nextFire = timestamp + objects.bomb.fireInterval;
-
+      
       if (objects.spaceship.bonuses.doubleFire) {
         this.createBomb();
       }
+      
+      objects.bomb.nextFire = timestamp + objects.bomb.fireInterval;
     }
   }
 
