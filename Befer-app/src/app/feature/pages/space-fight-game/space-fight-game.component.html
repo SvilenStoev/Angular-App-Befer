@@ -45,7 +45,7 @@
                 <p class="settings-controls-text">{{menu.settings.press}} <b>"M"</b> {{menu.settings.gameMenu}}</p>
             </article>
             <article class="settings-bonuses">
-                <h2 class="settings-title">{{menu.settings.bonuses}}</h2>
+                <h2 class="settings-title" (click)="warningAndStartGame(true)">{{menu.settings.bonuses}}</h2>
                 <div class="settings-bonuses-el">
                     <p class="settings-bonuses-text">{{menu.settings.fireBonus}}</p>
                     <div><img src="../../../../assets/images/bonus-double-fire.png" alt="Double-Fire"

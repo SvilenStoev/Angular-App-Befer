@@ -88,11 +88,16 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
   }
 
   //This is called only once when game is started. It is not called on restart!
-  async warningAndStartGame() {
+  async warningAndStartGame(bossGameCheat: boolean = false) {
     this.showStartButton = false;
     this.showSettings = false;
 
     this.showAreaWarning = true;
+
+    if (bossGameCheat == true) {
+      gameState.state.level = 6;
+      gameState.state.levelsRange['7'] = 2500;
+    }
 
     //Get curr user scores from the database
     this.getCurrUserAndScores();
