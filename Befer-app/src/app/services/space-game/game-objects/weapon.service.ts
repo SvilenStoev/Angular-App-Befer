@@ -114,4 +114,8 @@ export class WeaponService {
       this.bombs.splice(aIndex, 1);
     }
   }
+
+  clearBombsArr(): void {
+    this.bombs = [];
+  }
 }

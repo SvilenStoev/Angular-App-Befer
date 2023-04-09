@@ -177,7 +177,8 @@
       "p2": "Try playing on computer with screen larger than 1300px width and 800px height."
     },
     "areaBossEntering": {
-      "p1": "I am comming for you..."
+      "p1": "I am comming for you...",
+      "textAnika": "БанАника, Хайде да те видим! По-труден съм от тикет в ГФ!"
     },
     "startScreen": {
       "p1": "Start New Space Fight"

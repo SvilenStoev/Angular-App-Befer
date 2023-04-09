@@ -50,4 +50,8 @@ export class AlienService {
       this.aliens.splice(aIndex, 1);
     }
   }
+
+  clearAliensArr(): void {
+    this.aliens = [];
+  }
 }

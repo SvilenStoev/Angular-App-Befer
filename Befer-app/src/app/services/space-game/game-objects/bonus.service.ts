@@ -132,8 +132,8 @@ export class BonusService {
   clearActiveBonuses(): void {
     this.setBonusFooterElements();
 
-    this.aimBonusFooterEl.classList.remove('footer-img-active');
-    this.invisibleBonusFooterEl.classList.remove('footer-img-active');
-    this.doubleBonusFooterEl.classList.remove('footer-img-active');
+    this.aimBonusFooterEl?.classList.remove('footer-img-active');
+    this.invisibleBonusFooterEl?.classList.remove('footer-img-active');
+    this.doubleBonusFooterEl?.classList.remove('footer-img-active');
   }
 }

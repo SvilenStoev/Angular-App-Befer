@@ -55,6 +55,8 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
   menu: any = this.langService.get().spaceFightGame;
   subscription: Subscription;
 
+  frameId: any;
+
   constructor(
     private gameService: SpaceGameService,
     private bossGameService: BossGameService,
@@ -112,7 +114,7 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
     this.gameService.initialStartUp();
     await this.sharedService.sleep(1000);
 
-    window.requestAnimationFrame(this.gameLoop.bind(this));
+    this.frameId = window.requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   async gameLoop(timestamp: number) {
@@ -189,9 +191,9 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
   checkForPauseOrMenu() {
     if (!gameState.state.isPaused && !gameState.state.openMenu) {
       if (gameState.state.isBossMode) {
-        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+        this.frameId = window.requestAnimationFrame(this.gameLoopBoss.bind(this));
       } else {
-        window.requestAnimationFrame(this.gameLoop.bind(this));
+        this.frameId = window.requestAnimationFrame(this.gameLoop.bind(this));
       }
     } else if (gameState.state.isPaused) {
       this.pauseGame();
@@ -217,14 +219,14 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
 
         (document.querySelector('footer') as HTMLElement).style.display = 'none';
 
-        await this.sharedService.sleep(5000);
+        await this.sharedService.sleep(6000);
 
         this.showBossEntering = false;
 
         //Initializing boss game mode
         this.bossGameService.initialStartUpBossMode(timestamp);
 
-        window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+        this.frameId = window.requestAnimationFrame(this.gameLoopBoss.bind(this));
         return true;
       } else {
         notifySuccess(this.replaceArgs.transform(this.menu.messages.levelUp, gameState.state.level));
@@ -241,6 +243,13 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
     //Gets the best scores again!
     this.getCurrUserAndScores();
 
+    this.resetViewStats();
+
+    this.gameService.onRestart();
+    this.startGame();
+  }
+
+  private resetViewStats() {
     if (gameState.state.gameOver) {
       Array.from(document.querySelectorAll('.collision-img-game-over')).forEach(c => {
         c.remove();
@@ -257,9 +266,6 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
     this.aliensMissed = 0;
     this.bossHealth = objects.bossAlien.initHealthPoints;
     this.spaceshipHealth = objects.spaceship.initHealthPoints;
-
-    this.gameService.onRestart();
-    this.startGame();
   }
 
   pauseGame(): void {
@@ -319,9 +325,9 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
       //Check for menu also, because event listener doesn't remove..
       if (!gameState.state.gameOver && !gameState.state.openMenu) {
         if (gameState.state.isBossMode) {
-          window.requestAnimationFrame(this.gameLoopBoss.bind(this));
+          this.frameId = window.requestAnimationFrame(this.gameLoopBoss.bind(this));
         } else {
-          window.requestAnimationFrame(this.gameLoop.bind(this));
+          this.frameId = window.requestAnimationFrame(this.gameLoop.bind(this));
         }
       }
     }
@@ -387,5 +393,10 @@ export class SpaceFightGameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    window.cancelAnimationFrame(this.frameId);
+    
+    //restart state
+    this.resetViewStats();
+    this.gameService.onRestart();
   }
 }

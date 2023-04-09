@@ -24,7 +24,12 @@
     <article *ngIf="showBossEntering" class="area-boss-entering">
         <div class="area-boss-entering-img"><img src="../../../../assets/images/boss-entering.jpg" alt=""></div>
         <div class="area-warning-text">
-            <p>{{menu.areaBossEntering.p1}}</p>
+            <ng-container *ngIf="currUserUsername == 'anika' || currUserUsername == 'anika.nedyalkova'; else bossEntering">
+                <p>{{menu.areaBossEntering.textAnika}}</p>
+            </ng-container>
+            <ng-template #bossEntering>
+                <p>{{menu.areaBossEntering.p1}}</p>
+            </ng-template>
         </div>
     </article>
     <article *ngIf="showSettings" class="settings">

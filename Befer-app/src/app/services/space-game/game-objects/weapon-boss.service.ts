@@ -89,4 +89,8 @@ export class WeaponBossService {
       this.bossBombs.splice(aIndex, 1);
     }
   }
+
+  clearBombsArr(): void {
+    this.bossBombs = [];
+  }
 }

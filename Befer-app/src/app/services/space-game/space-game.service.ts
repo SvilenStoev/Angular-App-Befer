@@ -8,6 +8,7 @@ import { SpaceshipService } from './game-objects/spaceship.service';
 import { objects } from 'src/app/shared/space-fight-game/gameObjects';
 import { gameState } from 'src/app/shared/space-fight-game/gameState';
 import { initState } from 'src/app/shared/space-fight-game/initialGameState';
+import { WeaponBossService } from './game-objects/weapon-boss.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class SpaceGameService {
     private alienService: AlienService,
     private spaceshipService: SpaceshipService,
     private weaponService: WeaponService,
+    private weaponBossService: WeaponBossService,
     private bonusService: BonusService,
     private sharedService: SharedService) { }
 
@@ -147,7 +149,10 @@ export class SpaceGameService {
     }
 
     this.bonusService.clearActiveBonuses();
-    this.spaceshipEl.remove();
+    this.spaceshipEl?.remove();
+    this.alienService.clearAliensArr();
+    this.weaponService.clearBombsArr();
+    this.weaponBossService.clearBombsArr();
 
     //Remove all possible game objects that could be remain on the screen after game over and restart.
     Array.from(document.getElementsByClassName('boss')).forEach(b => b.remove());
